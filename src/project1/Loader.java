@@ -46,16 +46,16 @@ public class Loader {
 				input=text.split(",");
 				switch(input[0]){
 					case "wall":
-						sprite[index]=new Sprite("/assets/wall.png",Integer.parseInt(input[1]),Integer.parseInt(input[2]));
+						sprite[index]=new Wall("/assets/wall.png",Integer.parseInt(input[1]),Integer.parseInt(input[2]));
 						break;
 					case "stone":
-						sprite[index]=new Sprite("/assets/stone.png",Integer.parseInt(input[1]),Integer.parseInt(input[2]));
+						sprite[index]=new Stone("/assets/stone.png",Integer.parseInt(input[1]),Integer.parseInt(input[2]));
 						break;
 					case "floor":
-						sprite[index]=new Sprite("/assets/floor.png",Integer.parseInt(input[1]),Integer.parseInt(input[2]));
+						sprite[index]=new Floor("/assets/floor.png",Integer.parseInt(input[1]),Integer.parseInt(input[2]));
 						break;
 					case "target":
-						sprite[index]=new Sprite("/assets/target.png",Integer.parseInt(input[1]),Integer.parseInt(input[2]));
+						sprite[index]=new Target("/assets/target.png",Integer.parseInt(input[1]),Integer.parseInt(input[2]));
 						break;
 					case "player":
 						//spriteArrayList.add(new Sprite("/assets/player_left.png",Integer.parseInt(input[1]),Integer.parseInt(input[2])));

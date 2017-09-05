@@ -17,7 +17,18 @@ public class World {
 	
 	public void update(Input input, int delta) {
 		for(int i=0;i<s.length;i++){
+			float prevX,prevY;
+			prevX=s[i].getX();
+			prevY=s[i].getY();
 			s[i].update(input,delta);
+			if(s[i].getClass().equals(Player.class)){
+				for (int j=s.length-1;0<=j;j--){
+					if(s[j].getX()==s[i].getX() && s[j].getY()==s[i].getY() && s[j].getClass().equals(Wall.class)){
+						s[i].setX(prevX);
+						s[i].setY(prevY);
+					}
+				}
+			}
 		}
 	}
 	
