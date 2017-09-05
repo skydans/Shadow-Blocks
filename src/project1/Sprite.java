@@ -10,8 +10,9 @@ public class Sprite {
 	private String image_src; //primitive
 	private float x,y; //primitive
 	private Image image;
-	private int spriteType;
+	//private int spriteType;
 	
+	/*
 	//Copy constructor
 	public Sprite(Sprite sprite){
 		this.image_src=sprite.image_src;
@@ -19,6 +20,8 @@ public class Sprite {
 		this.y=sprite.y;
 		this.image=sprite.image;
 	}
+	*/
+	
 	//Constructor
 	public Sprite(String image_src, float x, float y) throws SlickException{
 		this.image_src=image_src;
