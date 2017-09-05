@@ -38,6 +38,14 @@ public class Sprite {
 		return y;
 	}
 	
+	public void setX(float x){
+		this.x=x;
+	}
+	
+	public void setY(float y){
+		this.y=y;
+	}
+	
 	public String getImageSrc(){
 		return image_src;
 	}
@@ -54,6 +62,7 @@ public class Sprite {
 		//System.out.println(image_src);
 		//System.out.println(x);
 		//System.out.println(y);
+		
 	}
 	
 	public void render(Graphics g) {
