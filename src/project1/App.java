@@ -30,7 +30,7 @@ public class App extends BasicGame
     
     public App()
     {    	
-        super("Shadow Blocks");
+        super("Shadow Blocksss");
     }
 
     @Override
@@ -52,6 +52,11 @@ public class App extends BasicGame
         // Get data about the current input (keyboard state).
         Input input = gc.getInput();
         world.update(input, delta);
+        
+        //Exit if ESC key is pressed.
+        if (input.isKeyDown(Input.KEY_ESCAPE)) {
+			System.exit(0);
+		}
     }
 
     /** Render the entire screen, so it reflects the current game state.
