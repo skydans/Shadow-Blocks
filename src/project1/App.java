@@ -26,11 +26,6 @@ public class App extends BasicGame
     /** size of the tiles, in pixels */
     public static final int TILE_SIZE = 32;
     
-    
-    //Image[][] draw=new Image[Loader.width][Loader.height];
-    
-    
-    
     private World world;
     
     public App()

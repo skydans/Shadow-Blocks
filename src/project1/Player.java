@@ -4,20 +4,18 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 public class Player extends Sprite{
-
-	//public Player(Sprite sprite){
-	//	super(sprite);
-	//}
 	
+	//constructor of the Player sub-class.
 	public Player(String image_src, float x, float y) throws SlickException {
 		super(image_src,x,y);
 	}
-	/*
-	public boolean isPlayer(){
-		return super.isPlayer() || true;
-	}
-	*/
+	
+	/** Handles the update method for the player sub-class.
+	 *  It detects key presses and change the position of the player using
+	 *  setters and getters.
+	 */
 	public void update(Input input,int delta){
+		//inherit the code from the super-class.
 		super.update(input,delta);
 		if (input.isKeyPressed(Input.KEY_UP)) {
 			setY(getY()-1);

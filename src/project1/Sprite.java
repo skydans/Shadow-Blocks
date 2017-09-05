@@ -10,17 +10,6 @@ public class Sprite {
 	private String image_src; //primitive
 	private float x,y; //primitive
 	private Image image;
-	//private int spriteType;
-	
-	/*
-	//Copy constructor
-	public Sprite(Sprite sprite){
-		this.image_src=sprite.image_src;
-		this.x=sprite.x;
-		this.y=sprite.y;
-		this.image=sprite.image;
-	}
-	*/
 	
 	//Constructor
 	public Sprite(String image_src, float x, float y) throws SlickException{
@@ -29,42 +18,35 @@ public class Sprite {
 		this.y=y;
 		this.image=new Image(image_src);
 	}
-	
+	// getter method for the x coordinate (in tiles).
 	public float getX(){
 		return x;
 	}
-	
+	// getter method for the y coordinate (in tiles).
 	public float getY(){
 		return y;
 	}
-	
+	// setter method for the x coordinate (in tiles).
 	public void setX(float x){
 		this.x=x;
 	}
-	
+	// getter method for the y coordinate (in tiles).
 	public void setY(float y){
 		this.y=y;
 	}
-	
+	// getter method for the image file path.
 	public String getImageSrc(){
 		return image_src;
 	}
-	
+	// getter method for the image object.
 	public Image getImage(){
 		return image;
 	}
-	
-	public boolean isPlayer(){
-		return false;
-	}
-	
+	// update method for the Sprite class.
 	public void update(Input input, int delta) {
-		//System.out.println(image_src);
-		//System.out.println(x);
-		//System.out.println(y);
 		
 	}
-	
+	// render method for the Sprite class.	
 	public void render(Graphics g) {
 		
 	}
