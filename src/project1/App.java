@@ -30,7 +30,7 @@ public class App extends BasicGame
     
     public App()
     {    	
-        super("Shadow Blocksss");
+        super("Shadow Blocks");
     }
 
     @Override
