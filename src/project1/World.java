@@ -11,13 +11,13 @@ public class World {
 	
 	private Image draw;
 	
-	//constructor of the World class.
+	/** constructor of the World class. */
 	public World() {
 		//loads the sprite when an instance of the world is created.
 		s=Loader.loadSprites("assets/levels/0.lvl");
 	}
 	
-	/* Sets up the values of the sprite(s) of concern before rendering it. 
+	/** Sets up the values of the sprite(s) of concern before rendering it. 
 	 */
 	public void update(Input input, int delta) {
 		for(int i=0;i<s.length;i++){

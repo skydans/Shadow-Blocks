@@ -5,7 +5,7 @@ import org.newdawn.slick.SlickException;
 
 public class Player extends Sprite{
 	
-	//constructor of the Player sub-class.
+	/** constructor of the Player sub-class. */
 	public Player(String image_src, float x, float y) throws SlickException {
 		super(image_src,x,y);
 	}
