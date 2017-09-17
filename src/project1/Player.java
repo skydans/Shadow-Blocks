@@ -2,7 +2,7 @@ package project1;
 
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-
+/** Player is a sub-class of Sprite. */
 public class Player extends Sprite{
 	
 	/** constructor of the Player sub-class. */

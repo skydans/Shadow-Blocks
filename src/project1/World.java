@@ -4,9 +4,9 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-
+/** World class handles interactions between sprites */
 public class World {	
-	
+	/** array of Sprite objects */
 	private Sprite[] s;
 	
 	private Image draw;

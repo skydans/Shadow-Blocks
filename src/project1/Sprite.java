@@ -5,7 +5,9 @@ import org.newdawn.slick.Graphics;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-
+/** super-class for sprites which handle instance variables that commonly 
+ * exist in sprites. 
+ */
 public class Sprite {	
 	/** primitive variables for image source and position */
 	private String image_src;
@@ -18,7 +20,15 @@ public class Sprite {
 		this.image_src=image_src;
 		this.x=x;
 		this.y=y;
-		this.image=new Image(image_src);
+		//this.image=new Image(image_src);
+		/* Try to create an image object using the image source path and 
+		 * catch the error if this is unsuccessful.
+		 */
+		try {
+			image = new Image(image_src);
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
 	}
 	/** getter method for the x coordinate (in tiles). */
 	public float getX(){

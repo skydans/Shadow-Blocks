@@ -1,7 +1,9 @@
 package project1;
 
 import java.io.*;
-
+/** reads the strings on the specified file and storing it to the Sprite 
+ * object
+ */
 public class Loader {
 	
 	private static int width=0,height=0;
