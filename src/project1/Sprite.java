@@ -2,7 +2,6 @@ package project1;
 
 import org.newdawn.slick.Input;
 import org.newdawn.slick.Graphics;
-
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 /** super-class for sprites which handle instance variables that commonly 
@@ -60,7 +59,12 @@ public class Sprite {
 	}
 	/**  render method for the Sprite class. */	
 	public void render(Graphics g) {
-		
+		//draw=new Image(s[i].getImageSrc());
+		//output the image of the sprite onto the screen
+		image.drawCentered((App.SCREEN_WIDTH-Loader.getWidth()*
+				App.TILE_SIZE)/2+(x*App.TILE_SIZE+App.TILE_SIZE
+				/2),(App.SCREEN_HEIGHT-Loader.getHeight()*App.TILE_SIZE)/2
+				+(y*App.TILE_SIZE+App.TILE_SIZE/2));
 	}
 	
 	

@@ -8,12 +8,26 @@ public class Loader {
 	
 	private static int width=0,height=0;
 	
-	// Converts a world coordinate to a tile coordinate,
-	// and returns if that location is a blocked tile
+	
+	/** Converts a world coordinate to a tile coordinate,
+	 * and returns if that location is a blocked tile
+	 */
 	public static boolean isBlocked(float x, float y) {
+		
+		//If wall is encountered
+		for (int j=sprites.length-1;0<=j;j--){
+			if(sprites[j].getX()==x && sprites[j].getY()==y){ 
+				if(sprites[j].getClass().equals(Wall.class)){
+					tempIndex=j;
+					return WALL;
+				}
+			}
+		}
+		
 		// Default to blocked
 		return true;
 	}
+	
 		
 	/**
 	 * Loads the sprites from a given file.
@@ -83,6 +97,46 @@ public class Loader {
 						break;
 					case "player":
 						sprite[index]=new Player("/assets/player_left.png",
+								Integer.parseInt(input[1]),
+								Integer.parseInt(input[2]));
+						break;
+					case "mage":
+						sprite[index]=new Player("/assets/mage.png",
+								Integer.parseInt(input[1]),
+								Integer.parseInt(input[2]));
+						break;
+					case "rogue":
+						sprite[index]=new Player("/assets/rogue.png",
+								Integer.parseInt(input[1]),
+								Integer.parseInt(input[2]));
+						break;
+					case "skeleton":
+						sprite[index]=new Player("/assets/skeleton.png",
+								Integer.parseInt(input[1]),
+								Integer.parseInt(input[2]));
+						break;
+					case "ice":
+						sprite[index]=new Player("/assets/ice.png",
+								Integer.parseInt(input[1]),
+								Integer.parseInt(input[2]));
+						break;
+					case "tnt":
+						sprite[index]=new Player("/assets/tnt.png",
+								Integer.parseInt(input[1]),
+								Integer.parseInt(input[2]));
+						break;
+					case "cracked":
+						sprite[index]=new Player("/assets/cracked_wall.png",
+								Integer.parseInt(input[1]),
+								Integer.parseInt(input[2]));
+						break;
+					case "switch":
+						sprite[index]=new Player("/assets/switch.png",
+								Integer.parseInt(input[1]),
+								Integer.parseInt(input[2]));
+						break;
+					case "door":
+						sprite[index]=new Player("/assets/door.png",
 								Integer.parseInt(input[1]),
 								Integer.parseInt(input[2]));
 						break;
