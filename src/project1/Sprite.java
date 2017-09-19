@@ -7,12 +7,18 @@ import org.newdawn.slick.SlickException;
 /** super-class for sprites which handle instance variables that commonly 
  * exist in sprites. 
  */
-public class Sprite {	
+public class Sprite implements Comparable<Sprite>{	
 	/** primitive variables for image source and position */
 	private String image_src;
 	private float x,y;
 	/** variable to store Image object */
 	private Image image;
+	
+	public static final int DIR_NONE = 0;
+	public static final int DIR_LEFT = 1;
+	public static final int DIR_RIGHT = 2;
+	public static final int DIR_UP = 3;
+	public static final int DIR_DOWN = 4;
 	
 	/** Constructor of Sprite */
 	public Sprite(String image_src, float x, float y) throws SlickException{
@@ -67,5 +73,23 @@ public class Sprite {
 				+(y*App.TILE_SIZE+App.TILE_SIZE/2));
 	}
 	
-	
+	public int compareTo(Sprite sprite){
+		if((this.getClass().equals(Floor.class) || 
+				this.getClass().equals(Wall.class) ||
+				this.getClass().equals(Target.class) ||
+				this.getClass().equals(Floor.class)) &&
+				!(sprite.getClass().equals(Floor.class) || 
+				sprite.getClass().equals(Wall.class) ||
+				sprite.getClass().equals(Target.class) ||
+				sprite.getClass().equals(Floor.class))){
+			return -1;
+		}
+		/*
+		if(!this.getClass().equals(Player.class) && 
+				sprite.getClass().equals(Player.class)){
+			return -1;
+		}
+		*/
+		return 1;
+	}
 }

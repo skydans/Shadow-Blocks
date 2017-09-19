@@ -1,6 +1,7 @@
 package project1;
 
 import java.io.*;
+import java.util.Arrays;
 /** reads the strings on the specified file and storing it to the Sprite 
  * object
  */
@@ -9,24 +10,7 @@ public class Loader {
 	private static int width=0,height=0;
 	
 	
-	/** Converts a world coordinate to a tile coordinate,
-	 * and returns if that location is a blocked tile
-	 */
-	public static boolean isBlocked(float x, float y) {
-		
-		//If wall is encountered
-		for (int j=sprites.length-1;0<=j;j--){
-			if(sprites[j].getX()==x && sprites[j].getY()==y){ 
-				if(sprites[j].getClass().equals(Wall.class)){
-					tempIndex=j;
-					return WALL;
-				}
-			}
-		}
-		
-		// Default to blocked
-		return true;
-	}
+	
 	
 		
 	/**
@@ -121,12 +105,12 @@ public class Loader {
 								Integer.parseInt(input[2]));
 						break;
 					case "tnt":
-						sprite[index]=new Player("/assets/tnt.png",
+						sprite[index]=new Tnt("/assets/tnt.png",
 								Integer.parseInt(input[1]),
 								Integer.parseInt(input[2]));
 						break;
 					case "cracked":
-						sprite[index]=new Player("/assets/cracked_wall.png",
+						sprite[index]=new Cracked("/assets/cracked_wall.png",
 								Integer.parseInt(input[1]),
 								Integer.parseInt(input[2]));
 						break;
@@ -143,7 +127,11 @@ public class Loader {
 				}
 				index++;
 			}
-			
+			Arrays.sort(sprite);
+			for(int i=0;i<sprite.length;i++){
+				System.out.println(sprite[i].getImageSrc()+sprite[i].getX()+
+						sprite[i].getY());
+			}
 			return sprite;
 		}catch(Exception e){
 			e.printStackTrace();
