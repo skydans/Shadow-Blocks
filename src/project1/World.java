@@ -30,8 +30,8 @@ public class World {
 	//this is used to store temporary index produced by isBlockedByBlock method
 	//private int tempIndex;
 	private static Sprite[] tempSprites;
-	private static ArrayList<Integer> toDelete;
-	private static ArrayList<Integer> toRestore;
+	private static List<Integer> toDelete;
+	private static List<Integer> toRestore;
 	//private static int level;
 	public static final int WALL=1;
 	public static final int STONE=2;
@@ -69,18 +69,23 @@ public class World {
 	}
 	
 	public static float[] getPlayerLatestMoveAttempt(){
-		return playerLatestMoveAttempt;
+		float[] playerLatestMoveAttemptCopy=
+				Arrays.copyOf(playerLatestMoveAttempt, 
+						playerLatestMoveAttempt.length);
+		return playerLatestMoveAttemptCopy;
 	}
 	
 	public static float[] getPlayerLatestMove(){
-		return playerLatestMove;
+		float[] playerLatestMoveCopy=Arrays.copyOf(playerLatestMove, 
+				playerLatestMove.length);
+		return playerLatestMoveCopy;
 	}
 	
 	public static void addToDelete(int index){
 		toDelete.add(index);
 	}
 	
-	public static ArrayList<Integer> getToDelete(){
+	public static List<Integer> getToDelete(){
 		return toDelete;
 	}
 	
@@ -146,7 +151,7 @@ public class World {
 		toRestore.add(index);
 	}
 	
-	public static ArrayList<Integer> getToRestore(){
+	public static List<Integer> getToRestore(){
 		return toRestore;
 	}
 	
@@ -217,7 +222,10 @@ public class World {
 	}
 	*/
 	public static float[] getLatestTntPosition(){
-		return latestTntPosition;
+		/*Using copy of array to prevent privacy leak*/
+		float[] latestTntPositionCopy=Arrays.copyOf(latestTntPosition,
+				latestTntPosition.length);
+		return latestTntPositionCopy;
 	}
 	
 	public static void setLatestTntPosition(float x,float y){
