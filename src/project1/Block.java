@@ -51,6 +51,9 @@ public class Block extends Sprite {
 	public boolean getOnTarget(){
 		return onTarget;
 	}
+	public void setOnTarget(boolean onTarget){
+		this.onTarget=onTarget;
+	}
 	
 	/** Credit: Inspired by Eleanor's code
 	 * 

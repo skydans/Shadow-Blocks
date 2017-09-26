@@ -25,6 +25,8 @@ public class Explosion extends Sprite {
 		if(show){timer+=delta;}
 		if(timer>=300){
 			show=false;
+			/* reset the timer in case it needs to be used again */
+			timer=0;
 		}
 
 	}
