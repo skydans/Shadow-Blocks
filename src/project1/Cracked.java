@@ -3,9 +3,10 @@ package project1;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
-public class Cracked extends Sprite implements CanDisappear{
+public class Cracked extends Inpenetrable implements CanDisappear{
 	public Cracked(String image_src, float x, float y) throws SlickException {
 		super(image_src,x,y);
+		setShow(true);
 	}
 	public void update(Input input,int delta){
 		super.update(input, delta);

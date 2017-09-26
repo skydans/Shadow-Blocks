@@ -31,6 +31,7 @@ public class World {
 	//private int tempIndex;
 	private static Sprite[] tempSprites;
 	private static ArrayList<Integer> toDelete;
+	private static ArrayList<Integer> toRestore;
 	//private static int level;
 	public static final int WALL=1;
 	public static final int STONE=2;
@@ -44,6 +45,7 @@ public class World {
 		latestTntPosition=new float[2];
 		moves=0;
 		toDelete=new ArrayList<>();
+		toRestore=new ArrayList<>();
 	}
 	/*
 	public void stoneCheck(){
@@ -85,7 +87,7 @@ public class World {
 	public void executeToDelete(){
 		for(int i=0;i<toDelete.size();i++){
 			//if(sprites[toDelete.get(i)].equals(Tnt.class)){
-			sprites[toDelete.get(i)]=null;
+			sprites[toDelete.get(i)].setShow(false);;
 			/*	
 			}else{
 				sprites[toDelete.get(i)]=null;
@@ -140,6 +142,25 @@ public class World {
 		
 	}
 	
+	public static void addToRestore(int index){
+		toRestore.add(index);
+	}
+	
+	public static ArrayList<Integer> getToRestore(){
+		return toRestore;
+	}
+	
+	public void executeToRestore(){
+		for(int i=0;i<toRestore.size();i++){
+			sprites[toRestore.get(i)].setShow(true);
+		}
+		int size=toRestore.size();
+		for(int i=0;i<size;i++){
+			toRestore.remove(0);
+		}
+		
+	}
+	
 	public static void setPlayerLatestMove(float x,float y, int dir){
 		playerLatestMove[0]=x;
 		playerLatestMove[1]=y;
@@ -174,10 +195,12 @@ public class World {
 	
 	public boolean levelCompletedCheck(){
 		for (int j=sprites.length-1;0<=j;j--){
-			if(sprites[j]==null){continue;}
-			if (sprites[j].getClass().equals(Stone.class)){
-				Stone stone=(Stone)sprites[j];	
-				if(!stone.getOnTarget()){
+			//ignore things that are have been gone such as tnt that has
+			//exploded.
+			if(!sprites[j].getShow()){continue;}
+			if (sprites[j] instanceof Block){
+				Block block=(Block)sprites[j];	
+				if(!block.getOnTarget()){
 					return false;
 				}
 			}
@@ -211,10 +234,22 @@ public class World {
 		return false;
 	}
 	
-	public static boolean isOnTarget(float x,float y){
-		//If wall is encountered
+	/* Assuming that there is only one door and one switch on each map. */
+	public static int getDoorIndex(){
 		for (int j=tempSprites.length-1;0<=j;j--){
-			if(tempSprites[j]==null){continue;}
+			//return the index regardless the state on whether the door is 
+			//shown or not.
+			if (tempSprites[j].getClass().equals(Door.class)){
+				//tempIndex=j;
+				return j;
+			}
+		}
+		return -1;
+	}
+	
+	public static boolean isOnTarget(float x,float y){
+		for (int j=tempSprites.length-1;0<=j;j--){
+			if(!tempSprites[j].getShow()){continue;}
 			if(tempSprites[j].getX()==x && tempSprites[j].getY()==y){ 
 				if (tempSprites[j].getClass().equals(Target.class)){
 					//tempIndex=j;
@@ -225,9 +260,24 @@ public class World {
 		return false;
 	}
 	
+	public static boolean hasBlockAt(float x,float y){
+		for (int j=tempSprites.length-1;0<=j;j--){
+			if(!tempSprites[j].getShow()){continue;}
+			if(tempSprites[j].getX()==x && tempSprites[j].getY()==y){ 
+				if (tempSprites[j] instanceof Block){
+					//tempIndex=j;
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	
+	
 	public static boolean isBlockedByTntOrCracked(float x,float y){
 		for (int j=tempSprites.length-1;0<=j;j--){
-			if(tempSprites[j]==null){continue;}
+			if(!tempSprites[j].getShow()){continue;}
 			if(tempSprites[j].getX()==x && tempSprites[j].getY()==y){ 
 				if(tempSprites[j].getClass().equals(Tnt.class) ||
 						tempSprites[j].getClass().equals(Cracked.class)){
@@ -245,10 +295,9 @@ public class World {
 		
 		//If wall is encountered
 		for (int j=tempSprites.length-1;0<=j;j--){
-			if(tempSprites[j]==null){continue;}
+			if(!tempSprites[j].getShow()){continue;}
 			if(tempSprites[j].getX()==x && tempSprites[j].getY()==y){ 
-				if (tempSprites[j].getClass().equals(Wall.class)
-						|| tempSprites[j].getClass().equals(Cracked.class)){
+				if (tempSprites[j] instanceof Inpenetrable){
 					//tempIndex=j;
 					return true;
 				}
@@ -263,10 +312,9 @@ public class World {
 		 * the sign of the bounds?
 		 */
 		for (int j=tempSprites.length-1;0<=j;j--){
-			if(tempSprites[j]==null){continue;}
+			if(!tempSprites[j].getShow()){continue;}
 			if(tempSprites[j].getX()==x && tempSprites[j].getY()==y){ 
-				if(tempSprites[j].getClass().equals(Stone.class)
-						|| tempSprites[j].getClass().equals(Tnt.class)){
+				if(tempSprites[j] instanceof Block){
 					//tempIndex=j;
 					return true;
 				}
@@ -277,10 +325,9 @@ public class World {
 	public static boolean isBlockedByAdjacentBlock(float x,float y,int dir){
 		
 		for (int j=tempSprites.length-1;0<=j;j--){
-			if(tempSprites[j]==null){continue;}
+			if(!tempSprites[j].getShow()){continue;}
 			if(tempSprites[j].getX()==x && tempSprites[j].getY()==y){ 
-				if(tempSprites[j].getClass().equals(Tnt.class) 
-						|| tempSprites[j].getClass().equals(Stone.class)){
+				if(tempSprites[j] instanceof Block){
 					//tempIndex=j;
 					Block stone=(Block)tempSprites[j];
 					switch(dir){
@@ -323,6 +370,9 @@ public class World {
 			executeToDelete();
 			System.out.println("Execute toDelete");
 		}
+		if(toRestore.size()>0){
+			executeToRestore();
+		}
 		if(levelCompletedCheck()){levelUp();}
 	}
 	/**
@@ -332,7 +382,7 @@ public class World {
 	 */
 	public void render(Graphics g) throws SlickException{
 		for(int i=0;i<sprites.length;i++){
-			if(sprites[i]==null){continue;}
+			if(!sprites[i].getShow()){continue;}
     		sprites[i].render(g);
     	}
 		g.drawString("Moves: "+moves, 11, 32);

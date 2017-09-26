@@ -5,8 +5,10 @@ import org.newdawn.slick.SlickException;
 
 public class Block extends Sprite {
 	private boolean canBeMovedUp,canBeMovedDown,canBeMovedRight,canBeMovedLeft;
+	private boolean onTarget;
 	public Block(String image_src, float x, float y) throws SlickException {
 		super(image_src,x,y);
+		setShow(true);
 		canBeMovedUp=canBeMovedDown=canBeMovedRight=canBeMovedLeft=true;
 	}
 	public boolean canMoveUp(){
@@ -43,7 +45,13 @@ public class Block extends Sprite {
 			System.out.println("Block moveToDest");
 		}
 		blockCheck();
+		onTarget=World.isOnTarget(getX(), getY());
 	}
+	
+	public boolean getOnTarget(){
+		return onTarget;
+	}
+	
 	/** Credit: Inspired by Eleanor's code
 	 * 
 	 * @param dir

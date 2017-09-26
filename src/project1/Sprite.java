@@ -13,6 +13,8 @@ public class Sprite implements Comparable<Sprite>{
 	private float x,y;
 	/** variable to store Image object */
 	private Image image;
+	/** variable to indicate whether it is to be renedered or not */
+	private boolean show;
 	/** Credit: Inspired by Eleanor's code */
 	public static final int DIR_NONE = 0;
 	public static final int DIR_LEFT = 1;
@@ -21,7 +23,8 @@ public class Sprite implements Comparable<Sprite>{
 	public static final int DIR_DOWN = 4;
 	
 	/** Constructor of Sprite */
-	public Sprite(String image_src, float x, float y) throws SlickException{
+	public Sprite(String image_src, float x, float y) 
+			throws SlickException{
 		this.image_src=image_src;
 		this.x=x;
 		this.y=y;
@@ -43,6 +46,10 @@ public class Sprite implements Comparable<Sprite>{
 	public float getY(){
 		return y;
 	}
+	/** getter method for the y coordinate (in tiles). */
+	public boolean getShow(){
+		return show;
+	}
 	/** setter method for the x coordinate (in tiles). */
 	public void setX(float x){
 		this.x=x;
@@ -50,6 +57,10 @@ public class Sprite implements Comparable<Sprite>{
 	/** getter method for the y coordinate (in tiles). */
 	public void setY(float y){
 		this.y=y;
+	}
+	/** getter method for the y coordinate (in tiles). */
+	public void setShow(boolean show){
+		this.show=show;
 	}
 	/** getter method for the image file path. */
 	public String getImageSrc(){

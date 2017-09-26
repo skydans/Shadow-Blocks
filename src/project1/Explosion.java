@@ -1,7 +1,5 @@
 package project1;
 
-import java.util.ArrayList;
-
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -12,7 +10,9 @@ public class Explosion extends Sprite {
 	/** constructor of the Explosion sub-class. */
 	public Explosion(String image_src, float x, float y) throws SlickException {
 		super(image_src,x,y);
-		show=false;
+		/* exception for Explosion, the render method of Explosion is 
+		 * overriden. */
+		setShow(true);
 		timer=0;
 	}
 	

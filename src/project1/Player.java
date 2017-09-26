@@ -8,6 +8,7 @@ public class Player extends Sprite{
 	/** constructor of the Player sub-class. */
 	public Player(String image_src, float x, float y) throws SlickException {
 		super(image_src,x,y);
+		setShow(true);
 	}
 	//this moveToDest is different from the one in Stone class.
 	public void moveToDest(int dir){
