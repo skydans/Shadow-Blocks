@@ -32,6 +32,8 @@ public class Player extends Sprite{
 			setX(getX()+deltaX);
 			setY(getY()+deltaY);
 			
+		}else{
+			World.setPlayerLatestMoveAttempt(getX()+deltaX, getY()+deltaY);
 		}
 		if(dir!=DIR_NONE){
 			World.setMoves(World.getMoves()+1);

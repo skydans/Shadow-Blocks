@@ -3,20 +3,29 @@ package project1;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
-public class Cracked extends Sprite{
-	private boolean once;
+public class Cracked extends Sprite implements CanDisappear{
 	public Cracked(String image_src, float x, float y) throws SlickException {
 		super(image_src,x,y);
-		once=true;
 	}
 	public void update(Input input,int delta){
 		super.update(input, delta);
-		if(tntCheck() && once){
+		disappearIfNeeded();
+	}
+	public void disappearIfNeeded(){
+		float[] playerLatestMoveAttemptCopy=World.getPlayerLatestMoveAttempt();
+		if(tntCheck() && ((playerLatestMoveAttemptCopy[0]==getX()+1 &&
+				playerLatestMoveAttemptCopy[1]==getY())||
+				(playerLatestMoveAttemptCopy[0]==getX()-1 &&
+				playerLatestMoveAttemptCopy[1]==getY())||
+				(playerLatestMoveAttemptCopy[0]==getX() &&
+				playerLatestMoveAttemptCopy[1]==getY()+1)||
+				(playerLatestMoveAttemptCopy[0]==getX() &&
+				playerLatestMoveAttemptCopy[1]==getY()-1))){
 			World.addToDelete(World.getCurrentUpdateIndex());
-			once=false;
-			System.out.println("Tnt check");
+			System.out.println("Cracked Wall check");
 		}
 	}
+	
 	public boolean tntCheck(){
 		if(World.isBlockedByTntOrCracked(getX(),getY()+1) ||
 				World.isBlockedByTntOrCracked(getX(),getY()-1) ||

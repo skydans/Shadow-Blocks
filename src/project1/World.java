@@ -21,9 +21,11 @@ public class World {
 	public static final int DIR_UP = 3;
 	public static final int DIR_DOWN = 4;
 	
-	private int level=0;
+	private int level;
 	private static int moves;
 	private static float[] playerLatestMove;
+	private static float[] playerLatestMoveAttempt;
+	private static float[] latestTntPosition;
 	private static int currentUpdateIndex;
 	//this is used to store temporary index produced by isBlockedByBlock method
 	//private int tempIndex;
@@ -35,8 +37,11 @@ public class World {
 	/** constructor of the World class. */
 	public World() {
 		//loads the sprite when an instance of the world is created.
-		sprites=Loader.loadSprites("assets/levels/1.lvl");
+		sprites=Loader.loadSprites("assets/levels/2.lvl");
+		level=2;
 		playerLatestMove=new float[3];
+		playerLatestMoveAttempt=new float[2];
+		latestTntPosition=new float[2];
 		moves=0;
 		toDelete=new ArrayList<>();
 	}
@@ -61,6 +66,10 @@ public class World {
 		return moves;
 	}
 	
+	public static float[] getPlayerLatestMoveAttempt(){
+		return playerLatestMoveAttempt;
+	}
+	
 	public static float[] getPlayerLatestMove(){
 		return playerLatestMove;
 	}
@@ -69,8 +78,28 @@ public class World {
 		toDelete.add(index);
 	}
 	
+	public static ArrayList<Integer> getToDelete(){
+		return toDelete;
+	}
+	
 	public void executeToDelete(){
-		List<Sprite> tempToDelete = new ArrayList<Sprite>(Arrays.asList(sprites));
+		for(int i=0;i<toDelete.size();i++){
+			//if(sprites[toDelete.get(i)].equals(Tnt.class)){
+			sprites[toDelete.get(i)]=null;
+			/*	
+			}else{
+				sprites[toDelete.get(i)]=null;
+			}
+			*/
+			/*
+			int waitCounter=0;
+			while(waitCounter<=10){
+				waitCounter+=delta;
+			}
+			*/
+			
+		}
+		/*List<Sprite> tempToDelete = new ArrayList<Sprite>(Arrays.asList(sprites));
 		for(int i=0;i<toDelete.size();i++){
 			for (Iterator<Sprite> it = tempToDelete.iterator(); it.hasNext();){
 				Sprite sprite=it.next();
@@ -85,11 +114,21 @@ public class World {
 					tempToDelete.get(i).getX()+
 					tempToDelete.get(i).getY());
 		}
-		System.out.println(toDelete.size());
+		
 		sprites = tempToDelete.toArray(sprites);
-		for(int i=0;i<toDelete.size();i++){
+		*/
+		System.out.println("toDelete.size: "+toDelete.size());
+		int size=toDelete.size();
+		for(int i=0;i<size;i++){
 			toDelete.remove(0);
 		}
+		
+		/*
+		for (Iterator<Integer> it = toDelete.iterator(); it.hasNext();){
+			it.remove();
+		}
+		*/
+		System.out.println("toDelete.size after delete: "+toDelete.size());
 		
 		//
 		/*
@@ -98,12 +137,18 @@ public class World {
 					sprites[i].getY());
 		}
 		*/
+		
 	}
 	
 	public static void setPlayerLatestMove(float x,float y, int dir){
 		playerLatestMove[0]=x;
 		playerLatestMove[1]=y;
 		playerLatestMove[2]=dir;
+	}
+	
+	public static void setPlayerLatestMoveAttempt(float x,float y){
+		playerLatestMoveAttempt[0]=x;
+		playerLatestMoveAttempt[1]=y;
 	}
 	
 	public void levelUp(){
@@ -129,6 +174,7 @@ public class World {
 	
 	public boolean levelCompletedCheck(){
 		for (int j=sprites.length-1;0<=j;j--){
+			if(sprites[j]==null){continue;}
 			if (sprites[j].getClass().equals(Stone.class)){
 				Stone stone=(Stone)sprites[j];	
 				if(!stone.getOnTarget()){
@@ -139,9 +185,36 @@ public class World {
 		return true;
 	}
 	
+	/*
+	public static float[] getSpriteCoordinatesByIndex(int index){
+		float[] coordinates=new float[2];
+		coordinates[0]=tempSprites[index].getX();
+		coordinates[1]=tempSprites[index].getY();
+		return coordinates;
+	}
+	*/
+	public static float[] getLatestTntPosition(){
+		return latestTntPosition;
+	}
+	
+	public static void setLatestTntPosition(float x,float y){
+		latestTntPosition[0]=x;
+		latestTntPosition[1]=y;
+	}
+	
+	public static boolean isTntInToDelete(){
+		for(int i=0;i<toDelete.size();i++){
+			if(tempSprites[(int)toDelete.get(i)].getClass().equals(Tnt.class)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public static boolean isOnTarget(float x,float y){
 		//If wall is encountered
 		for (int j=tempSprites.length-1;0<=j;j--){
+			if(tempSprites[j]==null){continue;}
 			if(tempSprites[j].getX()==x && tempSprites[j].getY()==y){ 
 				if (tempSprites[j].getClass().equals(Target.class)){
 					//tempIndex=j;
@@ -154,6 +227,7 @@ public class World {
 	
 	public static boolean isBlockedByTntOrCracked(float x,float y){
 		for (int j=tempSprites.length-1;0<=j;j--){
+			if(tempSprites[j]==null){continue;}
 			if(tempSprites[j].getX()==x && tempSprites[j].getY()==y){ 
 				if(tempSprites[j].getClass().equals(Tnt.class) ||
 						tempSprites[j].getClass().equals(Cracked.class)){
@@ -171,6 +245,7 @@ public class World {
 		
 		//If wall is encountered
 		for (int j=tempSprites.length-1;0<=j;j--){
+			if(tempSprites[j]==null){continue;}
 			if(tempSprites[j].getX()==x && tempSprites[j].getY()==y){ 
 				if (tempSprites[j].getClass().equals(Wall.class)
 						|| tempSprites[j].getClass().equals(Cracked.class)){
@@ -188,6 +263,7 @@ public class World {
 		 * the sign of the bounds?
 		 */
 		for (int j=tempSprites.length-1;0<=j;j--){
+			if(tempSprites[j]==null){continue;}
 			if(tempSprites[j].getX()==x && tempSprites[j].getY()==y){ 
 				if(tempSprites[j].getClass().equals(Stone.class)
 						|| tempSprites[j].getClass().equals(Tnt.class)){
@@ -201,6 +277,7 @@ public class World {
 	public static boolean isBlockedByAdjacentBlock(float x,float y,int dir){
 		
 		for (int j=tempSprites.length-1;0<=j;j--){
+			if(tempSprites[j]==null){continue;}
 			if(tempSprites[j].getX()==x && tempSprites[j].getY()==y){ 
 				if(tempSprites[j].getClass().equals(Tnt.class) 
 						|| tempSprites[j].getClass().equals(Stone.class)){
@@ -238,6 +315,7 @@ public class World {
 	public void update(Input input, int delta) {
 		for(int i=0;i<sprites.length;i++){
 			tempSprites=Arrays.copyOf(sprites,sprites.length);
+			if(sprites[i]==null){continue;}
 			currentUpdateIndex=i;
 			sprites[i].update(input,delta);
 		}
@@ -254,6 +332,7 @@ public class World {
 	 */
 	public void render(Graphics g) throws SlickException{
 		for(int i=0;i<sprites.length;i++){
+			if(sprites[i]==null){continue;}
     		sprites[i].render(g);
     	}
 		g.drawString("Moves: "+moves, 11, 32);

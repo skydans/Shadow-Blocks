@@ -44,7 +44,10 @@ public class Block extends Sprite {
 		}
 		blockCheck();
 	}
-	
+	/** Credit: Inspired by Eleanor's code
+	 * 
+	 * @param dir
+	 */
 	public void moveToDest(int dir){
 		int deltaX=0,deltaY=0;
 		switch(dir){

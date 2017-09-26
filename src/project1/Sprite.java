@@ -13,7 +13,7 @@ public class Sprite implements Comparable<Sprite>{
 	private float x,y;
 	/** variable to store Image object */
 	private Image image;
-	
+	/** Credit: Inspired by Eleanor's code */
 	public static final int DIR_NONE = 0;
 	public static final int DIR_LEFT = 1;
 	public static final int DIR_RIGHT = 2;
@@ -67,6 +67,10 @@ public class Sprite implements Comparable<Sprite>{
 	public void render(Graphics g) {
 		//draw=new Image(s[i].getImageSrc());
 		//output the image of the sprite onto the screen
+		renderSprite();
+	}
+	
+	public void renderSprite(){
 		image.drawCentered((App.SCREEN_WIDTH-Loader.getWidth()*
 				App.TILE_SIZE)/2+(x*App.TILE_SIZE+App.TILE_SIZE
 				/2),(App.SCREEN_HEIGHT-Loader.getHeight()*App.TILE_SIZE)/2
@@ -74,6 +78,7 @@ public class Sprite implements Comparable<Sprite>{
 	}
 	
 	public int compareTo(Sprite sprite){
+		/*
 		if((this.getClass().equals(Floor.class) || 
 				this.getClass().equals(Wall.class) ||
 				this.getClass().equals(Target.class) ||
@@ -84,12 +89,60 @@ public class Sprite implements Comparable<Sprite>{
 				sprite.getClass().equals(Floor.class))){
 			return -1;
 		}
-		/*
-		if(!this.getClass().equals(Player.class) && 
-				sprite.getClass().equals(Player.class)){
+		
+		if(!this.getClass().equals(Explosion.class)&& !sprite.getClass().equals(Player.class)
+				&& (sprite.getClass().equals(Explosion.class) || sprite.getClass().equals(Player.class))){
+			return -1;
+		}
+		if(!this.getClass().equals(Explosion.class)&&
+				(sprite.getClass().equals(Explosion.class))){
 			return -1;
 		}
 		*/
-		return 1;
+		int leftDistance=0;
+		if(this.getClass().equals(Floor.class)){
+			leftDistance=0;
+		}else if(this.getClass().equals(Wall.class)){
+			leftDistance=1;
+		}else if(this.getClass().equals(Target.class)){
+			leftDistance=2;
+		}else if(this.getClass().equals(Cracked.class)){
+			leftDistance=3;
+		}else if(this.getClass().equals(Switch.class)){
+			leftDistance=4;
+		}else if(this.getClass().equals(Ice.class)){
+			leftDistance=5;
+		}else if(this.getClass().equals(Stone.class)){
+			leftDistance=6;
+		}else if(this.getClass().equals(Tnt.class)){
+			leftDistance=7;
+		}else if(this.getClass().equals(Player.class)){
+			leftDistance=8;
+		}else if(this.getClass().equals(Explosion.class)){
+			leftDistance=9;
+		}
+		int rightDistance=0;
+		if(sprite.getClass().equals(Floor.class)){
+			rightDistance=0;
+		}else if(sprite.getClass().equals(Wall.class)){
+			rightDistance=1;
+		}else if(sprite.getClass().equals(Target.class)){
+			rightDistance=2;
+		}else if(sprite.getClass().equals(Cracked.class)){
+			rightDistance=3;
+		}else if(sprite.getClass().equals(Switch.class)){
+			rightDistance=4;
+		}else if(sprite.getClass().equals(Ice.class)){
+			rightDistance=5;
+		}else if(sprite.getClass().equals(Stone.class)){
+			rightDistance=6;
+		}else if(sprite.getClass().equals(Tnt.class)){
+			rightDistance=7;
+		}else if(sprite.getClass().equals(Player.class)){
+			rightDistance=8;
+		}else if(sprite.getClass().equals(Explosion.class)){
+			rightDistance=9;
+		}
+		return leftDistance-rightDistance;
 	}
 }

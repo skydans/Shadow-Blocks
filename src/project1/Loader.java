@@ -10,8 +10,6 @@ public class Loader {
 	private static int width=0,height=0;
 	
 	
-	
-	
 		
 	/**
 	 * Loads the sprites from a given file.
@@ -21,8 +19,9 @@ public class Loader {
 	public static Sprite[] loadSprites(String filename) {
 		/* -1 as the starting index to offset the input of the dimension of 
 		 * the tile.
+		 * But then +1 to offset the input of the explosion sprite.
 		 */
-		int count=-1;
+		int count=0;
 		String text;
 		/* Do the first read of the file to determine the size of the Sprite
 		 * array.
@@ -100,7 +99,7 @@ public class Loader {
 								Integer.parseInt(input[2]));
 						break;
 					case "ice":
-						sprite[index]=new Player("/assets/ice.png",
+						sprite[index]=new Ice("/assets/ice.png",
 								Integer.parseInt(input[1]),
 								Integer.parseInt(input[2]));
 						break;
@@ -115,18 +114,19 @@ public class Loader {
 								Integer.parseInt(input[2]));
 						break;
 					case "switch":
-						sprite[index]=new Player("/assets/switch.png",
+						sprite[index]=new Switch("/assets/switch.png",
 								Integer.parseInt(input[1]),
 								Integer.parseInt(input[2]));
 						break;
 					case "door":
-						sprite[index]=new Player("/assets/door.png",
+						sprite[index]=new Door("/assets/door.png",
 								Integer.parseInt(input[1]),
 								Integer.parseInt(input[2]));
 						break;
 				}
 				index++;
 			}
+			sprite[index]=new Explosion("/assets/explosion.png",0,0);
 			Arrays.sort(sprite);
 			for(int i=0;i<sprite.length;i++){
 				System.out.println(sprite[i].getImageSrc()+sprite[i].getX()+
