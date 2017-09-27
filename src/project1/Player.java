@@ -3,7 +3,7 @@ package project1;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 /** Player is a sub-class of Sprite. */
-public class Player extends Sprite{
+public class Player extends Unit{
 	
 	/** constructor of the Player sub-class. */
 	public Player(String image_src, float x, float y) throws SlickException {
@@ -11,7 +11,7 @@ public class Player extends Sprite{
 		setShow(true);
 	}
 	//this moveToDest is different from the one in Stone class.
-	public void moveToDest(int dir){
+	public boolean moveToDest(int dir){
 		int deltaX=0,deltaY=0;
 		switch(dir){
 		case DIR_UP:
@@ -39,6 +39,8 @@ public class Player extends Sprite{
 		if(dir!=DIR_NONE){
 			World.setMoves(World.getMoves()+1);
 		}
+		/* to follow the abstract method in Unit */
+		return true;
 	}
 	
 	/** Handles the update method for the player sub-class.
@@ -47,7 +49,6 @@ public class Player extends Sprite{
 	 */
 	public void update(Input input,int delta){
 		//inherit the code from the super-class.
-		super.update(input,delta);
 		
 		int dir=DIR_NONE;
 		if (input.isKeyPressed(Input.KEY_UP)) {

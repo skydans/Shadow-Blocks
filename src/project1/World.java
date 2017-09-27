@@ -21,8 +21,10 @@ public class World {
 	public static final int DIR_UP = 3;
 	public static final int DIR_DOWN = 4;
 	
+	private static boolean willRestart;
 	private int level;
 	private static int moves;
+	private static float[] rogueLatestMove;
 	private static float[] playerLatestMove;
 	private static float[] playerLatestMoveAttempt;
 	private static float[] latestTntPosition;
@@ -38,14 +40,16 @@ public class World {
 	/** constructor of the World class. */
 	public World() {
 		//loads the sprite when an instance of the world is created.
-		sprites=Loader.loadSprites("assets/levels/2.lvl");
-		level=2;
+		sprites=Loader.loadSprites("assets/levels/3.lvl");
+		level=3;
+		rogueLatestMove=new float[3];
 		playerLatestMove=new float[3];
 		playerLatestMoveAttempt=new float[2];
 		latestTntPosition=new float[2];
 		moves=0;
 		toDelete=new ArrayList<>();
 		toRestore=new ArrayList<>();
+		willRestart=false;
 	}
 	/*
 	public void stoneCheck(){
@@ -81,12 +85,19 @@ public class World {
 		return playerLatestMoveCopy;
 	}
 	
+	public static float[] getRogueLatestMove(){
+		float[] rogueLatestMoveCopy=Arrays.copyOf(rogueLatestMove, 
+				rogueLatestMove.length);
+		return rogueLatestMoveCopy;
+	}
+	
 	public static void addToDelete(int index){
 		toDelete.add(index);
 	}
 	
 	public static List<Integer> getToDelete(){
-		return toDelete;
+		List<Integer> toDeleteCopy=new ArrayList<>(toDelete);
+		return toDeleteCopy;
 	}
 	
 	public void executeToDelete(){
@@ -152,7 +163,8 @@ public class World {
 	}
 	
 	public static List<Integer> getToRestore(){
-		return toRestore;
+		List<Integer> toRestoreCopy=new ArrayList<>(toRestore);
+		return toRestoreCopy;
 	}
 	
 	public void executeToRestore(){
@@ -166,6 +178,12 @@ public class World {
 		
 	}
 	
+	public static void setRogueLatestMove(float x,float y, int dir){
+		rogueLatestMove[0]=x;
+		rogueLatestMove[1]=y;
+		rogueLatestMove[2]=dir;
+	}
+	
 	public static void setPlayerLatestMove(float x,float y, int dir){
 		playerLatestMove[0]=x;
 		playerLatestMove[1]=y;
@@ -177,8 +195,20 @@ public class World {
 		playerLatestMoveAttempt[1]=y;
 	}
 	
+	public static void setWillRestart(boolean newWillRestart){
+		willRestart=newWillRestart;
+	}
+	
+	public void restart(){
+		loadLevel(level);
+	}
+	
 	public void levelUp(){
 		level++;
+		loadLevel(level);
+	}
+	
+	public void loadLevel(int level){
 		switch(level){
 		case 1:
 			sprites=Loader.loadSprites("assets/levels/1.lvl");
@@ -211,6 +241,19 @@ public class World {
 			}
 		}
 		return true;
+	}
+	
+	public static float[] getPlayerCoordinates(){
+		float[] coordinates=new float[2];
+		for (int j=tempSprites.length-1;0<=j;j--){
+			if(!tempSprites[j].getShow()){continue;}
+			if(tempSprites[j].getClass().equals(Player.class)){ 
+				coordinates[0]=tempSprites[j].getX();
+				coordinates[1]=tempSprites[j].getY();
+				break;
+			}
+		}
+		return coordinates;
 	}
 	
 	/*
@@ -330,6 +373,9 @@ public class World {
 		}
 		return false;
 	}
+	
+	
+	
 	public static boolean isBlockedByAdjacentBlock(float x,float y,int dir){
 		
 		for (int j=tempSprites.length-1;0<=j;j--){
@@ -380,6 +426,10 @@ public class World {
 		}
 		if(toRestore.size()>0){
 			executeToRestore();
+		}
+		if(willRestart){
+			willRestart=false;
+			restart();
 		}
 		if(levelCompletedCheck()){levelUp();}
 	}

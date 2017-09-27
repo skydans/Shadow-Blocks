@@ -40,10 +40,21 @@ public class Block extends Sprite {
 		super.update(input, delta);
 		blockCheck();
 		float[] tempPlayerLatestMove=World.getPlayerLatestMove();
+		//System.out.println("tempPlayerLatestMove[0]: "+tempPlayerLatestMove[0]);
+		//System.out.println("tempPlayerLatestMove[1]: "+tempPlayerLatestMove[1]);
+		//System.out.println("tempPlayerLatestMove[2]: "+tempPlayerLatestMove[2]);
 		if(tempPlayerLatestMove[0]==getX() && tempPlayerLatestMove[1]==getY()){
 			moveToDest((int)tempPlayerLatestMove[2]);
-			System.out.println("Block moveToDest");
+			System.out.println("Block moveToDest triggered by Player");
 		}
+		
+		float[] tempRogueLatestMove=World.getRogueLatestMove();
+		if(tempRogueLatestMove[0]==getX() && tempRogueLatestMove[1]==getY()){
+			moveToDest((int)tempRogueLatestMove[2]);
+			System.out.println("Block moveToDest triggered by Rogue");
+		}
+		
+		
 		blockCheck();
 		onTarget=World.isOnTarget(getX(), getY());
 	}

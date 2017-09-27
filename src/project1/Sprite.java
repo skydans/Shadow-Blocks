@@ -7,7 +7,7 @@ import org.newdawn.slick.SlickException;
 /** super-class for sprites which handle instance variables that commonly 
  * exist in sprites. 
  */
-public class Sprite implements Comparable<Sprite>{	
+public abstract class Sprite implements Comparable<Sprite>{	
 	/** primitive variables for image source and position */
 	private String image_src;
 	private float x,y;
@@ -71,7 +71,7 @@ public class Sprite implements Comparable<Sprite>{
 		return image;
 	}
 	/** update method for the Sprite class. */
-	public void update(Input input, int delta) {
+	public void update(Input input, int delta){
 		
 	}
 	/**  render method for the Sprite class. */	
@@ -129,8 +129,12 @@ public class Sprite implements Comparable<Sprite>{
 			leftDistance=7;
 		}else if(this.getClass().equals(Player.class)){
 			leftDistance=8;
-		}else if(this.getClass().equals(Explosion.class)){
+		}else if(this.getClass().equals(Skeleton.class)){
 			leftDistance=9;
+		}else if(this.getClass().equals(Rogue.class)){
+			leftDistance=10;
+		}else if(this.getClass().equals(Explosion.class)){
+			leftDistance=11;
 		}
 		int rightDistance=0;
 		if(sprite.getClass().equals(Floor.class)){
@@ -151,8 +155,12 @@ public class Sprite implements Comparable<Sprite>{
 			rightDistance=7;
 		}else if(sprite.getClass().equals(Player.class)){
 			rightDistance=8;
-		}else if(sprite.getClass().equals(Explosion.class)){
+		}else if(sprite.getClass().equals(Skeleton.class)){
 			rightDistance=9;
+		}else if(sprite.getClass().equals(Rogue.class)){
+			rightDistance=10;
+		}else if(sprite.getClass().equals(Explosion.class)){
+			rightDistance=11;
 		}
 		return leftDistance-rightDistance;
 	}

@@ -89,12 +89,12 @@ public class Loader {
 								Integer.parseInt(input[2]));
 						break;
 					case "rogue":
-						sprite[index]=new Player("/assets/rogue.png",
+						sprite[index]=new Rogue("/assets/rogue.png",
 								Integer.parseInt(input[1]),
 								Integer.parseInt(input[2]));
 						break;
 					case "skeleton":
-						sprite[index]=new Player("/assets/skeleton.png",
+						sprite[index]=new Skeleton("/assets/skeleton.png",
 								Integer.parseInt(input[1]),
 								Integer.parseInt(input[2]));
 						break;

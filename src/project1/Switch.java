@@ -4,12 +4,12 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 public class Switch extends Sprite{
-	private boolean isBlockOnSwitch;
+	//private boolean isBlockOnSwitch;
 	//private int doorIndex; //Is this okay for Java encapsulation?
 	public Switch(String image_src, float x, float y) throws SlickException {
 		super(image_src,x,y);
 		setShow(true);
-		isBlockOnSwitch=false;
+		//isBlockOnSwitch=false;
 		//doorIndex=World.getDoorIndex();
 	}
 	public void update(Input input, int delta){

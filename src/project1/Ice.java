@@ -17,8 +17,15 @@ public class Ice extends Block {
 		if(tempPlayerLatestMove[0]==getX() && tempPlayerLatestMove[1]==getY()){
 			tempDirection=(int)tempPlayerLatestMove[2];
 			moveToDest(tempDirection);
-			System.out.println("Ice moveToDest");
+			System.out.println("Ice moveToDest triggered by Player");
 		}
+		float[] tempRogueLatestMove=World.getRogueLatestMove();
+		if(tempRogueLatestMove[0]==getX() && tempRogueLatestMove[1]==getY()){
+			tempDirection=(int)tempRogueLatestMove[2];
+			moveToDest(tempDirection);
+			System.out.println("Ice moveToDest triggered by Rogue");
+		}
+		
 		timer+=delta;
 		if(timer>=100){//if(keepMoving && timer>=5){
 			int deltaX=0,deltaY=0;
