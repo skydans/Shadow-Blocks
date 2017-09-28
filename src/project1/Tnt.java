@@ -6,7 +6,9 @@ import org.newdawn.slick.SlickException;
 public class Tnt extends Block implements CanDisappear{
 	public Tnt(String image_src, float x, float y) throws SlickException {
 		super(image_src,x,y);
-		setShow(true);
+	}
+	public Tnt(Tnt tnt) throws SlickException {
+		super(tnt);
 	}
 	public void update(Input input,int delta) throws SlickException{
 		super.update(input, delta);

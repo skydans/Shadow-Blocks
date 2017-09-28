@@ -3,14 +3,18 @@ package project1;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
-public class Block extends Sprite {
+public abstract class Block extends Sprite{
 	private boolean canBeMovedUp,canBeMovedDown,canBeMovedRight,canBeMovedLeft;
-	private boolean onTarget;
 	public Block(String image_src, float x, float y) throws SlickException {
 		super(image_src,x,y);
 		setShow(true);
 		canBeMovedUp=canBeMovedDown=canBeMovedRight=canBeMovedLeft=true;
 	}
+	public Block(Block block) throws SlickException{
+		super(block);
+		setShow(true);
+	}
+	
 	public boolean canMoveUp(){
 		return canBeMovedUp;
 	}

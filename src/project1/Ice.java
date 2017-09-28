@@ -7,7 +7,10 @@ public class Ice extends Block {
 	private int timer,tempDirection=DIR_NONE;
 	public Ice(String image_src, float x, float y) throws SlickException {
 		super(image_src,x,y);
-		setShow(true);
+		timer=0;
+	}
+	public Ice(Ice ice) throws SlickException {
+		super(ice);
 		timer=0;
 	}
 	@Override
@@ -17,6 +20,8 @@ public class Ice extends Block {
 		if(tempPlayerLatestMove[0]==getX() && tempPlayerLatestMove[1]==getY()){
 			tempDirection=(int)tempPlayerLatestMove[2];
 			moveToDest(tempDirection);
+			System.out.println(tempPlayerLatestMove[0]);
+			System.out.println(tempPlayerLatestMove[1]);
 			System.out.println("Ice moveToDest triggered by Player");
 		}
 		float[] tempRogueLatestMove=World.getRogueLatestMove();

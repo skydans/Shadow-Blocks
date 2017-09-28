@@ -14,6 +14,7 @@ public class Player extends Unit{
 	
 	public Player(Player player) throws SlickException{
 		super(player);
+		setShow(true);
 	}
 	
 	//this moveToDest is different from the one in Stone class.

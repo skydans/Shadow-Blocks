@@ -35,24 +35,30 @@ public class World {
 	private static List<Integer> toDelete;
 	private static List<Integer> toRestore;
 	private static List<SpriteMove> movesHistory;
+	private static List<float[]> playerLatestMoveHistory;
+	private static List<float[]> playerLatestMoveAttemptHistory;
 	//private static int level;
 	public static final int WALL=1;
 	public static final int STONE=2;
 	/** constructor of the World class. */
-	public World() {
+	public World() throws SlickException {
 		//loads the sprite when an instance of the world is created.
-		level=3;
+		level=1;
 		loadLevel(level);
 		rogueLatestMove=new float[3];
 		playerLatestMove=new float[3];
 		playerLatestMoveAttempt=new float[2];
 		latestTntPosition=new float[2];
-		prevMoves=0;
 		moves=0;
+		resetPrevMoves();
 		toDelete=new ArrayList<>();
 		toRestore=new ArrayList<>();
 		movesHistory=new ArrayList<>();
+		playerLatestMoveHistory=new ArrayList<>();
+		playerLatestMoveAttemptHistory=new ArrayList<>();
 		willRestart=false;
+		tempSprites=Arrays.copyOf(sprites,sprites.length);
+		recordMovesHistory();
 	}
 	/*
 	public void stoneCheck(){
@@ -104,20 +110,49 @@ public class World {
 	}
 	
 	public static void recordMovesHistory() throws SlickException{
+		playerLatestMoveHistory.add(getPlayerLatestMove());
+		playerLatestMoveAttemptHistory.add(getPlayerLatestMoveAttempt());
 		for (int j=tempSprites.length-1;0<=j;j--){
 			if(!tempSprites[j].getShow()){continue;}
-			if(tempSprites[j] instanceof Block){ 
-				movesHistory.add(new SpriteMove(moves,j,tempSprites[j]));
+			
+			if(tempSprites[j] instanceof Ice){ 
+				Ice iceCopy=new Ice((Ice)tempSprites[j]);
+				movesHistory.add(new SpriteMove(moves,j,iceCopy));
+			}else if(tempSprites[j] instanceof Stone){
+				Stone stoneCopy=new Stone((Stone)tempSprites[j]);
+				movesHistory.add(new SpriteMove(moves,j,stoneCopy));
+			}else if(tempSprites[j] instanceof Tnt){
+				Tnt tntCopy=new Tnt((Tnt)tempSprites[j]);
+				movesHistory.add(new SpriteMove(moves,j,tntCopy));
+			}else if(tempSprites[j] instanceof Cracked){
+				Cracked crackedCopy=new Cracked((Cracked)tempSprites[j]);
+				movesHistory.add(new SpriteMove(moves,j,crackedCopy));
 			}else if(tempSprites[j].getClass().equals(Player.class)){
 				Player playerCopy=new Player((Player)tempSprites[j]);
 				movesHistory.add(new SpriteMove(moves,j,playerCopy));
-				System.out.println("tempSprites X: "+tempSprites[j].getX());
-				System.out.println("tempSprites Y: "+tempSprites[j].getY());
+				//System.out.println("tempSprites X: "+tempSprites[j].getX());
+				//System.out.println("tempSprites Y: "+tempSprites[j].getY());
 			}
 		}
 	}
 	
-	public void undo(){
+	public void undo() throws SlickException{
+		if(moves==0){return;}
+		for(int j=playerLatestMoveHistory.size()-1;0<=j;j--){
+			if(j==(moves-1)){
+				setPlayerLatestMove(playerLatestMoveHistory.get(j)[0],
+						playerLatestMoveHistory.get(j)[1],
+						(int)playerLatestMoveHistory.get(j)[2]);
+			}
+		}
+		for(int j=playerLatestMoveAttemptHistory.size()-1;0<=j;j--){
+			if(j==(moves-1)){
+				setPlayerLatestMoveAttempt(playerLatestMoveAttemptHistory.get(j)[0],
+						playerLatestMoveAttemptHistory.get(j)[1]);
+			}
+		}
+		
+		
 		for(int j=movesHistory.size()-1;0<=j;j--){
 			System.out.println("moveHistoryList");
 			System.out.println("moveIndex: "+movesHistory.get(j).getMoveIndex());
@@ -129,19 +164,67 @@ public class World {
 				//System.out.println("movesHistory Y: "+movesHistory.get(j).getSprite().getY());
 				//sprites[movesHistory.get(j).getSpriteIndex()]=
 				//		movesHistory.get(j).getSprite();
-				if(movesHistory.get(j).getSprite() instanceof Block){
-					sprites[movesHistory.get(j).getSpriteIndex()].setX(movesHistory.get(j).getSprite().getX());
-					sprites[movesHistory.get(j).getSpriteIndex()].setY(movesHistory.get(j).getSprite().getY());
-				}
-				if(movesHistory.get(j).getSprite().getClass().equals(Player.class)){
+				
+				if(movesHistory.get(j).getSprite().getClass().equals(Stone.class)){
+					Stone stoneCopy=new Stone((Stone)movesHistory.get(j).getSprite());
+					sprites[movesHistory.get(j).getSpriteIndex()]=stoneCopy;
+				}else if(movesHistory.get(j).getSprite().getClass().equals(Ice.class)){
+					Ice iceCopy=new Ice((Ice)movesHistory.get(j).getSprite());
+					sprites[movesHistory.get(j).getSpriteIndex()]=iceCopy;
+				
+				}else if(movesHistory.get(j).getSprite().getClass().equals(Tnt.class)){
+					Tnt tntCopy=new Tnt((Tnt)movesHistory.get(j).getSprite());
+					sprites[movesHistory.get(j).getSpriteIndex()]=tntCopy;
+				}else if(movesHistory.get(j).getSprite().getClass().equals(Cracked.class)){
+					Cracked crackedCopy=new Cracked((Cracked)movesHistory.get(j).getSprite());
+					sprites[movesHistory.get(j).getSpriteIndex()]=crackedCopy;
+				}else if(movesHistory.get(j).getSprite().getClass().equals(Player.class)){
 					//sprites[movesHistory.get(j).getSpriteIndex()].setX(3);
 					//sprites[movesHistory.get(j).getSpriteIndex()].setY(5);
 					//sprites[movesHistory.get(j).getSpriteIndex()].setShow(true);
-					sprites[movesHistory.get(j).getSpriteIndex()]=movesHistory.get(j).getSprite();
+					
+					Player playerCopy=new Player((Player)movesHistory.get(j).getSprite());
+					
+					sprites[movesHistory.get(j).getSpriteIndex()]=playerCopy;
+					System.out.println("Player undo");
+					System.out.println(sprites[movesHistory.get(j).getSpriteIndex()].getShow());
 				}
 			}
 		}
 		
+		while(true){
+			int tempIndex=movesHistory.size()-1;
+			if(tempIndex<0){break;}
+			if(movesHistory.get(tempIndex).getMoveIndex()==moves){
+				movesHistory.remove(tempIndex);
+			}else{
+				break;
+			}
+		}
+		int tempIndex=playerLatestMoveHistory.size()-1;
+		if(tempIndex>=0){
+			playerLatestMoveHistory.remove(tempIndex);
+		}
+		tempIndex=playerLatestMoveAttemptHistory.size()-1;
+		if(tempIndex>=0){
+			playerLatestMoveAttemptHistory.remove(tempIndex);
+		}
+		
+		moves--;
+		resetPrevMoves();
+		for(int j=movesHistory.size()-1;0<=j;j--){
+			System.out.println("moveHistoryList after undo");
+			System.out.println("moveIndex: "+movesHistory.get(j).getMoveIndex());
+			System.out.println("movesHistory X: "+movesHistory.get(j).getSprite().getX());
+			System.out.println("movesHistory Y: "+movesHistory.get(j).getSprite().getY());
+		}
+		
+	}
+	
+	
+	
+	public void resetPrevMoves(){
+		prevMoves=moves;
 	}
 	
 	public void executeToDelete(){
@@ -243,13 +326,51 @@ public class World {
 		willRestart=newWillRestart;
 	}
 	
-	public void restart(){
+	public void restart() throws SlickException{
 		loadLevel(level);
+		moves=0;
+		resetPrevMoves();
+		clearMovesHistory();
+		clearPlayerLatestMoveHistory();
+		clearPlayerLatestMoveAttemptHistory();
+	}
+	public void clearMovesHistory(){
+		int size=movesHistory.size();
+		for(int i=0;i<size-1;i++){
+			movesHistory.remove(movesHistory.size()-1);
+		}
+	}
+	public void clearPlayerLatestMoveAttemptHistory(){
+		int size=playerLatestMoveAttemptHistory.size();
+		for(int i=0;i<size-1;i++){
+			playerLatestMoveAttemptHistory.remove(
+					playerLatestMoveAttemptHistory.size()-1);
+		}
+	}
+	public void clearPlayerLatestMoveHistory(){
+		int size=playerLatestMoveHistory.size();
+		for(int i=0;i<size-1;i++){
+			playerLatestMoveHistory.remove(playerLatestMoveHistory.size()-1);
+		}
 	}
 	
-	public void levelUp(){
+	public void levelUp() throws SlickException{
 		level++;
-		loadLevel(level);
+		restart();
+		int size=movesHistory.size();
+		for(int j=0;j<size;j++){
+			movesHistory.remove(0);
+		}
+		size=playerLatestMoveAttemptHistory.size();
+		for(int j=0;j<size;j++){
+			playerLatestMoveAttemptHistory.remove(0);
+		}
+		size=playerLatestMoveHistory.size();
+		for(int j=0;j<size;j++){
+			playerLatestMoveHistory.remove(0);
+		}
+		tempSprites=Arrays.copyOf(sprites,sprites.length);
+		recordMovesHistory();
 	}
 	
 	public void loadLevel(int level){
