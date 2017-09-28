@@ -22,6 +22,21 @@ public abstract class Sprite implements Comparable<Sprite>{
 	public static final int DIR_UP = 3;
 	public static final int DIR_DOWN = 4;
 	
+	/* Copy constructor of Sprite */
+	
+	public Sprite(Sprite sprite) 
+			throws SlickException{
+		this.image_src=sprite.image_src;
+		this.x=sprite.x;
+		this.y=sprite.y;
+		try {
+			image = new Image(image_src);
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	/** Constructor of Sprite */
 	public Sprite(String image_src, float x, float y) 
 			throws SlickException{
@@ -62,6 +77,10 @@ public abstract class Sprite implements Comparable<Sprite>{
 	public void setShow(boolean show){
 		this.show=show;
 	}
+	/** setter method for the image file path. */
+	public void setImageSrc(String image_src){
+		this.image_src=image_src;
+	}
 	/** getter method for the image file path. */
 	public String getImageSrc(){
 		return image_src;
@@ -71,7 +90,7 @@ public abstract class Sprite implements Comparable<Sprite>{
 		return image;
 	}
 	/** update method for the Sprite class. */
-	public void update(Input input, int delta){
+	public void update(Input input, int delta) throws SlickException{
 		
 	}
 	/**  render method for the Sprite class. */	
@@ -127,14 +146,16 @@ public abstract class Sprite implements Comparable<Sprite>{
 			leftDistance=6;
 		}else if(this.getClass().equals(Tnt.class)){
 			leftDistance=7;
-		}else if(this.getClass().equals(Player.class)){
+		}else if(this.getClass().equals(Rogue.class)){
 			leftDistance=8;
 		}else if(this.getClass().equals(Skeleton.class)){
 			leftDistance=9;
-		}else if(this.getClass().equals(Rogue.class)){
+		}else if(this.getClass().equals(Mage.class)){
 			leftDistance=10;
-		}else if(this.getClass().equals(Explosion.class)){
+		}else if(this.getClass().equals(Player.class)){
 			leftDistance=11;
+		}else if(this.getClass().equals(Explosion.class)){
+			leftDistance=12;
 		}
 		int rightDistance=0;
 		if(sprite.getClass().equals(Floor.class)){
@@ -153,14 +174,16 @@ public abstract class Sprite implements Comparable<Sprite>{
 			rightDistance=6;
 		}else if(sprite.getClass().equals(Tnt.class)){
 			rightDistance=7;
-		}else if(sprite.getClass().equals(Player.class)){
+		}else if(sprite.getClass().equals(Rogue.class)){
 			rightDistance=8;
 		}else if(sprite.getClass().equals(Skeleton.class)){
 			rightDistance=9;
-		}else if(sprite.getClass().equals(Rogue.class)){
+		}else if(sprite.getClass().equals(Mage.class)){
 			rightDistance=10;
-		}else if(sprite.getClass().equals(Explosion.class)){
+		}else if(sprite.getClass().equals(Player.class)){
 			rightDistance=11;
+		}else if(sprite.getClass().equals(Explosion.class)){
+			rightDistance=12;
 		}
 		return leftDistance-rightDistance;
 	}

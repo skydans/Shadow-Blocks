@@ -4,7 +4,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 public class Ice extends Block {
-	private int timer,tempDirection=-1;
+	private int timer,tempDirection=DIR_NONE;
 	public Ice(String image_src, float x, float y) throws SlickException {
 		super(image_src,x,y);
 		setShow(true);
@@ -46,8 +46,11 @@ public class Ice extends Block {
 			
 			if(!World.isBlocked(getX()+deltaX,getY()+deltaY)
 					&& !World.isBlockedByBlock(getX()+deltaX, 
-							getY()+deltaY)){
+							getY()+deltaY) && !World.isBlockedByUnit(getX()+deltaX, 
+									getY()+deltaY)){
 				moveToDest(tempDirection);
+			}else{
+				tempDirection=DIR_NONE;
 			}
 			timer=0;
 		}
@@ -55,6 +58,5 @@ public class Ice extends Block {
 		//if(keepMoving){timer+=delta;System.out.println("timer: "+timer+"\n");}
 		//if(timer>=200){timer=0;}
 		blockCheck();
-		setOnTarget(World.isOnTarget(getX(), getY()));
 	}
 }

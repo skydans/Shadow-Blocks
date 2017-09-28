@@ -23,7 +23,7 @@ public class World {
 	
 	private static boolean willRestart;
 	private int level;
-	private static int moves;
+	private static int moves,prevMoves;
 	private static float[] rogueLatestMove;
 	private static float[] playerLatestMove;
 	private static float[] playerLatestMoveAttempt;
@@ -34,21 +34,24 @@ public class World {
 	private static Sprite[] tempSprites;
 	private static List<Integer> toDelete;
 	private static List<Integer> toRestore;
+	private static List<SpriteMove> movesHistory;
 	//private static int level;
 	public static final int WALL=1;
 	public static final int STONE=2;
 	/** constructor of the World class. */
 	public World() {
 		//loads the sprite when an instance of the world is created.
-		sprites=Loader.loadSprites("assets/levels/3.lvl");
 		level=3;
+		loadLevel(level);
 		rogueLatestMove=new float[3];
 		playerLatestMove=new float[3];
 		playerLatestMoveAttempt=new float[2];
 		latestTntPosition=new float[2];
+		prevMoves=0;
 		moves=0;
 		toDelete=new ArrayList<>();
 		toRestore=new ArrayList<>();
+		movesHistory=new ArrayList<>();
 		willRestart=false;
 	}
 	/*
@@ -98,6 +101,47 @@ public class World {
 	public static List<Integer> getToDelete(){
 		List<Integer> toDeleteCopy=new ArrayList<>(toDelete);
 		return toDeleteCopy;
+	}
+	
+	public static void recordMovesHistory() throws SlickException{
+		for (int j=tempSprites.length-1;0<=j;j--){
+			if(!tempSprites[j].getShow()){continue;}
+			if(tempSprites[j] instanceof Block){ 
+				movesHistory.add(new SpriteMove(moves,j,tempSprites[j]));
+			}else if(tempSprites[j].getClass().equals(Player.class)){
+				Player playerCopy=new Player((Player)tempSprites[j]);
+				movesHistory.add(new SpriteMove(moves,j,playerCopy));
+				System.out.println("tempSprites X: "+tempSprites[j].getX());
+				System.out.println("tempSprites Y: "+tempSprites[j].getY());
+			}
+		}
+	}
+	
+	public void undo(){
+		for(int j=movesHistory.size()-1;0<=j;j--){
+			System.out.println("moveHistoryList");
+			System.out.println("moveIndex: "+movesHistory.get(j).getMoveIndex());
+			System.out.println("movesHistory X: "+movesHistory.get(j).getSprite().getX());
+			System.out.println("movesHistory Y: "+movesHistory.get(j).getSprite().getY());
+			if(movesHistory.get(j).getMoveIndex()==(moves-1)){
+				//System.out.println("moveIndex: "+movesHistory.get(j).getMoveIndex());
+				//System.out.println("movesHistory X: "+movesHistory.get(j).getSprite().getX());
+				//System.out.println("movesHistory Y: "+movesHistory.get(j).getSprite().getY());
+				//sprites[movesHistory.get(j).getSpriteIndex()]=
+				//		movesHistory.get(j).getSprite();
+				if(movesHistory.get(j).getSprite() instanceof Block){
+					sprites[movesHistory.get(j).getSpriteIndex()].setX(movesHistory.get(j).getSprite().getX());
+					sprites[movesHistory.get(j).getSpriteIndex()].setY(movesHistory.get(j).getSprite().getY());
+				}
+				if(movesHistory.get(j).getSprite().getClass().equals(Player.class)){
+					//sprites[movesHistory.get(j).getSpriteIndex()].setX(3);
+					//sprites[movesHistory.get(j).getSpriteIndex()].setY(5);
+					//sprites[movesHistory.get(j).getSpriteIndex()].setShow(true);
+					sprites[movesHistory.get(j).getSpriteIndex()]=movesHistory.get(j).getSprite();
+				}
+			}
+		}
+		
 	}
 	
 	public void executeToDelete(){
@@ -210,6 +254,9 @@ public class World {
 	
 	public void loadLevel(int level){
 		switch(level){
+		case 0:
+			sprites=Loader.loadSprites("assets/levels/0.lvl");
+			break;
 		case 1:
 			sprites=Loader.loadSprites("assets/levels/1.lvl");
 			break;
@@ -233,9 +280,9 @@ public class World {
 			//ignore things that are have been gone such as tnt that has
 			//exploded.
 			if(!sprites[j].getShow()){continue;}
-			if (sprites[j] instanceof Block){
-				Block block=(Block)sprites[j];	
-				if(!block.getOnTarget()){
+			if (sprites[j].getClass().equals(Target.class)){
+				Target target=(Target)sprites[j];	
+				if(!target.getHasBlock()){
 					return false;
 				}
 			}
@@ -296,19 +343,6 @@ public class World {
 			}
 		}
 		return -1;
-	}
-	
-	public static boolean isOnTarget(float x,float y){
-		for (int j=tempSprites.length-1;0<=j;j--){
-			if(!tempSprites[j].getShow()){continue;}
-			if(tempSprites[j].getX()==x && tempSprites[j].getY()==y){ 
-				if (tempSprites[j].getClass().equals(Target.class)){
-					//tempIndex=j;
-					return true;
-				}
-			}
-		}
-		return false;
 	}
 	
 	public static boolean hasBlockAt(float x,float y){
@@ -374,7 +408,29 @@ public class World {
 		return false;
 	}
 	
+	public static boolean isBlockedByUnit(float x,float y){
+		/* No need bound checking because the wall is eventually will become
+		 * the sign of the bounds?
+		 */
+		for (int j=tempSprites.length-1;0<=j;j--){
+			if(!tempSprites[j].getShow()){continue;}
+			if(tempSprites[j].getX()==x && tempSprites[j].getY()==y){ 
+				if(tempSprites[j] instanceof Unit){
+					//tempIndex=j;
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 	
+	public static boolean playerMoved(){
+		if(moves>prevMoves){
+			prevMoves=moves;
+			return true;
+		}
+		return false;
+	}
 	
 	public static boolean isBlockedByAdjacentBlock(float x,float y,int dir){
 		
@@ -413,7 +469,7 @@ public class World {
 	}
 	/** Sets up the values of the sprite(sprites) of concern before rendering it. 
 	 */
-	public void update(Input input, int delta) {
+	public void update(Input input, int delta) throws SlickException{
 		for(int i=0;i<sprites.length;i++){
 			tempSprites=Arrays.copyOf(sprites,sprites.length);
 			if(sprites[i]==null){continue;}
@@ -432,6 +488,12 @@ public class World {
 			restart();
 		}
 		if(levelCompletedCheck()){levelUp();}
+		if (input.isKeyPressed(Input.KEY_R)) {
+			restart();
+		}
+		if (input.isKeyPressed(Input.KEY_Z)) {
+			undo();
+		}
 	}
 	/**
 	 * This method renders the sprites onto the screen.

@@ -36,7 +36,7 @@ public class Block extends Sprite {
 		this.canBeMovedLeft=canBeMovedLeft;
 	}
 	
-	public void update(Input input,int delta){
+	public void update(Input input,int delta) throws SlickException{
 		super.update(input, delta);
 		blockCheck();
 		float[] tempPlayerLatestMove=World.getPlayerLatestMove();
@@ -56,14 +56,6 @@ public class Block extends Sprite {
 		
 		
 		blockCheck();
-		onTarget=World.isOnTarget(getX(), getY());
-	}
-	
-	public boolean getOnTarget(){
-		return onTarget;
-	}
-	public void setOnTarget(boolean onTarget){
-		this.onTarget=onTarget;
 	}
 	
 	/** Credit: Inspired by Eleanor's code

@@ -84,7 +84,7 @@ public class Loader {
 								Integer.parseInt(input[2]));
 						break;
 					case "mage":
-						sprite[index]=new Player("/assets/mage.png",
+						sprite[index]=new Mage("/assets/mage.png",
 								Integer.parseInt(input[1]),
 								Integer.parseInt(input[2]));
 						break;

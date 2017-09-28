@@ -10,7 +10,7 @@ public class Stone extends Block{
 		setShow(true);
 	}
 	
-	public void update(Input input,int delta){
+	public void update(Input input,int delta)throws SlickException{
 		super.update(input, delta);
 		
 	}

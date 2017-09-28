@@ -8,7 +8,7 @@ public class Tnt extends Block implements CanDisappear{
 		super(image_src,x,y);
 		setShow(true);
 	}
-	public void update(Input input,int delta){
+	public void update(Input input,int delta) throws SlickException{
 		super.update(input, delta);
 		
 		disappearIfNeeded();

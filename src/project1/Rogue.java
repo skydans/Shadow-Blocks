@@ -4,11 +4,10 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 public class Rogue extends Unit{
-	private int timer,currentDirection;
+	private int currentDirection;
 	public Rogue(String img_src,float x,float y) throws SlickException{
 		super(img_src,x,y);
 		setShow(true);
-		timer=0;
 		currentDirection=DIR_LEFT;
 	}
 	public boolean moveToDest(int dir){
@@ -42,8 +41,7 @@ public class Rogue extends Unit{
 	}
 	@Override
 	public void update(Input input,int delta){
-		timer+=delta;
-		if(timer>=1000){
+		if(World.playerMoved()){
 			if(!moveToDest(currentDirection)){
 				if(currentDirection==DIR_LEFT){
 					currentDirection=DIR_RIGHT;
@@ -52,7 +50,6 @@ public class Rogue extends Unit{
 				}
 				moveToDest(currentDirection);
 			}
-			timer=0;
 		}
 		if(checkContactWithPlayer()){World.setWillRestart(true);}
 	}
