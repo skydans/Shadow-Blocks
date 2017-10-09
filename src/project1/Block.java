@@ -146,26 +146,26 @@ public abstract class Block extends Sprite{
 		 * an instance of Inpenetrable class or by a block, set to true 
 		 * otherwise.
 		 */
-		if(World.isBlocked(getX(),getY()+1) ||
-				World.isBlockedByBlock(getX(),getY()+1)){
+		if(World.isBlocked("Inpenetrable",getX(),getY()+1) ||
+				World.isBlocked("Block",getX(),getY()+1)){
 			setCanMoveDown(false);
 		}else{
 			setCanMoveDown(true);
 		}
-		if(World.isBlocked(getX(),getY()-1) ||
-				World.isBlockedByBlock(getX(),getY()-1)){
+		if(World.isBlocked("Inpenetrable",getX(),getY()-1) ||
+				World.isBlocked("Block",getX(),getY()-1)){
 			setCanMoveUp(false);
 		}else{
 			setCanMoveUp(true);
 		}
-		if(World.isBlocked(getX()+1,getY()) ||
-				World.isBlockedByBlock(getX()+1,getY())){
+		if(World.isBlocked("Inpenetrable",getX()+1,getY()) ||
+				World.isBlocked("Block",getX()+1,getY())){
 			setCanMoveRight(false);
 		}else{
 			setCanMoveRight(true);
 		}
-		if(World.isBlocked(getX()-1,getY()) ||
-				World.isBlockedByBlock(getX()-1,getY())){
+		if(World.isBlocked("Inpenetrable",getX()-1,getY()) ||
+				World.isBlocked("Block",getX()-1,getY())){
 			setCanMoveLeft(false);
 		}else{
 			setCanMoveLeft(true);

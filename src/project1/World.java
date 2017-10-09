@@ -63,7 +63,7 @@ public class World {
 	 */
 	public World() throws SlickException {
 		//loads the sprite when an instance of the world is created.
-		level=1;
+		level=3;
 		loadLevel(level);
 		rogueLatestMove=new float[3];
 		playerLatestMove=new float[3];
@@ -635,14 +635,37 @@ public class World {
 	 * @return true if the position is occupied by a sub-class of the 
 	 * Inpenetrable class, false otherwise.
 	 */
-	public static boolean isBlocked(float x, float y) {
+	public static boolean isBlocked(String tag,float x, float y) {
 		//If wall is encountered
+		/* No need bound checking because the wall is eventually will become
+		 * the sign of the bounds?
+		 */
 		for (int j=spritesCopy.length-1;0<=j;j--){
 			if(!spritesCopy[j].getShow()){continue;}
 			if(spritesCopy[j].getX()==x && spritesCopy[j].getY()==y){ 
-				if (spritesCopy[j] instanceof Inpenetrable){
-					//tempIndex=j;
-					return true;
+				switch(tag){
+				case "Inpenetrable":
+					if (spritesCopy[j] instanceof Inpenetrable){
+						//tempIndex=j;
+						return true;
+					}
+					break;
+				case "Block":
+					if(spritesCopy[j] instanceof Block){
+						//tempIndex=j;
+						return true;
+					}
+					break;
+				case "Unit":
+					if(spritesCopy[j] instanceof Unit){
+						//tempIndex=j;
+						return true;
+					}
+					break;
+				default:
+					System.out.println("Spelling error");
+					System.exit(0);
+					break;
 				}
 			}
 		}
@@ -650,37 +673,6 @@ public class World {
 		return false;
 	}
 	
-	public static boolean isBlockedByBlock(float x,float y){
-		/* No need bound checking because the wall is eventually will become
-		 * the sign of the bounds?
-		 */
-		for (int j=spritesCopy.length-1;0<=j;j--){
-			if(!spritesCopy[j].getShow()){continue;}
-			if(spritesCopy[j].getX()==x && spritesCopy[j].getY()==y){ 
-				if(spritesCopy[j] instanceof Block){
-					//tempIndex=j;
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-	
-	public static boolean isBlockedByUnit(float x,float y){
-		/* No need bound checking because the wall is eventually will become
-		 * the sign of the bounds?
-		 */
-		for (int j=spritesCopy.length-1;0<=j;j--){
-			if(!spritesCopy[j].getShow()){continue;}
-			if(spritesCopy[j].getX()==x && spritesCopy[j].getY()==y){ 
-				if(spritesCopy[j] instanceof Unit){
-					//tempIndex=j;
-					return true;
-				}
-			}
-		}
-		return false;
-	}
 	/**This method returns true if the player has moved.
 	 * @return true if the player has moved, false otherwise.
 	 */

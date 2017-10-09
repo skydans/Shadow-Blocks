@@ -30,7 +30,7 @@ public class Rogue extends Unit{
 			deltaX+=1;
 			break;
 		}
-		if(!World.isBlocked(getX()+deltaX,getY()+deltaY) && 
+		if(!World.isBlocked("Inpenetrable",getX()+deltaX,getY()+deltaY) && 
 				!World.isBlockedByAdjacentBlock(getX()+deltaX, getY()+deltaY,
 						dir)){
 			World.setRogueLatestMove(getX()+deltaX,getY()+deltaY,dir);
@@ -48,10 +48,15 @@ public class Rogue extends Unit{
 			return true;
 		}
 		return false;
+		
 	}
 	@Override
 	public void update(Input input,int delta){
 		if(World.playerMoved()){
+			/* Check whether the rogue is in contact with player before the 
+			 * rogue makes a move. 
+			 */
+			if(checkContactWithPlayer()){World.setWillRestart(true);}
 			if(!moveToDest(currentDirection)){
 				if(currentDirection==DIR_LEFT){
 					currentDirection=DIR_RIGHT;
@@ -60,8 +65,12 @@ public class Rogue extends Unit{
 				}
 				moveToDest(currentDirection);
 			}
+			/* Check whether the rogue is in contact with player after the 
+			 * rogue makes a move. 
+			 */
+			if(checkContactWithPlayer()){World.setWillRestart(true);}
 		}
-		if(checkContactWithPlayer()){World.setWillRestart(true);}
+		
 	}
 	
 	

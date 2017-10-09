@@ -42,8 +42,8 @@ public class Mage extends Unit {
 			deltaX+=1;
 			break;
 		}
-		if(!World.isBlocked(getX()+deltaX,getY()+deltaY) && 
-				!World.isBlockedByBlock(getX()+deltaX, getY()+deltaY) ){
+		if(!World.isBlocked("Inpenetrable",getX()+deltaX,getY()+deltaY) && 
+				!World.isBlocked("Block",getX()+deltaX, getY()+deltaY) ){
 			setX(getX()+deltaX);
 			setY(getY()+deltaY);
 			return true;

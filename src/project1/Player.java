@@ -43,7 +43,7 @@ public class Player extends Unit{
 			deltaX+=1;
 			break;
 		}
-		if(!World.isBlocked(getX()+deltaX,getY()+deltaY) && 
+		if(!World.isBlocked("Inpenetrable",getX()+deltaX,getY()+deltaY) && 
 				!World.isBlockedByAdjacentBlock(getX()+deltaX, getY()+deltaY, dir) ){
 			World.setPlayerLatestMove(getX()+deltaX,getY()+deltaY,dir);
 			setX(getX()+deltaX);
