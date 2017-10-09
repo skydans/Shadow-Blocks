@@ -4,8 +4,11 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-/** super-class for sprites which handle instance variables that commonly 
- * exist in sprites. 
+/**Super-class for sprites which handle instance variables that commonly 
+ * exist in sprites.
+ * 
+ * @author Daniel Gonawan
+ *
  */
 public abstract class Sprite implements Comparable<Sprite>{	
 	/** primitive variables for image source and position */
@@ -38,20 +41,20 @@ public abstract class Sprite implements Comparable<Sprite>{
 	
 	
 	/** Constructor of Sprite */
-	public Sprite(String image_src, float x, float y) 
+	public Sprite(float x, float y) 
 			throws SlickException{
-		this.image_src=image_src;
 		this.x=x;
 		this.y=y;
 		//this.image=new Image(image_src);
 		/* Try to create an image object using the image source path and 
 		 * catch the error if this is unsuccessful.
 		 */
-		try {
+		/*try {
 			image = new Image(image_src);
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
+		*/
 	}
 	/** getter method for the x coordinate (in tiles). */
 	public float getX(){
@@ -88,6 +91,10 @@ public abstract class Sprite implements Comparable<Sprite>{
 	/** getter method for the image object. */
 	public Image getImage(){
 		return image;
+	}
+	/** setter method for the image object. */
+	public void setImage(Image image){
+		this.image=image;
 	}
 	/** update method for the Sprite class. */
 	public void update(Input input, int delta) throws SlickException{

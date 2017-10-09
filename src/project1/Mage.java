@@ -1,12 +1,23 @@
 package project1;
 
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 public class Mage extends Unit {
-	public Mage(String img_src,float x,float y) throws SlickException{
-		super(img_src, x, y);
+	public Mage(float x,float y) throws SlickException{
+		super(x, y);
+		setImageSrc("/assets/mage.png");
+		/* Try to create an image object using the image source path and 
+		* catch the error if this is unsuccessful.
+		*/
+		try {
+			setImage(new Image(getImageSrc()));
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
 		setShow(true);
+		
 	}
 	public void update(Input input,int delta){
 		if(World.playerMoved()){
@@ -42,7 +53,7 @@ public class Mage extends Unit {
 	}
 	public void algorithmOne(){
 		float distX,distY;
-		float[] playerCoordinates=World.getPlayerCoordinates();
+		float[] playerCoordinates=World.getSpriteCoordinates(Player.class);
 		distX=playerCoordinates[0]-getX();
 		distY=getY()-playerCoordinates[1];
 		
@@ -56,7 +67,7 @@ public class Mage extends Unit {
 		}
 	}
 	public boolean checkContactWithPlayer(){
-		float[] playerCoordinates=World.getPlayerCoordinates();
+		float[] playerCoordinates=World.getSpriteCoordinates(Player.class);
 		if(playerCoordinates[0]==getX() && playerCoordinates[1]==getY()){
 			return true;
 		}

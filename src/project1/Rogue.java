@@ -1,12 +1,22 @@
 package project1;
 
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 public class Rogue extends Unit{
 	private int currentDirection;
-	public Rogue(String img_src,float x,float y) throws SlickException{
-		super(img_src,x,y);
+	public Rogue(float x,float y) throws SlickException{
+		super(x,y);
+		setImageSrc("/assets/rogue.png");
+		/* Try to create an image object using the image source path and 
+		* catch the error if this is unsuccessful.
+		*/
+		try {
+			setImage(new Image(getImageSrc()));
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
 		setShow(true);
 		currentDirection=DIR_LEFT;
 	}
@@ -33,7 +43,7 @@ public class Rogue extends Unit{
 		}
 	}
 	public boolean checkContactWithPlayer(){
-		float[] playerCoordinates=World.getPlayerCoordinates();
+		float[] playerCoordinates=World.getSpriteCoordinates(Player.class);
 		if(playerCoordinates[0]==getX() && playerCoordinates[1]==getY()){
 			return true;
 		}

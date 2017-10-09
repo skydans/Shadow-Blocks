@@ -7,8 +7,17 @@ import org.newdawn.slick.SlickException;
 public class Player extends Unit{
 	
 	/** constructor of the Player sub-class. */
-	public Player(String image_src, float x, float y) throws SlickException {
-		super(image_src,x,y);
+	public Player(float x, float y) throws SlickException {
+		super(x,y);
+		setImageSrc("/assets/player_left.png");
+		/* Try to create an image object using the image source path and 
+		* catch the error if this is unsuccessful.
+		*/
+		try {
+			setImage(new Image(getImageSrc()));
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
 		setShow(true);
 	}
 	

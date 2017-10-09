@@ -59,74 +59,74 @@ public class Loader {
 				 */
 				switch(input[0]){
 					case "wall":
-						sprite[index]=new Wall("/assets/wall.png",
+						sprite[index]=new Wall(
 								Integer.parseInt(input[1]),
 								Integer.parseInt(input[2]));
 						break;
 					case "stone":
-						sprite[index]=new Stone("/assets/stone.png",
+						sprite[index]=new Stone(
 								Integer.parseInt(input[1]),
 								Integer.parseInt(input[2]));
 						break;
 					case "floor":
-						sprite[index]=new Floor("/assets/floor.png",
+						sprite[index]=new Floor(
 								Integer.parseInt(input[1]),
 								Integer.parseInt(input[2]));
 						break;
 					case "target":
-						sprite[index]=new Target("/assets/target.png",
+						sprite[index]=new Target(
 								Integer.parseInt(input[1]),
 								Integer.parseInt(input[2]));
 						break;
 					case "player":
-						sprite[index]=new Player("/assets/player_left.png",
+						sprite[index]=new Player(
 								Integer.parseInt(input[1]),
 								Integer.parseInt(input[2]));
 						break;
 					case "mage":
-						sprite[index]=new Mage("/assets/mage.png",
+						sprite[index]=new Mage(
 								Integer.parseInt(input[1]),
 								Integer.parseInt(input[2]));
 						break;
 					case "rogue":
-						sprite[index]=new Rogue("/assets/rogue.png",
+						sprite[index]=new Rogue(
 								Integer.parseInt(input[1]),
 								Integer.parseInt(input[2]));
 						break;
 					case "skeleton":
-						sprite[index]=new Skeleton("/assets/skeleton.png",
+						sprite[index]=new Skeleton(
 								Integer.parseInt(input[1]),
 								Integer.parseInt(input[2]));
 						break;
 					case "ice":
-						sprite[index]=new Ice("/assets/ice.png",
+						sprite[index]=new Ice(
 								Integer.parseInt(input[1]),
 								Integer.parseInt(input[2]));
 						break;
 					case "tnt":
-						sprite[index]=new Tnt("/assets/tnt.png",
+						sprite[index]=new Tnt(
 								Integer.parseInt(input[1]),
 								Integer.parseInt(input[2]));
 						break;
 					case "cracked":
-						sprite[index]=new Cracked("/assets/cracked_wall.png",
+						sprite[index]=new Cracked(
 								Integer.parseInt(input[1]),
 								Integer.parseInt(input[2]));
 						break;
 					case "switch":
-						sprite[index]=new Switch("/assets/switch.png",
+						sprite[index]=new Switch(
 								Integer.parseInt(input[1]),
 								Integer.parseInt(input[2]));
 						break;
 					case "door":
-						sprite[index]=new Door("/assets/door.png",
+						sprite[index]=new Door(
 								Integer.parseInt(input[1]),
 								Integer.parseInt(input[2]));
 						break;
 				}
 				index++;
 			}
-			sprite[index]=new Explosion("/assets/explosion.png",0,0);
+			sprite[index]=new Explosion(0,0);
 			Arrays.sort(sprite);
 			for(int i=0;i<sprite.length;i++){
 				System.out.println(sprite[i].getImageSrc()+sprite[i].getX()+
