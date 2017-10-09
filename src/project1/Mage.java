@@ -44,12 +44,15 @@ public class Mage extends Unit {
 		float distX,distY;
 		float[] playerCoordinates=World.getPlayerCoordinates();
 		distX=playerCoordinates[0]-getX();
-		distY=playerCoordinates[1]-getY();
+		distY=getY()-playerCoordinates[1];
+		
+		System.out.println("distX: "+distX);
+		System.out.println("distY: "+distY);
 		
 		if(Math.abs(distX)>Math.abs(distY) &&
 				moveToDest(distX<0 ? DIR_LEFT : DIR_RIGHT)){
 		}else{
-			moveToDest(distY<0?DIR_UP:DIR_DOWN);
+			moveToDest(distY<0?DIR_DOWN:DIR_UP);
 		}
 	}
 	public boolean checkContactWithPlayer(){

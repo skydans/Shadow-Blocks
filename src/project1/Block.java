@@ -39,22 +39,22 @@ public abstract class Block extends Sprite{
 	public void setCanMoveLeft(boolean canBeMovedLeft){
 		this.canBeMovedLeft=canBeMovedLeft;
 	}
-	
+	/**
+	 * 
+	 */
 	public void update(Input input,int delta) throws SlickException{
 		super.update(input, delta);
 		blockCheck();
-		float[] tempPlayerLatestMove=World.getPlayerLatestMove();
-		//System.out.println("tempPlayerLatestMove[0]: "+tempPlayerLatestMove[0]);
-		//System.out.println("tempPlayerLatestMove[1]: "+tempPlayerLatestMove[1]);
-		//System.out.println("tempPlayerLatestMove[2]: "+tempPlayerLatestMove[2]);
-		if(tempPlayerLatestMove[0]==getX() && tempPlayerLatestMove[1]==getY()){
-			moveToDest((int)tempPlayerLatestMove[2]);
+		float[] playerLatestMoveCopy=World.getPlayerLatestMove();
+		float[] rogueLatestMoveCopy=World.getRogueLatestMove();
+		//System.out.println("playerLatestMoveCopy[0]: "+playerLatestMoveCopy[0]);
+		//System.out.println("playerLatestMoveCopy[1]: "+playerLatestMoveCopy[1]);
+		//System.out.println("playerLatestMoveCopy[2]: "+playerLatestMoveCopy[2]);
+		if(playerLatestMoveCopy[0]==getX() && playerLatestMoveCopy[1]==getY()){
+			moveToDest((int)playerLatestMoveCopy[2]);
 			System.out.println("Block moveToDest triggered by Player");
-		}
-		
-		float[] tempRogueLatestMove=World.getRogueLatestMove();
-		if(tempRogueLatestMove[0]==getX() && tempRogueLatestMove[1]==getY()){
-			moveToDest((int)tempRogueLatestMove[2]);
+		}else if(rogueLatestMoveCopy[0]==getX() && rogueLatestMoveCopy[1]==getY()){
+			moveToDest((int)rogueLatestMoveCopy[2]);
 			System.out.println("Block moveToDest triggered by Rogue");
 		}
 		

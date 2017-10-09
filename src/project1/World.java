@@ -43,7 +43,7 @@ public class World {
 	/** constructor of the World class. */
 	public World() throws SlickException {
 		//loads the sprite when an instance of the world is created.
-		level=1;
+		level=3;
 		loadLevel(level);
 		rogueLatestMove=new float[3];
 		playerLatestMove=new float[3];
