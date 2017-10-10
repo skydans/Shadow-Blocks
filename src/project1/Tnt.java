@@ -49,8 +49,8 @@ public class Tnt extends Block implements CanDisappear{
 	/**This method will make the Tnt disappear after the explosion and when it 
 	 * collides into a cracked wall.
 	 */
-	public void disappearIfNeeded(){
-		float[] playerLatestMoveAttemptCopy=World.getPlayerLatestMoveAttempt();
+	public void disappearIfNeeded() throws SlickException{
+		float[] playerLatestMoveAttemptCopy=((Player)World.getSprite("Player")).getLatestMoveAttempt();
 		if(surroundingCheck() && playerLatestMoveAttemptCopy[0]==getX() && playerLatestMoveAttemptCopy[1]==getY()){
 			World.addToHide(World.getCurrentUpdateIndex());
 			System.out.println("Tnt check");

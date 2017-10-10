@@ -40,8 +40,8 @@ public class Cracked extends Inpenetrable implements CanDisappear{
 	}
 	/**This method checks whether the cracked wall should disappear or not.
 	 */
-	public void disappearIfNeeded(){
-		float[] playerLatestMoveAttemptCopy=World.getPlayerLatestMoveAttempt();
+	public void disappearIfNeeded() throws SlickException{
+		float[] playerLatestMoveAttemptCopy=((Player)World.getSprite("Player")).getLatestMoveAttempt();
 		if(surroundingCheck() && ((playerLatestMoveAttemptCopy[0]==getX()+1 &&
 				playerLatestMoveAttemptCopy[1]==getY())||
 				(playerLatestMoveAttemptCopy[0]==getX()-1 &&

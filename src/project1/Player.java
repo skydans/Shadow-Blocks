@@ -1,5 +1,7 @@
 package project1;
 
+import java.util.Arrays;
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -13,6 +15,7 @@ import org.newdawn.slick.SlickException;
 public class Player extends Unit{
 	private int moves;
 	private boolean playerMoved;
+	private float[] latestMove,latestMoveAttempt;
 	/** constructor of the Player sub-class. */
 	public Player(float x, float y) throws SlickException {
 		super(x,y);
@@ -30,6 +33,8 @@ public class Player extends Unit{
 		//prevMoves=0;
 		//resetPrevMoves();
 		playerMoved=false;
+		latestMove=new float[3];
+		latestMoveAttempt=new float[2];
 	}
 	/**This is a copy constructor of Player class.
 	 * 
@@ -42,6 +47,8 @@ public class Player extends Unit{
 		moves=player.moves;
 		playerMoved=player.playerMoved;
 		//prevMoves=player.prevMoves;
+		latestMove=Arrays.copyOf(player.latestMove, player.latestMove.length);
+		latestMoveAttempt=Arrays.copyOf(player.latestMoveAttempt, player.latestMoveAttempt.length);
 	}
 	
 	
@@ -71,12 +78,15 @@ public class Player extends Unit{
 		}
 		if(!World.isBlocked("Inpenetrable",getX()+deltaX,getY()+deltaY) && 
 				!World.isBlockedByAdjacentBlock(getX()+deltaX, getY()+deltaY, dir) ){
-			World.setPlayerLatestMove(getX()+deltaX,getY()+deltaY,dir);
+			latestMove[0]=getX()+deltaX;
+			latestMove[1]=getY()+deltaY;
+			latestMove[2]=dir;
 			setX(getX()+deltaX);
 			setY(getY()+deltaY);
 			
 		}else{
-			World.setPlayerLatestMoveAttempt(getX()+deltaX, getY()+deltaY);
+			latestMoveAttempt[0]=getX()+deltaX;
+			latestMoveAttempt[1]=getY()+deltaY;
 		}
 		/* Increment the number of moves made by the player if the player 
 		 * attempted to make a move (regardless the success of the move).
@@ -142,6 +152,18 @@ public class Player extends Unit{
 		return moves;
 	}
 	
+	/**This method returns a copy of an array which stores the data of the 
+	 * latest move done by the player.
+	 * 
+	 * @return a copy of an array of 3 elements which are the 
+	 * x and y coordinates the player attempted to move into, and
+	 * the direction of that attempt.
+	 */
+	public float[] getLatestMove(){
+		float[] latestMoveCopy=Arrays.copyOf(latestMove, 
+				latestMove.length);
+		return latestMoveCopy;
+	}
 	/*
 	public void resetPrevMoves(){
 		prevMoves=moves;
@@ -171,5 +193,18 @@ public class Player extends Unit{
 		return false;
 	}
 	*/
+	/**This method returns a copy of an array of 2 elements which are the 
+	 * x coordinate and the y coordinate the player attempted to move into.
+	 *  
+	 * @return a copy of an array of 2 elements which are the 
+	 * x coordinate and the y coordinate the player attempted to move into.
+	 */
+	
+	public float[] getLatestMoveAttempt(){
+		float[] playerLatestMoveAttemptCopy=
+				Arrays.copyOf(latestMoveAttempt, 
+						latestMoveAttempt.length);
+		return playerLatestMoveAttemptCopy;
+	}
 	
 }

@@ -1,6 +1,8 @@
 package project1;
 
-public interface CanDisappear {
-	public abstract void disappearIfNeeded();
+import org.newdawn.slick.SlickException;
+
+public interface CanDisappear{
+	public abstract void disappearIfNeeded() throws SlickException;
 	public abstract boolean surroundingCheck();
 }

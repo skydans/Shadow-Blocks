@@ -54,7 +54,7 @@ public class Ice extends Block {
 	 * 
 	 */
 	@Override
-	public void update(Input input,int delta){
+	public void update(Input input,int delta) throws SlickException{
 		/* Check the available directions the block can move for the current
 		 * position. 
 		 */
@@ -62,7 +62,7 @@ public class Ice extends Block {
 		/* Retrieve the current coordinates and directions of the player and
 		 * rogue latest moves. 
 		 */
-		float[] playerLatestMoveCopy=World.getPlayerLatestMove();
+		float[] playerLatestMoveCopy=((Player)World.getSprite("Player")).getLatestMove();
 		float[] rogueLatestMoveCopy=World.getRogueLatestMove();
 		if(playerLatestMoveCopy[0]==getX() && playerLatestMoveCopy[1]==getY()){
 			tempDirection=(int)playerLatestMoveCopy[2];

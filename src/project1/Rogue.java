@@ -11,6 +11,7 @@ import org.newdawn.slick.SlickException;
  */
 public class Rogue extends Unit{
 	private int currentDirection;
+	//private float[] latestMove;
 	/**This is the constructor of the Rogue class. It initialises the path 
 	 * of the rogue image file.
 	 * 
@@ -84,9 +85,9 @@ public class Rogue extends Unit{
 			 * rogue makes a move. 
 			 */
 			if(checkContactWithPlayer() && 
-					World.getPlayerLatestMove()[2]!=DIR_UP
-					&& World.getPlayerLatestMove()[2]!=DIR_DOWN &&
-					currentDirection!=World.getPlayerLatestMove()[2]){
+					((Player)World.getSprite("Player")).getLatestMove()[2]!=DIR_UP
+					&& ((Player)World.getSprite("Player")).getLatestMove()[2]!=DIR_DOWN &&
+					currentDirection!=((Player)World.getSprite("Player")).getLatestMove()[2]){
 				World.setWillRestart(true);}
 			if(!moveToDest(currentDirection)){
 				if(currentDirection==DIR_LEFT){
@@ -102,9 +103,9 @@ public class Rogue extends Unit{
 				 * next to a wall.
 				 */
 				if(checkContactWithPlayer() && 
-						World.getPlayerLatestMove()[2]!=DIR_UP
-						&& World.getPlayerLatestMove()[2]!=DIR_DOWN &&
-						currentDirection!=World.getPlayerLatestMove()[2]){
+						((Player)World.getSprite("Player")).getLatestMove()[2]!=DIR_UP
+						&& ((Player)World.getSprite("Player")).getLatestMove()[2]!=DIR_DOWN &&
+						currentDirection!=((Player)World.getSprite("Player")).getLatestMove()[2]){
 					World.setWillRestart(true);}
 				moveToDest(currentDirection);
 			}

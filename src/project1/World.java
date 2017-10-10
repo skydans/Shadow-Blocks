@@ -33,8 +33,8 @@ public class World {
 	private int level;
 	
 	private static float[] rogueLatestMove;
-	private static float[] playerLatestMove;
-	private static float[] playerLatestMoveAttempt;
+	//private static float[] playerLatestMove;
+	//private static float[] playerLatestMoveAttempt;
 	//private static float[] latestTntPosition;
 	private static int currentUpdateIndex;
 	//this is used to store temporary index produced by isBlockedByBlock method
@@ -43,8 +43,8 @@ public class World {
 	private static List<Integer> toHide;
 	private static List<Integer> toRestore;
 	private static List<SpriteMove> movesHistory;
-	private static List<float[]> playerLatestMoveHistory;
-	private static List<float[]> playerLatestMoveAttemptHistory;
+	//private static List<float[]> playerLatestMoveHistory;
+	//private static List<float[]> playerLatestMoveAttemptHistory;
 	//private static int level;
 	public static final int WALL=1;
 	public static final int STONE=2;
@@ -63,18 +63,18 @@ public class World {
 	 */
 	public World() throws SlickException {
 		//loads the sprite when an instance of the world is created.
-		level=0;
+		level=3;
 		loadLevel(level);
 		rogueLatestMove=new float[3];
-		playerLatestMove=new float[3];
-		playerLatestMoveAttempt=new float[2];
+		//playerLatestMove=new float[3];
+		//playerLatestMoveAttempt=new float[2];
 		//latestTntPosition=new float[2];
 		//((Player)getSprite("Player")).resetPrevMoves();
 		toHide=new ArrayList<>();
 		toRestore=new ArrayList<>();
 		movesHistory=new ArrayList<>();
-		playerLatestMoveHistory=new ArrayList<>();
-		playerLatestMoveAttemptHistory=new ArrayList<>();
+		//playerLatestMoveHistory=new ArrayList<>();
+		//playerLatestMoveAttemptHistory=new ArrayList<>();
 		willRestart=false;
 		spritesCopy=Arrays.copyOf(sprites,sprites.length);
 		recordMovesHistory();
@@ -104,12 +104,14 @@ public class World {
 	 * @return a copy of an array of 2 elements which are the 
 	 * x coordinate and the y coordinate the player attempted to move into.
 	 */
+	/*
 	public static float[] getPlayerLatestMoveAttempt(){
 		float[] playerLatestMoveAttemptCopy=
 				Arrays.copyOf(playerLatestMoveAttempt, 
 						playerLatestMoveAttempt.length);
 		return playerLatestMoveAttemptCopy;
 	}
+	*/
 	/**This method returns a copy of an array which stores the data of the 
 	 * latest move done by the player.
 	 * 
@@ -117,11 +119,13 @@ public class World {
 	 * x and y coordinates the player attempted to move into, and
 	 * the direction of that attempt.
 	 */
+	/*
 	public static float[] getPlayerLatestMove(){
 		float[] playerLatestMoveCopy=Arrays.copyOf(playerLatestMove, 
 				playerLatestMove.length);
 		return playerLatestMoveCopy;
 	}
+	*/
 	/**This method returns a copy of an array which stores the data of the 
 	 * latest move done by the rogue.
 	 * 
@@ -157,8 +161,8 @@ public class World {
 	 * @throws SlickException
 	 */
 	public static void recordMovesHistory() throws SlickException{
-		playerLatestMoveHistory.add(getPlayerLatestMove());
-		playerLatestMoveAttemptHistory.add(getPlayerLatestMoveAttempt());
+		//playerLatestMoveHistory.add(getPlayerLatestMove());
+		//playerLatestMoveAttemptHistory.add(getPlayerLatestMoveAttempt());
 		for (int j=spritesCopy.length-1;0<=j;j--){
 			if(!spritesCopy[j].getShow()){continue;}
 			
@@ -201,6 +205,7 @@ public class World {
 		/* reverts the playerLatestMoveHistory array (which stores the latest 
 		 * move of the player.
 		 */
+		/*
 		for(int j=playerLatestMoveHistory.size()-1;0<=j;j--){
 			if(j==(((Player)getSprite("Player")).getMoves()-1)){
 				setPlayerLatestMove(playerLatestMoveHistory.get(j)[0],
@@ -208,15 +213,18 @@ public class World {
 						(int)playerLatestMoveHistory.get(j)[2]);
 			}
 		}
+		*/
 		/* reverts the playerLatestMoveAttemptHistory array (which stores the 
 		 * latest move attempt of the player.
 		 */
+		/*
 		for(int j=playerLatestMoveAttemptHistory.size()-1;0<=j;j--){
 			if(j==(((Player)getSprite("Player")).getMoves()-1)){
 				setPlayerLatestMoveAttempt(playerLatestMoveAttemptHistory.get(j)[0],
 						playerLatestMoveAttemptHistory.get(j)[1]);
 			}
 		}
+		*/
 		
 		/* Revert all the Sprite objects that are of the last index based on 
 		 * the movesHistory array.
@@ -278,17 +286,21 @@ public class World {
 		}
 		/* Remove the playerLatestMove array that is of the latest index.
 		 */
+		/*
 		int tempIndex=playerLatestMoveHistory.size()-1;
 		if(tempIndex>=0){
 			playerLatestMoveHistory.remove(tempIndex);
 		}
+		*/
 		/* Remove the playerLatestMoveAttempt array that is of the latest 
 		 * index.
 		 */
+		/*
 		tempIndex=playerLatestMoveAttemptHistory.size()-1;
 		if(tempIndex>=0){
 			playerLatestMoveAttemptHistory.remove(tempIndex);
 		}
+		*/
 		//decrement the number of moves.
 		//((Player)getSprite("Player")).setMoves(((Player)getSprite("Player")).getMoves()-1);
 		/* reset the prevMoves variable so that it can be usable again to check
@@ -401,11 +413,13 @@ public class World {
 	 * @param y y coordinate as a result of the latest move made by the rogue.
 	 * @param dir direction of the latest move.
 	 */
+	
 	public static void setRogueLatestMove(float x,float y, int dir){
 		rogueLatestMove[0]=x;
 		rogueLatestMove[1]=y;
 		rogueLatestMove[2]=dir;
 	}
+	
 	/**This is a setter method that sets the x and y coordinates as a result 
 	 * of the latest move vmade by the player. It also sets the direction of the 
 	 * latest move.
@@ -413,11 +427,13 @@ public class World {
 	 * @param y y coordinate as a result of the latest move made by the player.
 	 * @param dir direction of the latest move.
 	 */
-	public static void setPlayerLatestMove(float x,float y, int dir){
+	/*
+	private static void setPlayerLatestMove(float x,float y, int dir){
 		playerLatestMove[0]=x;
 		playerLatestMove[1]=y;
 		playerLatestMove[2]=dir;
 	}
+	*/
 	/**This is a setter method that sets the x and y coordinates of the 
 	 * player's latest move attempt. A move attempt is an unsuccessful move 
 	 * made by the player, such as when the player tries to walk into a wall. 
@@ -426,10 +442,12 @@ public class World {
 	 * @param y x coordinate as a result of the latest move attempt made by 
 	 * the player.
 	 */
+	/*
 	public static void setPlayerLatestMoveAttempt(float x,float y){
 		playerLatestMoveAttempt[0]=x;
 		playerLatestMoveAttempt[1]=y;
 	}
+	*/
 	
 	public void clearMovesHistory(){
 		int size=movesHistory.size();
@@ -437,7 +455,7 @@ public class World {
 			movesHistory.remove(movesHistory.size()-1);
 		}
 	}
-	
+	/*
 	public void clearPlayerLatestMoveAttemptHistory(){
 		int size=playerLatestMoveAttemptHistory.size();
 		for(int i=0;i<size-1;i++){
@@ -451,6 +469,7 @@ public class World {
 			playerLatestMoveHistory.remove(playerLatestMoveHistory.size()-1);
 		}
 	}
+	*/
 	/**This is a setter method which sets the state on whether the game should 
 	 * restart or not at the next update method call.
 	 * 
@@ -466,8 +485,10 @@ public class World {
 		//((Player)getSprite("Player")).setMoves(0);
 		//((Player)getSprite("Player")).resetPrevMoves();
 		clearMovesHistory();
+		/*
 		clearPlayerLatestMoveHistory();
 		clearPlayerLatestMoveAttemptHistory();
+		*/
 	}
 	/**This method increments the level variable and loads the level 
 	 * corresponding to that variable that has been incremented. It also 
@@ -482,6 +503,7 @@ public class World {
 		for(int j=0;j<size;j++){
 			movesHistory.remove(0);
 		}
+		/*
 		size=playerLatestMoveAttemptHistory.size();
 		for(int j=0;j<size;j++){
 			playerLatestMoveAttemptHistory.remove(0);
@@ -490,6 +512,7 @@ public class World {
 		for(int j=0;j<size;j++){
 			playerLatestMoveHistory.remove(0);
 		}
+		*/
 		spritesCopy=Arrays.copyOf(sprites,sprites.length);
 		recordMovesHistory();
 	}
