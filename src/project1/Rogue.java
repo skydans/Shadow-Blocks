@@ -55,13 +55,27 @@ public class Rogue extends Unit{
 			/* Check whether the rogue is in contact with player before the 
 			 * rogue makes a move. 
 			 */
-			if(checkContactWithPlayer()){World.setWillRestart(true);}
+			if(checkContactWithPlayer() && World.getPlayerLatestMove()[2]!=DIR_UP
+					&& World.getPlayerLatestMove()[2]!=DIR_DOWN &&
+					currentDirection!=World.getPlayerLatestMove()[2]){
+				World.setWillRestart(true);}
 			if(!moveToDest(currentDirection)){
 				if(currentDirection==DIR_LEFT){
 					currentDirection=DIR_RIGHT;
 				}else{
 					currentDirection=DIR_LEFT;
 				}
+				/*If the moveToDest fails, then the direction changes. An 
+				 * additional checking is required to know whether the rogue 
+				 * is in contact with the player or not.
+				 * This is to handle the case where the player moves in the 
+				 * opposite direction into a rogue that changes direction 
+				 * next to a wall.
+				 */
+				if(checkContactWithPlayer() && World.getPlayerLatestMove()[2]!=DIR_UP
+						&& World.getPlayerLatestMove()[2]!=DIR_DOWN &&
+						currentDirection!=World.getPlayerLatestMove()[2]){
+					World.setWillRestart(true);}
 				moveToDest(currentDirection);
 			}
 			/* Check whether the rogue is in contact with player after the 
