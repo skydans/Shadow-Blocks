@@ -74,8 +74,8 @@ public class Mage extends Unit {
 		distX=World.getSprite("Player").getX()-getX();
 		distY=getY()-World.getSprite("Player").getY();
 		
-		System.out.println("distX: "+distX);
-		System.out.println("distY: "+distY);
+		//System.out.println("distX: "+distX);
+		//System.out.println("distY: "+distY);
 		
 		if(Math.abs(distX)>Math.abs(distY) &&
 				moveToDest(distX<0 ? DIR_LEFT : DIR_RIGHT)){

@@ -114,10 +114,10 @@ public abstract class Block extends Sprite{
 		 */
 		if(playerLatestMoveCopy[0]==getX() && playerLatestMoveCopy[1]==getY()){
 			moveToDest((int)playerLatestMoveCopy[2]);
-			System.out.println("Block moveToDest triggered by Player");
+			//System.out.println("Block moveToDest triggered by Player");
 		}else if(rogueLatestMoveCopy[0]==getX() && rogueLatestMoveCopy[1]==getY()){
 			moveToDest((int)rogueLatestMoveCopy[2]);
-			System.out.println("Block moveToDest triggered by Rogue");
+			//System.out.println("Block moveToDest triggered by Rogue");
 		}
 		blockCheck();
 	}

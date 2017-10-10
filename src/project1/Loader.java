@@ -129,10 +129,12 @@ public class Loader {
 			}
 			sprite[index]=new Explosion(0,0);
 			Arrays.sort(sprite);
+			/*
 			for(int i=0;i<sprite.length;i++){
 				System.out.println(sprite[i].getImageSrc()+sprite[i].getX()+
 						sprite[i].getY());
 			}
+			*/
 			return sprite;
 		}catch(Exception e){
 			e.printStackTrace();

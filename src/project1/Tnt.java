@@ -53,7 +53,7 @@ public class Tnt extends Block implements CanDisappear{
 		float[] playerLatestMoveAttemptCopy=((Player)World.getSprite("Player")).getLatestMoveAttempt();
 		if(surroundingCheck() && playerLatestMoveAttemptCopy[0]==getX() && playerLatestMoveAttemptCopy[1]==getY()){
 			World.addToHide(World.getCurrentUpdateIndex());
-			System.out.println("Tnt check");
+			//System.out.println("Tnt check");
 		}
 	}
 	/**This method checks whether there is a cracked wall in the surrounding 

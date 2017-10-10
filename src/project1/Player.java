@@ -30,8 +30,6 @@ public class Player extends Unit{
 		}
 		setShow(true);
 		moves=0;
-		//prevMoves=0;
-		//resetPrevMoves();
 		playerMoved=false;
 		latestMove=new float[3];
 		latestMoveAttempt=new float[2];
@@ -93,7 +91,7 @@ public class Player extends Unit{
 		 */
 		if(dir!=DIR_NONE){
 			moves+=1;
-			System.out.println("moves: "+moves);
+			//System.out.println("moves: "+moves);
 			World.recordMovesHistory();
 			playerMoved=true;
 		}
@@ -148,11 +146,6 @@ public class Player extends Unit{
 				latestMove.length);
 		return latestMoveCopy;
 	}
-	/*
-	public void resetPrevMoves(){
-		prevMoves=moves;
-	}
-	*/
 	/**This method returns true if the player has moved.
 	 * @return true if the player has moved, false otherwise.
 	 */
