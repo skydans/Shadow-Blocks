@@ -28,7 +28,7 @@ public class Mage extends Unit {
 	 * the mage touches the player.
 	 */
 	public void update(Input input,int delta) throws SlickException{
-		if(((Player)World.getSprite("Player")).playerMoved()){
+		if(((Player)World.getSprite("Player")).getPlayerMoved()){
 			algorithmOne();
 		}
 		if(checkContactWithPlayer()){World.setWillRestart(true);}
@@ -89,7 +89,8 @@ public class Mage extends Unit {
 	 * @throws SlickException
 	 */
 	public boolean checkContactWithPlayer() throws SlickException{
-		if(World.getSprite("Player").getX()==getX() && World.getSprite("Player").getY()==getY()){
+		if(World.getSprite("Player").getX()==getX() && 
+				World.getSprite("Player").getY()==getY()){
 			return true;
 		}
 		return false;

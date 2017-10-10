@@ -64,7 +64,8 @@ public class Rogue extends Unit{
 	 * @throws SlickException
 	 */
 	public boolean checkContactWithPlayer() throws SlickException{
-		if(World.getSprite("Player").getX()==getX() && World.getSprite("Player").getY()==getY()){
+		if(World.getSprite("Player").getX()==getX() && 
+				World.getSprite("Player").getY()==getY()){
 			return true;
 		}
 		return false;
@@ -77,11 +78,13 @@ public class Rogue extends Unit{
 	 */
 	@Override
 	public void update(Input input,int delta) throws SlickException{
-		if(((Player)World.getSprite("Player")).playerMoved()){
+		
+		if(((Player)World.getSprite("Player")).getPlayerMoved()){
 			/* Check whether the rogue is in contact with player before the 
 			 * rogue makes a move. 
 			 */
-			if(checkContactWithPlayer() && World.getPlayerLatestMove()[2]!=DIR_UP
+			if(checkContactWithPlayer() && 
+					World.getPlayerLatestMove()[2]!=DIR_UP
 					&& World.getPlayerLatestMove()[2]!=DIR_DOWN &&
 					currentDirection!=World.getPlayerLatestMove()[2]){
 				World.setWillRestart(true);}
@@ -98,7 +101,8 @@ public class Rogue extends Unit{
 				 * opposite direction into a rogue that changes direction 
 				 * next to a wall.
 				 */
-				if(checkContactWithPlayer() && World.getPlayerLatestMove()[2]!=DIR_UP
+				if(checkContactWithPlayer() && 
+						World.getPlayerLatestMove()[2]!=DIR_UP
 						&& World.getPlayerLatestMove()[2]!=DIR_DOWN &&
 						currentDirection!=World.getPlayerLatestMove()[2]){
 					World.setWillRestart(true);}

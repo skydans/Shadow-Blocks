@@ -11,7 +11,8 @@ import org.newdawn.slick.SlickException;
  *
  */
 public class Player extends Unit{
-	private int moves,prevMoves;
+	private int moves;
+	private boolean playerMoved;
 	/** constructor of the Player sub-class. */
 	public Player(float x, float y) throws SlickException {
 		super(x,y);
@@ -25,8 +26,10 @@ public class Player extends Unit{
 			e.printStackTrace();
 		}
 		setShow(true);
-		moves=prevMoves=0;
-		resetPrevMoves();
+		moves=0;
+		//prevMoves=0;
+		//resetPrevMoves();
+		playerMoved=false;
 	}
 	/**This is a copy constructor of Player class.
 	 * 
@@ -35,7 +38,10 @@ public class Player extends Unit{
 	 */
 	public Player(Player player) throws SlickException{
 		super(player);
-		setShow(true);
+		setShow(player.getShow());
+		moves=player.moves;
+		playerMoved=player.playerMoved;
+		//prevMoves=player.prevMoves;
 	}
 	
 	
@@ -79,6 +85,7 @@ public class Player extends Unit{
 			moves+=1;
 			System.out.println("moves: "+moves);
 			World.recordMovesHistory();
+			playerMoved=true;
 		}
 		/* to follow the abstract method in Unit */
 		return true;
@@ -91,6 +98,7 @@ public class Player extends Unit{
 	public void update(Input input,int delta) throws SlickException{
 		//inherit the code from the super-class.
 		super.update(input,delta);
+		playerMoved=false;
 		int dir=DIR_NONE;
 		if (input.isKeyPressed(Input.KEY_UP)) {
 			dir=DIR_UP;
@@ -109,16 +117,22 @@ public class Player extends Unit{
 			
 		}
 		moveToDest(dir);
+		/*
+		if(World.getUndoPressed()){
+			//moves-=1;
+		}
+		*/
 	}
 	
 	/**This is a setter method that sets the number of moves recorded.
 	 * 
 	 * @param newMoves number of moves made by the player
 	 */
+	/*
 	public void setMoves(int newMoves){
 		moves=newMoves; //this does not seem to apply here
 	}
-	
+	*/
 	/**This is a getter method that returns the number of moves.
 	 *  
 	 * @return the number of moves
@@ -128,19 +142,34 @@ public class Player extends Unit{
 		return moves;
 	}
 	
+	/*
 	public void resetPrevMoves(){
 		prevMoves=moves;
 	}
+	*/
 	/**This method returns true if the player has moved.
 	 * @return true if the player has moved, false otherwise.
 	 */
+	public boolean getPlayerMoved(){
+		//System.out.println("moves: "+moves);
+		//System.out.println("prevMoves: "+prevMoves);
+		//System.out.println("playerMoved: "+playerMoved);
+		if(playerMoved){
+			return true;
+		}
+		return false;
+	}
+	//Old version
+	/*
 	public boolean playerMoved(){
+		System.out.println("moves: "+moves);
+		System.out.println("prevMoves: "+prevMoves);
 		if(moves>prevMoves){
 			prevMoves=moves;
 			return true;
 		}
 		return false;
 	}
-	
+	*/
 	
 }

@@ -29,7 +29,7 @@ public class World {
 	/**Down direction*/
 	public static final int DIR_DOWN = 4;
 	
-	private static boolean willRestart;
+	private static boolean willRestart;//,undoPressed;
 	private int level;
 	
 	private static float[] rogueLatestMove;
@@ -63,7 +63,7 @@ public class World {
 	 */
 	public World() throws SlickException {
 		//loads the sprite when an instance of the world is created.
-		level=3;
+		level=0;
 		loadLevel(level);
 		rogueLatestMove=new float[3];
 		playerLatestMove=new float[3];
@@ -195,6 +195,7 @@ public class World {
 	 * @throws SlickException
 	 */
 	public void undo() throws SlickException{
+		//undoPressed=true;
 		/* immediately end the method if there are no moves to be undone. */
 		if(((Player)getSprite("Player")).getMoves()==0){return;}
 		/* reverts the playerLatestMoveHistory array (which stores the latest 
@@ -256,10 +257,10 @@ public class World {
 					Player playerCopy=new Player((Player)movesHistory.get(j).getSprite());
 					
 					sprites[movesHistory.get(j).getSpriteIndex()]=playerCopy;
-					/*
+					
 					System.out.println("Player undo");
 					System.out.println(sprites[movesHistory.get(j).getSpriteIndex()].getShow());
-					*/
+					
 				}
 			}
 		}
@@ -289,11 +290,11 @@ public class World {
 			playerLatestMoveAttemptHistory.remove(tempIndex);
 		}
 		//decrement the number of moves.
-		((Player)getSprite("Player")).setMoves(((Player)getSprite("Player")).getMoves()-1);
+		//((Player)getSprite("Player")).setMoves(((Player)getSprite("Player")).getMoves()-1);
 		/* reset the prevMoves variable so that it can be usable again to check
 		 * whether a move has been made. 
 		 */
-		((Player)getSprite("Player")).resetPrevMoves();
+		//((Player)getSprite("Player")).resetPrevMoves();
 		/*
 		for(int j=movesHistory.size()-1;0<=j;j--){
 			System.out.println("moveHistoryList after undo");
@@ -462,8 +463,8 @@ public class World {
 	
 	public void restart() throws SlickException{
 		loadLevel(level);
-		((Player)getSprite("Player")).setMoves(0);
-		((Player)getSprite("Player")).resetPrevMoves();
+		//((Player)getSprite("Player")).setMoves(0);
+		//((Player)getSprite("Player")).resetPrevMoves();
 		clearMovesHistory();
 		clearPlayerLatestMoveHistory();
 		clearPlayerLatestMoveAttemptHistory();
@@ -549,9 +550,11 @@ public class World {
 					//@SuppressWarnings("unchecked")
 					//T spriteCopy=(T)new Player((Player)spritesCopy[j]);
 					Player spriteCopy=new Player((Player)spritesCopy[j]);
+					/*
 					System.out.println("spriteCopy:");
 					System.out.println("x: "+spriteCopy.getX());
 					System.out.println("y: "+spriteCopy.getY());
+					*/
 					//System.out.println("y: "+spriteCopy.getMoves());
 					return spriteCopy;
 				}
@@ -619,6 +622,11 @@ public class World {
 		}
 		return false;
 	}
+	/*
+	public static boolean getUndoPressed(){
+		return undoPressed;
+	}
+	*/
 	
 	/* Assuming that there is only one door and one switch on each map. */
 	public static <T> int getSpriteIndex(Class<T> className){
@@ -788,6 +796,7 @@ public class World {
 		if (input.isKeyPressed(Input.KEY_R)) {
 			restart();
 		}
+		//undoPressed=false;
 		if (input.isKeyPressed(Input.KEY_Z)) {
 			undo();
 		}
