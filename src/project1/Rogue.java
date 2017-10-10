@@ -42,16 +42,15 @@ public class Rogue extends Unit{
 			return false;
 		}
 	}
-	public boolean checkContactWithPlayer(){
-		float[] playerCoordinates=World.getSpriteCoordinates(Player.class);
-		if(playerCoordinates[0]==getX() && playerCoordinates[1]==getY()){
+	public boolean checkContactWithPlayer() throws SlickException{
+		if(World.getSprite("Player").getX()==getX() && World.getSprite("Player").getY()==getY()){
 			return true;
 		}
 		return false;
 		
 	}
 	@Override
-	public void update(Input input,int delta){
+	public void update(Input input,int delta) throws SlickException{
 		if(World.playerMoved()){
 			/* Check whether the rogue is in contact with player before the 
 			 * rogue makes a move. 

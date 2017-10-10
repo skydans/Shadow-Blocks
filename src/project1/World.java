@@ -536,17 +536,30 @@ public class World {
 	 * accessible in the sprites array that is initialised in the World class.
 	 * @return a float array that has the x and y coordinates of the player.
 	 */
-	public static <T> float[] getSpriteCoordinates(Class<T> className){
-		float[] coordinates=new float[2];
+	public static Sprite getSprite(String tag) throws SlickException{
 		for (int j=spritesCopy.length-1;0<=j;j--){
 			if(!spritesCopy[j].getShow()){continue;}
-			if(spritesCopy[j].getClass().equals(className)){ 
-				coordinates[0]=spritesCopy[j].getX();
-				coordinates[1]=spritesCopy[j].getY();
+			switch(tag){
+			case "Player":
+				if(spritesCopy[j].getClass().equals(Player.class)){ 
+					Sprite spriteCopy=new Player((Player)spritesCopy[j]);
+					return spriteCopy;
+				}
+				break;
+			case "Tnt":
+				if(spritesCopy[j].getClass().equals(Tnt.class)){ 
+					Sprite spriteCopy=new Tnt((Tnt)spritesCopy[j]);
+					return spriteCopy;
+				}
+				break;
+			default:
+				/* For error detection purposes */
+				System.out.println("Spelling error");
+				System.exit(0);
 				break;
 			}
 		}
-		return coordinates;
+		return new Player(0,0);
 	}
 	
 	/*
@@ -663,6 +676,7 @@ public class World {
 					}
 					break;
 				default:
+					/* For error detection purposes */
 					System.out.println("Spelling error");
 					System.exit(0);
 					break;

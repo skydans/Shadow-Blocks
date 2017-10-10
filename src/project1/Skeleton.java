@@ -22,7 +22,7 @@ public class Skeleton extends Unit {
 		currentDirection=DIR_UP;
 	}
 	@Override
-	public void update(Input input, int delta){
+	public void update(Input input, int delta) throws SlickException{
 		timer+=delta;
 		if(timer>=1000){
 			if(!moveToDest(currentDirection)){
@@ -56,9 +56,8 @@ public class Skeleton extends Unit {
 			return false;
 		}
 	}
-	public boolean checkContactWithPlayer(){
-		float[] playerCoordinates=World.getSpriteCoordinates(Player.class);
-		if(playerCoordinates[0]==getX() && playerCoordinates[1]==getY()){
+	public boolean checkContactWithPlayer() throws SlickException{
+		if(World.getSprite("Player").getX()==getX() && World.getSprite("Player").getY()==getY()){
 			return true;
 		}
 		return false;

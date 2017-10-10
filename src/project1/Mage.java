@@ -19,7 +19,7 @@ public class Mage extends Unit {
 		setShow(true);
 		
 	}
-	public void update(Input input,int delta){
+	public void update(Input input,int delta) throws SlickException{
 		if(World.playerMoved()){
 			algorithmOne();
 		}
@@ -51,11 +51,11 @@ public class Mage extends Unit {
 			return false;
 		}
 	}
-	public void algorithmOne(){
+	public void algorithmOne() throws SlickException{
 		float distX,distY;
-		float[] playerCoordinates=World.getSpriteCoordinates(Player.class);
-		distX=playerCoordinates[0]-getX();
-		distY=getY()-playerCoordinates[1];
+		
+		distX=World.getSprite("Player").getX()-getX();
+		distY=getY()-World.getSprite("Player").getY();
 		
 		System.out.println("distX: "+distX);
 		System.out.println("distY: "+distY);
@@ -66,9 +66,8 @@ public class Mage extends Unit {
 			moveToDest(distY<0?DIR_DOWN:DIR_UP);
 		}
 	}
-	public boolean checkContactWithPlayer(){
-		float[] playerCoordinates=World.getSpriteCoordinates(Player.class);
-		if(playerCoordinates[0]==getX() && playerCoordinates[1]==getY()){
+	public boolean checkContactWithPlayer() throws SlickException{
+		if(World.getSprite("Player").getX()==getX() && World.getSprite("Player").getY()==getY()){
 			return true;
 		}
 		return false;

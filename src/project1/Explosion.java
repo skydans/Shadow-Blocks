@@ -43,7 +43,7 @@ public class Explosion extends Sprite {
 	/**This method updates the timer that determines how long the explosion 
 	 * will be shown.
 	 */
-	public void update(Input input, int delta) {
+	public void update(Input input, int delta) throws SlickException{
 		
 		showOnTntIfNeeded();
 		/*Add the timer when the explosion is being shown.*/
@@ -67,7 +67,7 @@ public class Explosion extends Sprite {
 	/**This method calls another function to retrieve the latest Tnt position 
 	 * and set the coordinate on that TNT position.
 	 */
-	public void showOnTntIfNeeded(){
+	public void showOnTntIfNeeded() throws SlickException{
 		//ArrayList<Integer> toDeleteCopy=World.getToDelete();
 		//
 		/* Checks whether the Tnt is going to disappear, if yes, show the 
@@ -76,9 +76,8 @@ public class Explosion extends Sprite {
 		 */
 		if(World.isTntInToHide()){
 			System.out.println("toDelete not empty inside if statement");
-			float[] coordinates=World.getSpriteCoordinates(Tnt.class);
-			setX(coordinates[0]);
-			setY(coordinates[1]);
+			setX(World.getSprite("Tnt").getX());
+			setY(World.getSprite("Tnt").getY());
 			show=true;
 		}
 	}
