@@ -44,7 +44,7 @@ public class World {
 	 * @throws SlickException
 	 */
 	public World() throws SlickException {
-		level=3;
+		level=0;
 		//loads the sprite when an instance of the world is created.
 		loadLevel(level);
 		toHide=new ArrayList<>();
@@ -316,7 +316,7 @@ public class World {
 			}
 		}
 		
-		return new Player(0,0);
+		return new Player(-1,-1);
 	}
 	/**This method checks whether a particular sprite type is in toHide or not.
 	 * 

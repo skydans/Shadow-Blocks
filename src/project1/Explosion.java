@@ -65,8 +65,6 @@ public class Explosion extends Sprite {
 	 * and set the coordinate on that TNT position.
 	 */
 	public void showOnTntIfNeeded() throws SlickException{
-		//ArrayList<Integer> toDeleteCopy=World.getToDelete();
-		//
 		/* Checks whether the Tnt is going to disappear, if yes, show the 
 		 * explosion. This is with the assumption no more than 1 TNT can 
 		 * explode at the same time.

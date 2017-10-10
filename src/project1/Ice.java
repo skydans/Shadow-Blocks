@@ -60,10 +60,16 @@ public class Ice extends Block {
 		 */
 		blockCheck();
 		/* Retrieve the current coordinates and directions of the player and
-		 * rogue latest moves. 
+		 * rogue latest moves. It also handles the problem if player or rogue 
+		 * is not loaded on the sprite array. 
 		 */
-		float[] playerLatestMoveCopy=((Player)World.getSprite("Player")).getLatestMove();
-		float[] rogueLatestMoveCopy=((Rogue)World.getSprite("Rogue")).getLatestMove();
+		float[] playerLatestMoveCopy=World.getSprite("Player").getX()!=-1?
+				((Player)World.getSprite("Player")).getLatestMove():
+					new float[]{-1,-1};
+		float[] rogueLatestMoveCopy=
+				World.getSprite("Rogue").getX()!=-1?
+						((Rogue)World.getSprite("Rogue")).getLatestMove():
+							new float[]{-1,-1};
 		if(playerLatestMoveCopy[0]==getX() && playerLatestMoveCopy[1]==getY()){
 			tempDirection=(int)playerLatestMoveCopy[2];
 			moveToDest(tempDirection);
