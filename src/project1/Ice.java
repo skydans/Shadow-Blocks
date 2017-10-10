@@ -63,7 +63,7 @@ public class Ice extends Block {
 		 * rogue latest moves. 
 		 */
 		float[] playerLatestMoveCopy=((Player)World.getSprite("Player")).getLatestMove();
-		float[] rogueLatestMoveCopy=World.getRogueLatestMove();
+		float[] rogueLatestMoveCopy=((Rogue)World.getSprite("Rogue")).getLatestMove();
 		if(playerLatestMoveCopy[0]==getX() && playerLatestMoveCopy[1]==getY()){
 			tempDirection=(int)playerLatestMoveCopy[2];
 			moveToDest(tempDirection);

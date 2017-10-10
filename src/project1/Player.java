@@ -36,7 +36,9 @@ public class Player extends Unit{
 		latestMove=new float[3];
 		latestMoveAttempt=new float[2];
 	}
-	/**This is a copy constructor of Player class.
+	/**This is a copy constructor of Player class. It initialises the instance 
+	 * variables of the Rogue class based on the object that it is going to 
+	 * copy from.
 	 * 
 	 * @param player parameter of type Player.
 	 * @throws SlickException

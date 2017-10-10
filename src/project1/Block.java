@@ -100,7 +100,7 @@ public abstract class Block extends Sprite{
 		blockCheck();
 		//Retrieve the player's and rogue's latest moves.
 		float[] playerLatestMoveCopy=((Player)World.getSprite("Player")).getLatestMove();
-		float[] rogueLatestMoveCopy=World.getRogueLatestMove();
+		float[] rogueLatestMoveCopy=((Rogue)World.getSprite("Rogue")).getLatestMove();
 		/* Move the block if the player or rogue is at the current position 
 		 * of the block. 
 		 */

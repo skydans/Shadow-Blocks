@@ -1,12 +1,12 @@
 package project1;
 
-import java.util.Iterator;
+//import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
+//import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 /**This class handles interactions between sprites.
@@ -32,7 +32,7 @@ public class World {
 	private static boolean willRestart;//,undoPressed;
 	private int level;
 	
-	private static float[] rogueLatestMove;
+	//private static float[] rogueLatestMove;
 	//private static float[] playerLatestMove;
 	//private static float[] playerLatestMoveAttempt;
 	//private static float[] latestTntPosition;
@@ -65,7 +65,7 @@ public class World {
 		//loads the sprite when an instance of the world is created.
 		level=3;
 		loadLevel(level);
-		rogueLatestMove=new float[3];
+		//rogueLatestMove=new float[3];
 		//playerLatestMove=new float[3];
 		//playerLatestMoveAttempt=new float[2];
 		//latestTntPosition=new float[2];
@@ -133,11 +133,13 @@ public class World {
 	 * x and y coordinates the rogue attempted to move into, and
 	 * the direction of that attempt.
 	 */
+	/*
 	public static float[] getRogueLatestMove(){
 		float[] rogueLatestMoveCopy=Arrays.copyOf(rogueLatestMove, 
 				rogueLatestMove.length);
 		return rogueLatestMoveCopy;
 	}
+	*/
 	/**This method adds the index of the sprites array that are going to be 
 	 * hidden.
 	 * @param index index of the sprites array.
@@ -413,13 +415,13 @@ public class World {
 	 * @param y y coordinate as a result of the latest move made by the rogue.
 	 * @param dir direction of the latest move.
 	 */
-	
+	/*
 	public static void setRogueLatestMove(float x,float y, int dir){
 		rogueLatestMove[0]=x;
 		rogueLatestMove[1]=y;
 		rogueLatestMove[2]=dir;
 	}
-	
+	*/
 	/**This is a setter method that sets the x and y coordinates as a result 
 	 * of the latest move vmade by the player. It also sets the direction of the 
 	 * latest move.
@@ -589,6 +591,14 @@ public class World {
 					Tnt spriteCopy=new Tnt((Tnt)spritesCopy[j]);
 					return spriteCopy;
 					
+				}
+				break;
+			case "Rogue":
+				if(spritesCopy[j].getClass().equals(Rogue.class)){ 
+					//@SuppressWarnings("unchecked")
+					//T spriteCopy=(T)new Tnt((Tnt)spritesCopy[j]);
+					Rogue spriteCopy=new Rogue((Rogue)spritesCopy[j]);
+					return spriteCopy;
 				}
 				break;
 			default:
