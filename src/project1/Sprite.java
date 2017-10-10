@@ -40,7 +40,12 @@ public abstract class Sprite implements Comparable<Sprite>{
 	}
 	
 	
-	/** Constructor of Sprite */
+	/** Constructor of Sprite
+	 * 
+	 * @param x x coordinate of sprite.
+	 * @param y y coordinate of sprite.
+	 * @throws SlickException
+	 */
 	public Sprite(float x, float y) 
 			throws SlickException{
 		this.x=x;
@@ -106,14 +111,18 @@ public abstract class Sprite implements Comparable<Sprite>{
 		//output the image of the sprite onto the screen
 		renderSprite();
 	}
-	
+	/**This method renders the sprite onto the screen.
+	 * 
+	 */
 	public void renderSprite(){
 		image.drawCentered((App.SCREEN_WIDTH-Loader.getWidth()*
 				App.TILE_SIZE)/2+(x*App.TILE_SIZE+App.TILE_SIZE
 				/2),(App.SCREEN_HEIGHT-Loader.getHeight()*App.TILE_SIZE)/2
 				+(y*App.TILE_SIZE+App.TILE_SIZE/2));
 	}
-	
+	/**It defines the order of how the sprite is going to be sorted.
+	 * 
+	 */
 	public int compareTo(Sprite sprite){
 		/*
 		if((this.getClass().equals(Floor.class) || 

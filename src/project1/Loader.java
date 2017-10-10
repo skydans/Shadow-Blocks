@@ -2,15 +2,16 @@ package project1;
 
 import java.io.*;
 import java.util.Arrays;
-/** reads the strings on the specified file and storing it to the Sprite 
+/**reads the strings on the specified file and storing it to the Sprite 
  * object
+ * 
+ * Credit: Eleanor McMurty
+ * @author Daniel Gonawan
+ *
  */
 public class Loader {
 	
 	private static int width=0,height=0;
-	
-	
-		
 	/**
 	 * Loads the sprites from a given file.
 	 * @param filename
@@ -138,11 +139,17 @@ public class Loader {
 		}
 		return null;
 	}
-	// getter method for the width variable of the world tile dimension.
+	/**getter method for the width variable of the world tile dimension.
+	 * 
+	 * @return the width of the map.
+	 */
 	public static int getWidth(){
 		return width;
 	}
-	// getter method for the height variable of the world tile dimension. 
+	/**getter method for the height variable of the world tile dimension.
+	 *  
+	 * @return the height of the map.
+	 */
 	public static int getHeight(){
 		return height;
 	}

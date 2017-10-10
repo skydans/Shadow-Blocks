@@ -34,7 +34,7 @@ public class Target extends Sprite {
 		hasBlock=false;
 	}
 	public void update(Input input,int delta){
-		hasBlock=World.hasBlockAt(getX(),getY());
+		hasBlock=World.hasSpriteTypeAt("Block",getX(),getY());
 	}
 	/**This is a getter method that returns true if there is a block on the 
 	 * target sprite, and false otherwise.

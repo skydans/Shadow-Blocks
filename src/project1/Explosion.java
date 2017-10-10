@@ -74,7 +74,7 @@ public class Explosion extends Sprite {
 		 * explosion. This is with the assumption no more than 1 TNT can 
 		 * explode at the same time.
 		 */
-		if(World.isTntInToHide()){
+		if(World.isSpriteInToHide(Tnt.class)){
 			System.out.println("toDelete not empty inside if statement");
 			setX(World.getSprite("Tnt").getX());
 			setY(World.getSprite("Tnt").getY());

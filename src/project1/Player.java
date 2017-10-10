@@ -3,9 +3,15 @@ package project1;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-/** Player is a sub-class of Sprite. */
+/**This class represents the Player sprite and it is a sub-class of Sprite. It 
+ * contains methods to execute player movements and record the history of 
+ * player movements.
+ *  
+ * @author Daniel Gonawan
+ *
+ */
 public class Player extends Unit{
-	
+	private int moves,prevMoves;
 	/** constructor of the Player sub-class. */
 	public Player(float x, float y) throws SlickException {
 		super(x,y);
@@ -19,14 +25,28 @@ public class Player extends Unit{
 			e.printStackTrace();
 		}
 		setShow(true);
+		moves=prevMoves=0;
+		resetPrevMoves();
 	}
-	
+	/**This is a copy constructor of Player class.
+	 * 
+	 * @param player parameter of type Player.
+	 * @throws SlickException
+	 */
 	public Player(Player player) throws SlickException{
 		super(player);
 		setShow(true);
 	}
 	
+	
 	//this moveToDest is different from the one in Stone class.
+	/**This method executes the movement of Player towards a particular 
+	 * direction. It overrides the method that is in the superclass of Player 
+	 * class.
+	 * It also checks whether the movement is possible. It executes the 
+	 * movement and returns true if it the movement is possible and returns 
+	 * false otherwise.
+	 */
 	public boolean moveToDest(int dir) throws SlickException{
 		int deltaX=0,deltaY=0;
 		switch(dir){
@@ -52,8 +72,12 @@ public class Player extends Unit{
 		}else{
 			World.setPlayerLatestMoveAttempt(getX()+deltaX, getY()+deltaY);
 		}
+		/* Increment the number of moves made by the player if the player 
+		 * attempted to make a move (regardless the success of the move).
+		 */
 		if(dir!=DIR_NONE){
-			World.setMoves(World.getMoves()+1);
+			moves+=1;
+			System.out.println("moves: "+moves);
 			World.recordMovesHistory();
 		}
 		/* to follow the abstract method in Unit */
@@ -87,6 +111,36 @@ public class Player extends Unit{
 		moveToDest(dir);
 	}
 	
+	/**This is a setter method that sets the number of moves recorded.
+	 * 
+	 * @param newMoves number of moves made by the player
+	 */
+	public void setMoves(int newMoves){
+		moves=newMoves; //this does not seem to apply here
+	}
+	
+	/**This is a getter method that returns the number of moves.
+	 *  
+	 * @return the number of moves
+	 */
+	
+	public int getMoves(){
+		return moves;
+	}
+	
+	public void resetPrevMoves(){
+		prevMoves=moves;
+	}
+	/**This method returns true if the player has moved.
+	 * @return true if the player has moved, false otherwise.
+	 */
+	public boolean playerMoved(){
+		if(moves>prevMoves){
+			prevMoves=moves;
+			return true;
+		}
+		return false;
+	}
 	
 	
 }

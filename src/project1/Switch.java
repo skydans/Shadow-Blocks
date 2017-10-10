@@ -48,7 +48,7 @@ public class Switch extends Sprite{
 	 * 
 	 */
 	public void checkBlockOnSwitch(){
-		if(World.hasBlockAt(getX(), getY())){
+		if(World.hasSpriteTypeAt("Block",getX(), getY())){
 			World.addToHide(World.getSpriteIndex(Door.class));
 		}else{
 			World.addToRestore(World.getSpriteIndex(Door.class));

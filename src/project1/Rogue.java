@@ -3,9 +3,21 @@ package project1;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-
+/**This class represents the Rogue sprite. It inherits from Unit class and 
+ * it contains methods that define how the rogue moves (e.g. it moves only 
+ * in left or right directions).
+ * @author Daniel Gonawan
+ *
+ */
 public class Rogue extends Unit{
 	private int currentDirection;
+	/**This is the constructor of the Rogue class. It initialises the path 
+	 * of the rogue image file.
+	 * 
+	 * @param x x coordinate of the rogue sprite.
+	 * @param y y coordinate of the rogue sprite.
+	 * @throws SlickException
+	 */
 	public Rogue(float x,float y) throws SlickException{
 		super(x,y);
 		setImageSrc("/assets/rogue.png");
@@ -20,6 +32,10 @@ public class Rogue extends Unit{
 		setShow(true);
 		currentDirection=DIR_LEFT;
 	}
+	/**This method defines how the Rogue moves. It only allows the rogue to 
+	 * move either to the left or to the right. It also checks whether the 
+	 * move will be possible and changes direction if the move is impossible.
+	 */
 	public boolean moveToDest(int dir){
 		int deltaX=0,deltaY=0;
 		switch(dir){
@@ -42,6 +58,11 @@ public class Rogue extends Unit{
 			return false;
 		}
 	}
+	/**This method checks whether the rogue touches the player or not.
+	 * 
+	 * @return true if the rogue touches the player, false otherwise.
+	 * @throws SlickException
+	 */
 	public boolean checkContactWithPlayer() throws SlickException{
 		if(World.getSprite("Player").getX()==getX() && World.getSprite("Player").getY()==getY()){
 			return true;
@@ -49,9 +70,14 @@ public class Rogue extends Unit{
 		return false;
 		
 	}
+	/**This method checks whether the player has made a move and makes the 
+	 * rogue to move if the player moves.
+	 * It also calls functions that check whether the rogue touches the player 
+	 * or not.
+	 */
 	@Override
 	public void update(Input input,int delta) throws SlickException{
-		if(World.playerMoved()){
+		if(((Player)World.getSprite("Player")).playerMoved()){
 			/* Check whether the rogue is in contact with player before the 
 			 * rogue makes a move. 
 			 */

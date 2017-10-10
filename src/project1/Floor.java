@@ -2,7 +2,10 @@ package project1;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-/** Floor is a sub-class of Sprite. */
+/** This class represents floor sprites and it is a sub-class of Sprite.
+ * @author Daniel Gonawan
+ *
+ */
 public class Floor extends Sprite{
 	/** constructor of the Floor sub-class. */
 	public Floor(float x, float y) throws SlickException {
