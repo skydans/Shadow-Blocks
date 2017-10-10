@@ -67,18 +67,14 @@ public class Ice extends Block {
 		if(playerLatestMoveCopy[0]==getX() && playerLatestMoveCopy[1]==getY()){
 			tempDirection=(int)playerLatestMoveCopy[2];
 			moveToDest(tempDirection);
-			//System.out.println(playerLatestMoveCopy[0]);
-			//System.out.println(playerLatestMoveCopy[1]);
-			//System.out.println("Ice moveToDest triggered by Player");
 		}else if(rogueLatestMoveCopy[0]==getX() && 
 				rogueLatestMoveCopy[1]==getY()){
 			tempDirection=(int)rogueLatestMoveCopy[2];
 			moveToDest(tempDirection);
-			//System.out.println("Ice moveToDest triggered by Rogue");
 		}
 		// Add up the timer value based on delta.
 		timer+=delta;
-		if(timer>=100){//if(keepMoving && timer>=5){
+		if(timer>=100){
 			int deltaX=0,deltaY=0;
 			switch(tempDirection){
 			case DIR_UP:
@@ -107,11 +103,6 @@ public class Ice extends Block {
 			timer=0;
 		}
 		
-		//if(keepMoving){timer+=delta;System.out.println("timer: "+timer+"\n");}
-		//if(timer>=200){timer=0;}
-		/* Check the available directions the block can move for the current
-		 * position. 
-		 */
 		blockCheck();
 	}
 }

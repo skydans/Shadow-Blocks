@@ -37,9 +37,6 @@ public class Explosion extends Sprite {
 		timer=0;
 	}
 	
-	/*!!!! You have to recheck this function and make sure it returns a copy 
-	* and not a reference so that there will be no provacy leak.
-	*/
 	/**This method updates the timer that determines how long the explosion 
 	 * will be shown.
 	 */

@@ -51,7 +51,6 @@ public class Cracked extends Inpenetrable implements CanDisappear{
 				(playerLatestMoveAttemptCopy[0]==getX() &&
 				playerLatestMoveAttemptCopy[1]==getY()-1))){
 			World.addToHide(World.getCurrentUpdateIndex());
-			//System.out.println("Cracked Wall check");
 		}
 	}
 	/**This method checks whether there is Tnt in the surroundings of the 

@@ -44,5 +44,4 @@ public class Target extends Sprite {
 	public boolean getHasBlock(){
 		return hasBlock;
 	}
-	//no setters for hasBlock
 }

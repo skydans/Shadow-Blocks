@@ -25,8 +25,12 @@ public abstract class Sprite implements Comparable<Sprite>{
 	public static final int DIR_UP = 3;
 	public static final int DIR_DOWN = 4;
 	
-	/* Copy constructor of Sprite */
-	
+	/**Copy constructor of Sprite. It initialises the image source file path, 
+	 * x and y coordinates.
+	 * 
+	 * @param sprite
+	 * @throws SlickException
+	 */
 	public Sprite(Sprite sprite) 
 			throws SlickException{
 		this.image_src=sprite.image_src;
@@ -50,16 +54,6 @@ public abstract class Sprite implements Comparable<Sprite>{
 			throws SlickException{
 		this.x=x;
 		this.y=y;
-		//this.image=new Image(image_src);
-		/* Try to create an image object using the image source path and 
-		 * catch the error if this is unsuccessful.
-		 */
-		/*try {
-			image = new Image(image_src);
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
-		*/
 	}
 	/** getter method for the x coordinate (in tiles). */
 	public float getX(){
@@ -107,8 +101,6 @@ public abstract class Sprite implements Comparable<Sprite>{
 	}
 	/**  render method for the Sprite class. */	
 	public void render(Graphics g) {
-		//draw=new Image(s[i].getImageSrc());
-		//output the image of the sprite onto the screen
 		renderSprite();
 	}
 	/**This method renders the sprite onto the screen.
@@ -124,27 +116,6 @@ public abstract class Sprite implements Comparable<Sprite>{
 	 * 
 	 */
 	public int compareTo(Sprite sprite){
-		/*
-		if((this.getClass().equals(Floor.class) || 
-				this.getClass().equals(Wall.class) ||
-				this.getClass().equals(Target.class) ||
-				this.getClass().equals(Floor.class)) &&
-				!(sprite.getClass().equals(Floor.class) || 
-				sprite.getClass().equals(Wall.class) ||
-				sprite.getClass().equals(Target.class) ||
-				sprite.getClass().equals(Floor.class))){
-			return -1;
-		}
-		
-		if(!this.getClass().equals(Explosion.class)&& !sprite.getClass().equals(Player.class)
-				&& (sprite.getClass().equals(Explosion.class) || sprite.getClass().equals(Player.class))){
-			return -1;
-		}
-		if(!this.getClass().equals(Explosion.class)&&
-				(sprite.getClass().equals(Explosion.class))){
-			return -1;
-		}
-		*/
 		int leftDistance=0;
 		if(this.getClass().equals(Floor.class)){
 			leftDistance=0;

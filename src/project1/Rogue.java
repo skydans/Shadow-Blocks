@@ -71,7 +71,6 @@ public class Rogue extends Unit{
 			latestMove[0]=getX()+deltaX;
 			latestMove[1]=getY()+deltaY;
 			latestMove[2]=dir;
-			//float[] tempPlayerLatestMove=World.getPlayerLatestMove();
 			setX(getX()+deltaX);
 			setY(getY()+deltaY);
 			return true;

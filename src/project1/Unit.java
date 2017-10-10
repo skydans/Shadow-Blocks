@@ -8,13 +8,27 @@ import org.newdawn.slick.SlickException;
  *
  */
 public abstract class Unit extends Sprite {
+	/**Constructor of Unit class.
+	 * 
+	 * @param x
+	 * @param y
+	 * @throws SlickException
+	 */
 	public Unit(float x,float y) throws SlickException{
 		super(x,y);
 	}
+	/**Copy constructor of Unit class.
+	 * 
+	 * @param unit
+	 * @throws SlickException
+	 */
 	public Unit(Unit unit) 
 			throws SlickException{
 		super(unit);
 	}
+	/**Update method of Unit class. This method is then inherited to the 
+	 * sub-classes of Unit class.
+	 */
 	public void update(Input input,int delta) throws SlickException{
 		super.update(input, delta);
 	};

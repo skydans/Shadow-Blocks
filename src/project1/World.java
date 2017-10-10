@@ -1,12 +1,9 @@
 package project1;
 
-//import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import org.newdawn.slick.Graphics;
-//import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 /**This class handles interactions between sprites.
@@ -17,7 +14,6 @@ import org.newdawn.slick.SlickException;
 public class World {	
 	private Sprite[] sprites;
 	
-	//private Image draw;
 	/**No direction*/
 	public static final int DIR_NONE = 0;
 	/**Left direction*/
@@ -32,63 +28,32 @@ public class World {
 	private static boolean willRestart;//,undoPressed;
 	private int level;
 	
-	//private static float[] rogueLatestMove;
-	//private static float[] playerLatestMove;
-	//private static float[] playerLatestMoveAttempt;
-	//private static float[] latestTntPosition;
 	private static int currentUpdateIndex;
-	//this is used to store temporary index produced by isBlockedByBlock method
-	//private int tempIndex;
 	private static Sprite[] spritesCopy;
 	private static List<Integer> toHide;
 	private static List<Integer> toRestore;
 	private static List<SpriteMove> movesHistory;
-	//private static List<float[]> playerLatestMoveHistory;
-	//private static List<float[]> playerLatestMoveAttemptHistory;
-	//private static int level;
 	public static final int WALL=1;
 	public static final int STONE=2;
 	/**Constructor of the World class. It sets the current level and loads 
-	 * that level. It initializes the arrays for the latest move of rogue, 
-	 * the latest move of player, the latest move attempt made by player, 
-	 * the latest TNT position, the sprites to be hidden, the sprites to be 
-	 * restored, histories, copy of sprites. 
+	 * that level. It initializes the arrays for the sprites to be hidden, 
+	 * the sprites to be restored, histories, copy of sprites. 
 	 * 
 	 * It also sets the willRestart variable to false.
-	 * 
-	 * In addition, it records the current state of the player, so that the 
-	 * undo functionality will apply until the initial state of the player.
 	 * 
 	 * @throws SlickException
 	 */
 	public World() throws SlickException {
-		//loads the sprite when an instance of the world is created.
 		level=3;
+		//loads the sprite when an instance of the world is created.
 		loadLevel(level);
-		//rogueLatestMove=new float[3];
-		//playerLatestMove=new float[3];
-		//playerLatestMoveAttempt=new float[2];
-		//latestTntPosition=new float[2];
-		//((Player)getSprite("Player")).resetPrevMoves();
 		toHide=new ArrayList<>();
 		toRestore=new ArrayList<>();
 		movesHistory=new ArrayList<>();
-		//playerLatestMoveHistory=new ArrayList<>();
-		//playerLatestMoveAttemptHistory=new ArrayList<>();
 		willRestart=false;
 		spritesCopy=Arrays.copyOf(sprites,sprites.length);
 		recordMovesHistory();
 	}
-	/*
-	public void stoneCheck(){
-		for(int i=0;i<sprites.length;i++){
-			if(sprites[i].getClass().equals(Stone.class)){
-				Stone stone=(Stone)sprites[i];
-				
-			}
-		}
-	}
-	*/
 	/**This method is a getter which returns the index of the sprites array    
 	 * that is being currently updated.
 	 * 
@@ -97,49 +62,6 @@ public class World {
 	public static int getCurrentUpdateIndex(){
 		return currentUpdateIndex;
 	}
-	
-	/**This method returns a copy of an array of 2 elements which are the 
-	 * x coordinate and the y coordinate the player attempted to move into.
-	 *  
-	 * @return a copy of an array of 2 elements which are the 
-	 * x coordinate and the y coordinate the player attempted to move into.
-	 */
-	/*
-	public static float[] getPlayerLatestMoveAttempt(){
-		float[] playerLatestMoveAttemptCopy=
-				Arrays.copyOf(playerLatestMoveAttempt, 
-						playerLatestMoveAttempt.length);
-		return playerLatestMoveAttemptCopy;
-	}
-	*/
-	/**This method returns a copy of an array which stores the data of the 
-	 * latest move done by the player.
-	 * 
-	 * @return a copy of an array of 3 elements which are the 
-	 * x and y coordinates the player attempted to move into, and
-	 * the direction of that attempt.
-	 */
-	/*
-	public static float[] getPlayerLatestMove(){
-		float[] playerLatestMoveCopy=Arrays.copyOf(playerLatestMove, 
-				playerLatestMove.length);
-		return playerLatestMoveCopy;
-	}
-	*/
-	/**This method returns a copy of an array which stores the data of the 
-	 * latest move done by the rogue.
-	 * 
-	 * @return a copy of an array of 3 elements which are the 
-	 * x and y coordinates the rogue attempted to move into, and
-	 * the direction of that attempt.
-	 */
-	/*
-	public static float[] getRogueLatestMove(){
-		float[] rogueLatestMoveCopy=Arrays.copyOf(rogueLatestMove, 
-				rogueLatestMove.length);
-		return rogueLatestMoveCopy;
-	}
-	*/
 	/**This method adds the index of the sprites array that are going to be 
 	 * hidden.
 	 * @param index index of the sprites array.
@@ -163,8 +85,6 @@ public class World {
 	 * @throws SlickException
 	 */
 	public static void recordMovesHistory() throws SlickException{
-		//playerLatestMoveHistory.add(getPlayerLatestMove());
-		//playerLatestMoveAttemptHistory.add(getPlayerLatestMoveAttempt());
 		for (int j=spritesCopy.length-1;0<=j;j--){
 			if(!spritesCopy[j].getShow()){continue;}
 			
@@ -190,8 +110,6 @@ public class World {
 				movesHistory.add(new SpriteMove(
 						((Player)getSprite("Player")).getMoves(),j,
 						playerCopy));
-				//System.out.println("spritesCopy X: "+spritesCopy[j].getX());
-				//System.out.println("spritesCopy Y: "+spritesCopy[j].getY());
 			}
 		}
 	}
@@ -201,58 +119,20 @@ public class World {
 	 * @throws SlickException
 	 */
 	public void undo() throws SlickException{
-		//undoPressed=true;
 		/* immediately end the method if there are no moves to be undone. */
 		if(((Player)getSprite("Player")).getMoves()==0){return;}
-		/* reverts the playerLatestMoveHistory array (which stores the latest 
-		 * move of the player.
-		 */
-		/*
-		for(int j=playerLatestMoveHistory.size()-1;0<=j;j--){
-			if(j==(((Player)getSprite("Player")).getMoves()-1)){
-				setPlayerLatestMove(playerLatestMoveHistory.get(j)[0],
-						playerLatestMoveHistory.get(j)[1],
-						(int)playerLatestMoveHistory.get(j)[2]);
-			}
-		}
-		*/
-		/* reverts the playerLatestMoveAttemptHistory array (which stores the 
-		 * latest move attempt of the player.
-		 */
-		/*
-		for(int j=playerLatestMoveAttemptHistory.size()-1;0<=j;j--){
-			if(j==(((Player)getSprite("Player")).getMoves()-1)){
-				setPlayerLatestMoveAttempt(playerLatestMoveAttemptHistory.get(j)[0],
-						playerLatestMoveAttemptHistory.get(j)[1]);
-			}
-		}
-		*/
-		
 		/* Revert all the Sprite objects that are of the last index based on 
 		 * the movesHistory array.
 		 */
 		for(int j=movesHistory.size()-1;0<=j;j--){
-			/*
-			System.out.println("moveHistoryList");
-			System.out.println("moveIndex: "+movesHistory.get(j).getMoveIndex());
-			System.out.println("movesHistory X: "+movesHistory.get(j).getSprite().getX());
-			System.out.println("movesHistory Y: "+movesHistory.get(j).getSprite().getY());
-			*/
 			if(movesHistory.get(j).getMoveIndex()==(
 					((Player)getSprite("Player")).getMoves()-1)){
-				//System.out.println("moveIndex: "+movesHistory.get(j).getMoveIndex());
-				//System.out.println("movesHistory X: "+movesHistory.get(j).getSprite().getX());
-				//System.out.println("movesHistory Y: "+movesHistory.get(j).getSprite().getY());
-				//sprites[movesHistory.get(j).getSpriteIndex()]=
-				//		movesHistory.get(j).getSprite();
-				
 				if(movesHistory.get(j).getSprite().getClass().equals(Stone.class)){
 					Stone stoneCopy=new Stone((Stone)movesHistory.get(j).getSprite());
 					sprites[movesHistory.get(j).getSpriteIndex()]=stoneCopy;
 				}else if(movesHistory.get(j).getSprite().getClass().equals(Ice.class)){
 					Ice iceCopy=new Ice((Ice)movesHistory.get(j).getSprite());
 					sprites[movesHistory.get(j).getSpriteIndex()]=iceCopy;
-				
 				}else if(movesHistory.get(j).getSprite().getClass().equals(Tnt.class)){
 					Tnt tntCopy=new Tnt((Tnt)movesHistory.get(j).getSprite());
 					sprites[movesHistory.get(j).getSpriteIndex()]=tntCopy;
@@ -260,16 +140,13 @@ public class World {
 					Cracked crackedCopy=new Cracked((Cracked)movesHistory.get(j).getSprite());
 					sprites[movesHistory.get(j).getSpriteIndex()]=crackedCopy;
 				}else if(movesHistory.get(j).getSprite().getClass().equals(Player.class)){
-					//sprites[movesHistory.get(j).getSpriteIndex()].setX(3);
-					//sprites[movesHistory.get(j).getSpriteIndex()].setY(5);
-					//sprites[movesHistory.get(j).getSpriteIndex()].setShow(true);
 					
 					Player playerCopy=new Player((Player)movesHistory.get(j).getSprite());
 					
 					sprites[movesHistory.get(j).getSpriteIndex()]=playerCopy;
 					
-					System.out.println("Player undo");
-					System.out.println(sprites[movesHistory.get(j).getSpriteIndex()].getShow());
+					//System.out.println("Player undo");
+					//System.out.println(sprites[movesHistory.get(j).getSpriteIndex()].getShow());
 					
 				}
 			}
@@ -286,96 +163,20 @@ public class World {
 				break;
 			}
 		}
-		/* Remove the playerLatestMove array that is of the latest index.
-		 */
-		/*
-		int tempIndex=playerLatestMoveHistory.size()-1;
-		if(tempIndex>=0){
-			playerLatestMoveHistory.remove(tempIndex);
-		}
-		*/
-		/* Remove the playerLatestMoveAttempt array that is of the latest 
-		 * index.
-		 */
-		/*
-		tempIndex=playerLatestMoveAttemptHistory.size()-1;
-		if(tempIndex>=0){
-			playerLatestMoveAttemptHistory.remove(tempIndex);
-		}
-		*/
-		//decrement the number of moves.
-		//((Player)getSprite("Player")).setMoves(((Player)getSprite("Player")).getMoves()-1);
-		/* reset the prevMoves variable so that it can be usable again to check
-		 * whether a move has been made. 
-		 */
-		//((Player)getSprite("Player")).resetPrevMoves();
-		/*
-		for(int j=movesHistory.size()-1;0<=j;j--){
-			System.out.println("moveHistoryList after undo");
-			System.out.println("moveIndex: "+movesHistory.get(j).getMoveIndex());
-			System.out.println("movesHistory X: "+movesHistory.get(j).getSprite().getX());
-			System.out.println("movesHistory Y: "+movesHistory.get(j).getSprite().getY());
-		}
-		*/
 	}
 	
 	
 	
-	public void executeToHide(){
+	private void executeToHide(){
 		for(int i=0;i<toHide.size();i++){
-			//if(sprites[toHide.get(i)].equals(Tnt.class)){
-			sprites[toHide.get(i)].setShow(false);;
-			/*	
-			}else{
-				sprites[toHide.get(i)]=null;
-			}
-			*/
-			/*
-			int waitCounter=0;
-			while(waitCounter<=10){
-				waitCounter+=delta;
-			}
-			*/
-			
+			sprites[toHide.get(i)].setShow(false);
 		}
-		/*List<Sprite> tempToHide = new ArrayList<Sprite>(Arrays.asList(sprites));
-		for(int i=0;i<toHide.size();i++){
-			for (Iterator<Sprite> it = tempToHide.iterator(); it.hasNext();){
-				Sprite sprite=it.next();
-				if(sprite.equals(sprites[toHide.get(i)])){
-					it.remove();
-				}
-			}
-		}
-		System.out.println("To delete index:"+toHide.get(0));
-		for(int i=0;i<tempToHide.size();i++){
-			System.out.println(tempToHide.get(i).getImageSrc()+
-					tempToHide.get(i).getX()+
-					tempToHide.get(i).getY());
-		}
-		
-		sprites = tempToHide.toArray(sprites);
-		*/
-		System.out.println("toHide.size: "+toHide.size());
+		//System.out.println("toHide.size: "+toHide.size());
 		int size=toHide.size();
 		for(int i=0;i<size;i++){
 			toHide.remove(0);
 		}
-		
-		/*
-		for (Iterator<Integer> it = toHide.iterator(); it.hasNext();){
-			it.remove();
-		}
-		*/
-		System.out.println("toHide.size after delete: "+toHide.size());
-		
-		//
-		/*
-		for(int i=0;i<sprites.length;i++){
-			System.out.println(sprites[i].getImageSrc()+sprites[i].getX()+
-					sprites[i].getY());
-		}
-		*/
+		//System.out.println("toHide.size after delete: "+toHide.size());
 		
 	}
 	/**This method adds an index of the sprites array to the List that stores 
@@ -386,19 +187,10 @@ public class World {
 	public static void addToRestore(int index){
 		toRestore.add(index);
 	}
-	/**This is a getter method that returns a copy of a List of indices of 
-	 * Sprites that are going to be restored.
-	 * @return a copy of a List of indices of Sprites that are going to be 
+	/* This method executes the operations needed for the sprites to be 
 	 * restored.
 	 */
-	public static List<Integer> getToRestore(){
-		List<Integer> toRestoreCopy=new ArrayList<>(toRestore);
-		return toRestoreCopy;
-	}
-	/**This method executes the operations needed for the sprites to be 
-	 * restored.
-	 */
-	public void executeToRestore(){
+	private void executeToRestore(){
 		for(int i=0;i<toRestore.size();i++){
 			sprites[toRestore.get(i)].setShow(true);
 		}
@@ -408,70 +200,13 @@ public class World {
 		}
 		
 	}
-	/**This is a setter method that sets the x and y coordinates as a result 
-	 * of the latest move made by the rogue. It also sets the direction of the 
-	 * latest move.
-	 * @param x x coordinate as a result of the latest move made by the rogue.
-	 * @param y y coordinate as a result of the latest move made by the rogue.
-	 * @param dir direction of the latest move.
-	 */
-	/*
-	public static void setRogueLatestMove(float x,float y, int dir){
-		rogueLatestMove[0]=x;
-		rogueLatestMove[1]=y;
-		rogueLatestMove[2]=dir;
-	}
-	*/
-	/**This is a setter method that sets the x and y coordinates as a result 
-	 * of the latest move vmade by the player. It also sets the direction of the 
-	 * latest move.
-	 * @param x x coordinate as a result of the latest move made by the player.
-	 * @param y y coordinate as a result of the latest move made by the player.
-	 * @param dir direction of the latest move.
-	 */
-	/*
-	private static void setPlayerLatestMove(float x,float y, int dir){
-		playerLatestMove[0]=x;
-		playerLatestMove[1]=y;
-		playerLatestMove[2]=dir;
-	}
-	*/
-	/**This is a setter method that sets the x and y coordinates of the 
-	 * player's latest move attempt. A move attempt is an unsuccessful move 
-	 * made by the player, such as when the player tries to walk into a wall. 
-	 * @param x x coordinate as a result of the latest move attempt made by 
-	 * the player.
-	 * @param y x coordinate as a result of the latest move attempt made by 
-	 * the player.
-	 */
-	/*
-	public static void setPlayerLatestMoveAttempt(float x,float y){
-		playerLatestMoveAttempt[0]=x;
-		playerLatestMoveAttempt[1]=y;
-	}
-	*/
 	
-	public void clearMovesHistory(){
+	private void clearMovesHistory(){
 		int size=movesHistory.size();
 		for(int i=0;i<size-1;i++){
 			movesHistory.remove(movesHistory.size()-1);
 		}
 	}
-	/*
-	public void clearPlayerLatestMoveAttemptHistory(){
-		int size=playerLatestMoveAttemptHistory.size();
-		for(int i=0;i<size-1;i++){
-			playerLatestMoveAttemptHistory.remove(
-					playerLatestMoveAttemptHistory.size()-1);
-		}
-	}
-	public void clearPlayerLatestMoveHistory(){
-		int size=playerLatestMoveHistory.size();
-		for(int i=0;i<size-1;i++){
-			playerLatestMoveHistory.remove(playerLatestMoveHistory.size()-1);
-		}
-	}
-	*/
 	/**This is a setter method which sets the state on whether the game should 
 	 * restart or not at the next update method call.
 	 * 
@@ -482,15 +217,9 @@ public class World {
 		willRestart=newWillRestart;
 	}
 	
-	public void restart() throws SlickException{
+	private void restart() throws SlickException{
 		loadLevel(level);
-		//((Player)getSprite("Player")).setMoves(0);
-		//((Player)getSprite("Player")).resetPrevMoves();
 		clearMovesHistory();
-		/*
-		clearPlayerLatestMoveHistory();
-		clearPlayerLatestMoveAttemptHistory();
-		*/
 	}
 	/**This method increments the level variable and loads the level 
 	 * corresponding to that variable that has been incremented. It also 
@@ -505,16 +234,6 @@ public class World {
 		for(int j=0;j<size;j++){
 			movesHistory.remove(0);
 		}
-		/*
-		size=playerLatestMoveAttemptHistory.size();
-		for(int j=0;j<size;j++){
-			playerLatestMoveAttemptHistory.remove(0);
-		}
-		size=playerLatestMoveHistory.size();
-		for(int j=0;j<size;j++){
-			playerLatestMoveHistory.remove(0);
-		}
-		*/
 		spritesCopy=Arrays.copyOf(sprites,sprites.length);
 		recordMovesHistory();
 	}
@@ -542,13 +261,13 @@ public class World {
 			break;
 		}
 	}
-	/*This method checks whether the level has been completed or not. It 
+	/* This method checks whether the level has been completed or not. It 
 	 * checks whether all the targets are covered by blocks or not.
 	 * It returns true if all targets are covered by blocks, false otherwise.
 	 */
 	private boolean levelCompletedCheck(){
 		for (int j=sprites.length-1;0<=j;j--){
-			//ignore things that are have been gone such as tnt that has
+			//ignore things that are have been gone such as tnts that have
 			//exploded.
 			if(!sprites[j].getShow()){continue;}
 			if (sprites[j].getClass().equals(Target.class)){
@@ -572,22 +291,12 @@ public class World {
 			switch(tag){
 			case "Player":
 				if(spritesCopy[j].getClass().equals(Player.class)){
-					//@SuppressWarnings("unchecked")
-					//T spriteCopy=(T)new Player((Player)spritesCopy[j]);
 					Player spriteCopy=new Player((Player)spritesCopy[j]);
-					/*
-					System.out.println("spriteCopy:");
-					System.out.println("x: "+spriteCopy.getX());
-					System.out.println("y: "+spriteCopy.getY());
-					*/
-					//System.out.println("y: "+spriteCopy.getMoves());
 					return spriteCopy;
 				}
 				break;
 			case "Tnt":
 				if(spritesCopy[j].getClass().equals(Tnt.class)){ 
-					//@SuppressWarnings("unchecked")
-					//T spriteCopy=(T)new Tnt((Tnt)spritesCopy[j]);
 					Tnt spriteCopy=new Tnt((Tnt)spritesCopy[j]);
 					return spriteCopy;
 					
@@ -595,8 +304,6 @@ public class World {
 				break;
 			case "Rogue":
 				if(spritesCopy[j].getClass().equals(Rogue.class)){ 
-					//@SuppressWarnings("unchecked")
-					//T spriteCopy=(T)new Tnt((Tnt)spritesCopy[j]);
 					Rogue spriteCopy=new Rogue((Rogue)spritesCopy[j]);
 					return spriteCopy;
 				}
@@ -611,36 +318,6 @@ public class World {
 		
 		return new Player(0,0);
 	}
-	
-	/*
-	public static float[] getSpriteCoordinatesByIndex(int index){
-		float[] coordinates=new float[2];
-		coordinates[0]=spritesCopy[index].getX();
-		coordinates[1]=spritesCopy[index].getY();
-		return coordinates;
-	}
-	*/
-	/**This is a getter method that returns the coordinates of the Tnt 
-	 * sprite. Note that the coordinates of the Tnt sprite is only 
-	 * accessible in the sprites array that is initialised in the World class.
-	 * 
-	 * @return
-	 */
-	/*
-	private static float[] getLatestTntPosition(){
-		//Using copy of array to prevent privacy leak
-		float[] latestTntPositionCopy=Arrays.copyOf(latestTntPosition,
-				latestTntPosition.length);
-		return latestTntPositionCopy;
-	}
-	 */
-	
-	/*
-	public static void setLatestTntPosition(float x,float y){
-		latestTntPosition[0]=x;
-		latestTntPosition[1]=y;
-	}
-	*/
 	/**This method checks whether a particular sprite type is in toHide or not.
 	 * 
 	 * @param className the class that wants to be checked.
@@ -655,13 +332,14 @@ public class World {
 		}
 		return false;
 	}
-	/*
-	public static boolean getUndoPressed(){
-		return undoPressed;
-	}
-	*/
 	
-	/* Assuming that there is only one door and one switch on each map. */
+	/**This method returns the index of a particular sprite based on its 
+	 * sprite type. This is done with the assumption that there is only one 
+	 * door and one switch on each map.
+	 * 
+	 * @param className generic Class<T>
+	 * @return the index in the sprites array
+	 */
 	public static <T> int getSpriteIndex(Class<T> className){
 		for (int j=spritesCopy.length-1;0<=j;j--){
 			//return the index regardless the state on whether the door is 
@@ -673,29 +351,31 @@ public class World {
 		}
 		return -1;
 	}
-	
+	/**This method checks whether there is a particular sprite type at a given 
+	 * position in the map.
+	 * @param tag name of the sprite type
+	 * @param x x coordinate in the map
+	 * @param y y coordinate in the map
+	 * @return true if there exists, false otherwise.
+	 */
 	public static boolean hasSpriteTypeAt(String tag,float x,float y){
 		for (int j=spritesCopy.length-1;0<=j;j--){
 			if(!spritesCopy[j].getShow()){continue;}
 			if(spritesCopy[j].getX()==x && spritesCopy[j].getY()==y){ 
-				/*switch(tag){
-				case "Block":*/
-					if (spritesCopy[j] instanceof Block){
-						//tempIndex=j;
-						return true;
-					}
-					/*break;
-				default:
-					System.out.println("Spelling error");
-					System.exit(0);
-					break;
+				if (spritesCopy[j] instanceof Block){
+					return true;
 				}
-				*/
 			}
 		}
 		return false;
 	}
-	
+	/**This method checks whether a sprite is blocked by another 
+	 * particular sprite.
+	 * @param x x coordinate in the map
+	 * @param y y coordinate in the map
+	 * @param className generic Class<T>
+	 * @return true if there exists, false otherwise.
+	 */
 	public static <T> boolean isBlockedByParticularSprite(float x,float y,
 			Class<T> className){
 		for (int j=spritesCopy.length-1;0<=j;j--){
@@ -734,13 +414,11 @@ public class World {
 					break;
 				case "Block":
 					if(spritesCopy[j] instanceof Block){
-						//tempIndex=j;
 						return true;
 					}
 					break;
 				case "Unit":
 					if(spritesCopy[j] instanceof Unit){
-						//tempIndex=j;
 						return true;
 					}
 					break;
@@ -771,7 +449,6 @@ public class World {
 			if(!spritesCopy[j].getShow()){continue;}
 			if(spritesCopy[j].getX()==x && spritesCopy[j].getY()==y){ 
 				if(spritesCopy[j] instanceof Block){
-					//tempIndex=j;
 					Block stone=(Block)spritesCopy[j];
 					switch(dir){
 					case DIR_UP:
@@ -829,7 +506,6 @@ public class World {
 		if (input.isKeyPressed(Input.KEY_R)) {
 			restart();
 		}
-		//undoPressed=false;
 		if (input.isKeyPressed(Input.KEY_Z)) {
 			undo();
 		}

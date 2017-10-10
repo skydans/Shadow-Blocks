@@ -68,19 +68,6 @@ public class Tnt extends Block implements CanDisappear{
 						Cracked.class) ||
 				World.isBlockedByParticularSprite(getX()-1,getY(),
 						Cracked.class)){
-			/*if(World.isBlockedByParticularSprite(getX(),getY()+1,Tnt.class) ||
-				World.isBlockedByParticularSprite(getX(),getY()+1,
-						Cracked.class) ||
-				World.isBlockedByParticularSprite(getX(),getY()-1,Tnt.class) ||
-				World.isBlockedByParticularSprite(getX(),getY()-1,
-						Cracked.class) ||
-				World.isBlockedByParticularSprite(getX()+1,getY(),Tnt.class) ||
-				World.isBlockedByParticularSprite(getX()+1,getY(),
-						Cracked.class) ||
-				World.isBlockedByParticularSprite(getX()-1,getY(),Tnt.class) ||
-				World.isBlockedByParticularSprite(getX()-1,getY(),
-						Cracked.class)){
-			 */
 			return true;
 		}
 		return false;

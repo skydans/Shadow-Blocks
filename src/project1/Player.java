@@ -48,13 +48,11 @@ public class Player extends Unit{
 		setShow(player.getShow());
 		moves=player.moves;
 		playerMoved=player.playerMoved;
-		//prevMoves=player.prevMoves;
 		latestMove=Arrays.copyOf(player.latestMove, player.latestMove.length);
 		latestMoveAttempt=Arrays.copyOf(player.latestMoveAttempt, player.latestMoveAttempt.length);
 	}
 	
 	
-	//this moveToDest is different from the one in Stone class.
 	/**This method executes the movement of Player towards a particular 
 	 * direction. It overrides the method that is in the superclass of Player 
 	 * class.
@@ -129,27 +127,11 @@ public class Player extends Unit{
 			
 		}
 		moveToDest(dir);
-		/*
-		if(World.getUndoPressed()){
-			//moves-=1;
-		}
-		*/
 	}
-	
-	/**This is a setter method that sets the number of moves recorded.
-	 * 
-	 * @param newMoves number of moves made by the player
-	 */
-	/*
-	public void setMoves(int newMoves){
-		moves=newMoves; //this does not seem to apply here
-	}
-	*/
 	/**This is a getter method that returns the number of moves.
 	 *  
 	 * @return the number of moves
 	 */
-	
 	public int getMoves(){
 		return moves;
 	}
@@ -175,26 +157,11 @@ public class Player extends Unit{
 	 * @return true if the player has moved, false otherwise.
 	 */
 	public boolean getPlayerMoved(){
-		//System.out.println("moves: "+moves);
-		//System.out.println("prevMoves: "+prevMoves);
-		//System.out.println("playerMoved: "+playerMoved);
 		if(playerMoved){
 			return true;
 		}
 		return false;
 	}
-	//Old version
-	/*
-	public boolean playerMoved(){
-		System.out.println("moves: "+moves);
-		System.out.println("prevMoves: "+prevMoves);
-		if(moves>prevMoves){
-			prevMoves=moves;
-			return true;
-		}
-		return false;
-	}
-	*/
 	/**This method returns a copy of an array of 2 elements which are the 
 	 * x coordinate and the y coordinate the player attempted to move into.
 	 *  

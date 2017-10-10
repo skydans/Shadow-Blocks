@@ -9,14 +9,6 @@ package project1;
 public class SpriteMove {
 	private int moveIndex,spriteIndex;
 	private Sprite sprite;
-	/*
-	//Copy constructor
-	public SpriteMove(SpriteMove spriteMove){
-		this.moveIndex=spriteMove.moveIndex;
-		this.spriteIndex=spriteMove.spriteIndex;
-		this.sprite=spriteMove.sprite;
-	}
-	*/
 	/**Constructor of SpriteMove class. It initialises the move index, sprite 
 	 * index and sprite.
 	 * 

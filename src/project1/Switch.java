@@ -10,8 +10,6 @@ import org.newdawn.slick.SlickException;
  *
  */
 public class Switch extends Sprite{
-	//private boolean isBlockOnSwitch;
-	//private int doorIndex; //Is this okay for Java encapsulation? NO.
 	/**Constructor of the Switch class. It inherits the constructor from the 
 	 * Sprite class and in addition, it sets the switch to be visible when 
 	 * loaded.
@@ -34,8 +32,6 @@ public class Switch extends Sprite{
 		}
 		//show the Switch sprite.
 		setShow(true);
-		//isBlockOnSwitch=false;
-		//doorIndex=World.getDoorIndex();
 	}
 	/**This method calls the checkBlockOnSwitch method.
 	 * 
