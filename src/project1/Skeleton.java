@@ -86,7 +86,8 @@ public class Skeleton extends Unit implements CanTouchPlayer{
 	 * @throws SlickException
 	 */
 	public boolean checkContactWithPlayer() throws SlickException{
-		if(World.getSprite("Player").getX()==getX() && World.getSprite("Player").getY()==getY()){
+		if(World.getSprite("Player").getX()==getX() && World
+				.getSprite("Player").getY()==getY()){
 			return true;
 		}
 		return false;

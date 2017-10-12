@@ -104,9 +104,12 @@ public class Rogue extends Unit implements CanTouchPlayer{
 			 * rogue makes a move. 
 			 */
 			if(checkContactWithPlayer() && 
-					((Player)World.getSprite("Player")).getLatestMove()[2]!=DIR_UP
-					&& ((Player)World.getSprite("Player")).getLatestMove()[2]!=DIR_DOWN &&
-					currentDirection!=((Player)World.getSprite("Player")).getLatestMove()[2]){
+					((Player)World.getSprite("Player"))
+					.getLatestMove()[2]!=DIR_UP
+					&& ((Player)World.getSprite("Player"))
+					.getLatestMove()[2]!=DIR_DOWN &&
+					currentDirection!=((Player)World.getSprite("Player"))
+					.getLatestMove()[2]){
 				World.setWillRestart(true);}
 			if(!moveToDest(currentDirection)){
 				if(currentDirection==DIR_LEFT){
@@ -122,9 +125,12 @@ public class Rogue extends Unit implements CanTouchPlayer{
 				 * next to a wall.
 				 */
 				if(checkContactWithPlayer() && 
-						((Player)World.getSprite("Player")).getLatestMove()[2]!=DIR_UP
-						&& ((Player)World.getSprite("Player")).getLatestMove()[2]!=DIR_DOWN &&
-						currentDirection!=((Player)World.getSprite("Player")).getLatestMove()[2]){
+						((Player)World.getSprite("Player"))
+						.getLatestMove()[2]!=DIR_UP
+						&& ((Player)World.getSprite("Player"))
+						.getLatestMove()[2]!=DIR_DOWN &&
+						currentDirection!=((Player)World.getSprite("Player"))
+						.getLatestMove()[2]){
 					World.setWillRestart(true);}
 				moveToDest(currentDirection);
 			}

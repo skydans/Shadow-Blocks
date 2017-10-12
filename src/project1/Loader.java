@@ -129,6 +129,7 @@ public class Loader {
 			}
 			sprite[index]=new Explosion(0,0);
 			Arrays.sort(sprite);
+			//For debugging purposes
 			/*
 			for(int i=0;i<sprite.length;i++){
 				System.out.println(sprite[i].getImageSrc()+sprite[i].getX()+

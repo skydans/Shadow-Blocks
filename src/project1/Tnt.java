@@ -50,9 +50,12 @@ public class Tnt extends Block implements CanDisappear{
 	 * collides into a cracked wall.
 	 */
 	public void disappearIfNeeded() throws SlickException{
-		float[] playerLatestMoveAttemptCopy=((Player)World.getSprite("Player")).getLatestMoveAttempt();
-		if(surroundingCheck() && playerLatestMoveAttemptCopy[0]==getX() && playerLatestMoveAttemptCopy[1]==getY()){
+		float[] playerLatestMoveAttemptCopy=((Player)World.getSprite("Player"))
+				.getLatestMoveAttempt();
+		if(surroundingCheck() && playerLatestMoveAttemptCopy[0]==getX() && 
+				playerLatestMoveAttemptCopy[1]==getY()){
 			World.addToHide(World.getCurrentUpdateIndex());
+			//For debugging purposes
 			//System.out.println("Tnt check");
 		}
 	}

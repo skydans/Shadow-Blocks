@@ -44,7 +44,7 @@ public class World {
 	 * @throws SlickException
 	 */
 	public World() throws SlickException {
-		level=1;
+		level=0;
 		//loads the sprite when an instance of the world is created.
 		loadLevel(level);
 		toHide=new ArrayList<>();
@@ -121,44 +121,53 @@ public class World {
 	public void undo() throws SlickException{
 		/* immediately end the method if there are no moves to be undone. */
 		if(((Player)getSprite("Player")).getMoves()==0){return;}
-		
+		//For debugging purposes
 		//System.out.println("console test undo");
 		boolean tntExploded=false;
+		/* Detects whether Tnt has exploded or not */
 		if(((Sprite)getSprite("Tnt")).getShow()==false){tntExploded=true;}
 		/* Revert all the Sprite objects that are of the last index based on 
 		 * the movesHistory array.
 		 */
 		for(int j=movesHistory.size()-1;0<=j;j--){
 			if(tntExploded){
+				//For debugging purposes
 				//System.out.println("TntExploded");
 				if(movesHistory.get(j).getSprite().getClass().equals(Tnt.class)
-						|| movesHistory.get(j).getSprite().getClass().equals(Cracked.class)){
+						|| movesHistory.get(j).getSprite().getClass()
+						.equals(Cracked.class)){
 					movesHistory.get(j).getSprite().setShow(false);
+					//For debugging purposes
 					//System.out.println("setshowfalse");
 				}
 			}
 			if(movesHistory.get(j).getMoveIndex()==(
 					((Player)getSprite("Player")).getMoves()-1)){
-				if(movesHistory.get(j).getSprite().getClass().equals(Stone.class)){
-					Stone stoneCopy=new Stone((Stone)movesHistory.get(j).getSprite());
+				if(movesHistory.get(j).getSprite().getClass()
+						.equals(Stone.class)){
+					Stone stoneCopy=new Stone((Stone)movesHistory.get(j)
+							.getSprite());
 					sprites[movesHistory.get(j).getSpriteIndex()]=stoneCopy;
-				}else if(movesHistory.get(j).getSprite().getClass().equals(Ice.class)){
+				}else if(movesHistory.get(j).getSprite().getClass()
+						.equals(Ice.class)){
 					Ice iceCopy=new Ice((Ice)movesHistory.get(j).getSprite());
 					sprites[movesHistory.get(j).getSpriteIndex()]=iceCopy;
-				}else if(movesHistory.get(j).getSprite().getClass().equals(Tnt.class)){
+				}else if(movesHistory.get(j).getSprite().getClass()
+						.equals(Tnt.class)){
 					Tnt tntCopy=new Tnt((Tnt)movesHistory.get(j).getSprite());
 					sprites[movesHistory.get(j).getSpriteIndex()]=tntCopy;
-				}else if(movesHistory.get(j).getSprite().getClass().equals(Cracked.class)){
-					Cracked crackedCopy=new Cracked((Cracked)movesHistory.get(j).getSprite());
+				}else if(movesHistory.get(j).getSprite().getClass()
+						.equals(Cracked.class)){
+					Cracked crackedCopy=new Cracked((Cracked)movesHistory
+									.get(j).getSprite());
 					sprites[movesHistory.get(j).getSpriteIndex()]=crackedCopy;
-				}else if(movesHistory.get(j).getSprite().getClass().equals(Player.class)){
+				}else if(movesHistory.get(j).getSprite().getClass()
+						.equals(Player.class)){
 					
-					Player playerCopy=new Player((Player)movesHistory.get(j).getSprite());
+					Player playerCopy=new Player((Player)movesHistory.get(j)
+							.getSprite());
 					
 					sprites[movesHistory.get(j).getSpriteIndex()]=playerCopy;
-					
-					//System.out.println("Player undo");
-					//System.out.println(sprites[movesHistory.get(j).getSpriteIndex()].getShow());
 					
 				}
 			}
@@ -184,15 +193,11 @@ public class World {
 	private void executeToHide(){
 		for(int i=0;i<toHide.size();i++){
 			sprites[toHide.get(i)].setShow(false);
-			System.out.println("sprites in toHide getShow: "+sprites[toHide.get(i)].getShow());
 		}
-		//System.out.println("toHide.size: "+toHide.size());
 		int size=toHide.size();
 		for(int i=0;i<size;i++){
 			toHide.remove(0);
 		}
-		//System.out.println("toHide.size after delete: "+toHide.size());
-		
 	}
 	/**This method adds an index of the sprites array to the List that stores 
 	 * the indices of the sprites that are going to be restored (or made 
@@ -299,10 +304,8 @@ public class World {
 	 * accessible in the sprites array that is initialised in the World class.
 	 * @return a float array that has the x and y coordinates of the player.
 	 */
-	//public static <T extends Sprite> T getSprite(String tag) throws SlickException{
 	public static Sprite getSprite(String tag) throws SlickException{
 		for (int j=spritesCopy.length-1;0<=j;j--){
-			//if(!spritesCopy[j].getShow()){continue;}
 			switch(tag){
 			case "Player":
 				if(spritesCopy[j].getClass().equals(Player.class)){
@@ -507,6 +510,7 @@ public class World {
 		}
 		if(toHide.size()>0){
 			executeToHide();
+			//For debugging purposes
 			//System.out.println("Execute toHide");
 		}
 		if(toRestore.size()>0){
@@ -534,7 +538,8 @@ public class World {
 			if(!sprites[i].getShow()){continue;}
     		sprites[i].render(g);
     	}
-		g.drawString("Moves: "+((Player)getSprite("Player")).getMoves(), 11, 32);
+		g.drawString("Moves: "+((Player)getSprite("Player")).getMoves(), 11, 
+				32);
 	}
 	
 }

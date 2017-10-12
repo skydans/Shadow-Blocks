@@ -99,7 +99,8 @@ public class Ice extends Block {
 			//Move the ice block if its surroundings are not blocked.
 			if(!World.isBlocked("Inpenetrable",getX()+deltaX,getY()+deltaY)
 					&& !World.isBlocked("Block",getX()+deltaX, 
-							getY()+deltaY) && !World.isBlocked("Unit",getX()+deltaX, 
+							getY()+deltaY) && !World.isBlocked("Unit",getX()+
+									deltaX, 
 									getY()+deltaY)){
 				moveToDest(tempDirection);
 			}else{

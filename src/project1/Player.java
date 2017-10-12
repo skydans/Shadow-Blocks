@@ -43,11 +43,11 @@ public class Player extends Unit{
 	 */
 	public Player(Player player) throws SlickException{
 		super(player);
-		//setShow(player.getShow());
 		moves=player.moves;
 		playerMoved=player.playerMoved;
 		latestMove=Arrays.copyOf(player.latestMove, player.latestMove.length);
-		latestMoveAttempt=Arrays.copyOf(player.latestMoveAttempt, player.latestMoveAttempt.length);
+		latestMoveAttempt=Arrays.copyOf(player.latestMoveAttempt, 
+				player.latestMoveAttempt.length);
 	}
 	
 	
@@ -75,7 +75,8 @@ public class Player extends Unit{
 			break;
 		}
 		if(!World.isBlocked("Inpenetrable",getX()+deltaX,getY()+deltaY) && 
-				!World.isBlockedByAdjacentBlock(getX()+deltaX, getY()+deltaY, dir) ){
+				!World.isBlockedByAdjacentBlock(getX()+deltaX, getY()+deltaY, 
+						dir) ){
 			latestMove[0]=getX()+deltaX;
 			latestMove[1]=getY()+deltaY;
 			latestMove[2]=dir;
@@ -91,6 +92,7 @@ public class Player extends Unit{
 		 */
 		if(dir!=DIR_NONE){
 			moves+=1;
+			//For debugging purposes
 			//System.out.println("moves: "+moves);
 			World.recordMovesHistory();
 			playerMoved=true;

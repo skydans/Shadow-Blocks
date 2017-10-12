@@ -9,6 +9,12 @@ import org.newdawn.slick.SlickException;
  *
  */
 public class Mage extends Unit implements CanTouchPlayer {
+	/**Constructor of mage. It sets the image file path for mage and sets the 
+	 * mage to become visible.
+	 * @param x x coordinate in the map
+	 * @param y y coordinate in the map
+	 * @throws SlickException
+	 */
 	public Mage(float x,float y) throws SlickException{
 		super(x, y);
 		setImageSrc("/assets/mage.png");
@@ -74,6 +80,7 @@ public class Mage extends Unit implements CanTouchPlayer {
 		distX=World.getSprite("Player").getX()-getX();
 		distY=getY()-World.getSprite("Player").getY();
 		
+		//For debugging purposes
 		//System.out.println("distX: "+distX);
 		//System.out.println("distY: "+distY);
 		
