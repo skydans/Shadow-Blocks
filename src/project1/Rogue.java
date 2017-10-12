@@ -46,7 +46,7 @@ public class Rogue extends Unit implements CanTouchPlayer{
 	 */
 	public Rogue(Rogue rogue) throws SlickException{
 		super(rogue);
-		setShow(rogue.getShow());
+		//setShow(rogue.getShow());
 		latestMove=Arrays.copyOf(rogue.latestMove, rogue.latestMove.length);
 		currentDirection=rogue.currentDirection;
 		

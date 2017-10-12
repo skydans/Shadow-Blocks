@@ -43,7 +43,7 @@ public class Player extends Unit{
 	 */
 	public Player(Player player) throws SlickException{
 		super(player);
-		setShow(player.getShow());
+		//setShow(player.getShow());
 		moves=player.moves;
 		playerMoved=player.playerMoved;
 		latestMove=Arrays.copyOf(player.latestMove, player.latestMove.length);

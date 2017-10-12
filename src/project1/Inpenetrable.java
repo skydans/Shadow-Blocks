@@ -26,6 +26,7 @@ public abstract class Inpenetrable extends Sprite {
 	public Inpenetrable(Inpenetrable inpenetrable) throws SlickException{
 		super(inpenetrable);
 	}
+	
 	/**Update method for the Inpenetrable class.
 	 * 
 	 */

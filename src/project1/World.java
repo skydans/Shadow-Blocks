@@ -44,7 +44,7 @@ public class World {
 	 * @throws SlickException
 	 */
 	public World() throws SlickException {
-		level=0;
+		level=1;
 		//loads the sprite when an instance of the world is created.
 		loadLevel(level);
 		toHide=new ArrayList<>();
@@ -121,10 +121,22 @@ public class World {
 	public void undo() throws SlickException{
 		/* immediately end the method if there are no moves to be undone. */
 		if(((Player)getSprite("Player")).getMoves()==0){return;}
+		
+		//System.out.println("console test undo");
+		boolean tntExploded=false;
+		if(((Sprite)getSprite("Tnt")).getShow()==false){tntExploded=true;}
 		/* Revert all the Sprite objects that are of the last index based on 
 		 * the movesHistory array.
 		 */
 		for(int j=movesHistory.size()-1;0<=j;j--){
+			if(tntExploded){
+				//System.out.println("TntExploded");
+				if(movesHistory.get(j).getSprite().getClass().equals(Tnt.class)
+						|| movesHistory.get(j).getSprite().getClass().equals(Cracked.class)){
+					movesHistory.get(j).getSprite().setShow(false);
+					//System.out.println("setshowfalse");
+				}
+			}
 			if(movesHistory.get(j).getMoveIndex()==(
 					((Player)getSprite("Player")).getMoves()-1)){
 				if(movesHistory.get(j).getSprite().getClass().equals(Stone.class)){
@@ -150,6 +162,7 @@ public class World {
 					
 				}
 			}
+			
 		}
 		/* Remove all the SpriteMove objects that are of the last index.
 		 */
@@ -163,6 +176,7 @@ public class World {
 				break;
 			}
 		}
+		
 	}
 	
 	
@@ -170,6 +184,7 @@ public class World {
 	private void executeToHide(){
 		for(int i=0;i<toHide.size();i++){
 			sprites[toHide.get(i)].setShow(false);
+			System.out.println("sprites in toHide getShow: "+sprites[toHide.get(i)].getShow());
 		}
 		//System.out.println("toHide.size: "+toHide.size());
 		int size=toHide.size();
@@ -287,7 +302,7 @@ public class World {
 	//public static <T extends Sprite> T getSprite(String tag) throws SlickException{
 	public static Sprite getSprite(String tag) throws SlickException{
 		for (int j=spritesCopy.length-1;0<=j;j--){
-			if(!spritesCopy[j].getShow()){continue;}
+			//if(!spritesCopy[j].getShow()){continue;}
 			switch(tag){
 			case "Player":
 				if(spritesCopy[j].getClass().equals(Player.class)){
@@ -408,7 +423,6 @@ public class World {
 				switch(tag){
 				case "Inpenetrable":
 					if (spritesCopy[j] instanceof Inpenetrable){
-						//tempIndex=j;
 						return true;
 					}
 					break;

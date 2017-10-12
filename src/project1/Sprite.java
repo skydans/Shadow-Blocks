@@ -41,6 +41,7 @@ public abstract class Sprite implements Comparable<Sprite>{
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
+		setShow(sprite.getShow());
 	}
 	
 	

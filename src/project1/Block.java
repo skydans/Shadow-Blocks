@@ -31,7 +31,6 @@ public abstract class Block extends Sprite{
 	 */
 	public Block(Block block) throws SlickException{
 		super(block);
-		setShow(true);
 	}
 	/**This method returns whether the block can move up or not.
 	 * 

@@ -29,7 +29,6 @@ public class Cracked extends Inpenetrable implements CanDisappear{
 	 */
 	public Cracked(Cracked cracked) throws SlickException {
 		super(cracked);
-		setShow(true);
 	}
 	/**This method calls the method that checks whether the cracked wall 
 	 * should disappear or not.
