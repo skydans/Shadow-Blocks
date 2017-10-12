@@ -8,7 +8,7 @@ import org.newdawn.slick.SlickException;
  * @author Daniel Gonawan
  *
  */
-public class Skeleton extends Unit {
+public class Skeleton extends Unit implements CanTouchPlayer{
 	private int timer,currentDirection;
 	/**Constructor of Skeleton which initialises the image path of the 
 	 * Skeleton. and makes the Skeleton visible. It also sets the initial 

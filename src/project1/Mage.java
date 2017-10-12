@@ -8,7 +8,7 @@ import org.newdawn.slick.SlickException;
  * @author Daniel Gonawan
  *
  */
-public class Mage extends Unit {
+public class Mage extends Unit implements CanTouchPlayer {
 	public Mage(float x,float y) throws SlickException{
 		super(x, y);
 		setImageSrc("/assets/mage.png");

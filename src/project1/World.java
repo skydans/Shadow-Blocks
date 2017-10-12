@@ -44,7 +44,7 @@ public class World {
 	 * @throws SlickException
 	 */
 	public World() throws SlickException {
-		level=1;
+		level=0;
 		//loads the sprite when an instance of the world is created.
 		loadLevel(level);
 		toHide=new ArrayList<>();

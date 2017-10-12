@@ -11,7 +11,7 @@ import org.newdawn.slick.SlickException;
  * @author Daniel Gonawan
  *
  */
-public class Rogue extends Unit{
+public class Rogue extends Unit implements CanTouchPlayer{
 	private int currentDirection;
 	private float[] latestMove;
 	//private float[] latestMove;
