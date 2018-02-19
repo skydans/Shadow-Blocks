@@ -39,4 +39,5 @@ public abstract class Unit extends Sprite {
 	 * @throws SlickException
 	 */
 	public abstract boolean moveToDest(int dir) throws SlickException;
+	
 }
