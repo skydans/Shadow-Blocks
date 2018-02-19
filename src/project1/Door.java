@@ -2,22 +2,22 @@ package project1;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-/**This class represents the Wall sprite and it is a sub-class of Inpenetrable 
- * class.
+/**This class contains the constructor for the Door class.
+ * 
  * @author Daniel Gonawan
  *
  */
-public class Wall extends Inpenetrable {
-	/**constructor of the Wall sub-class.
+public class Door extends Inpenetrable {
+	/**This constructor makes the door visible when the door is loaded.
 	 * 
-	 * @param x x coordinate of sprite.
-	 * @param y y coordinate of sprite.
+	 * @param image_src
+	 * @param x
+	 * @param y
 	 * @throws SlickException
 	 */
-	public Wall(float x, float y) throws SlickException {
+	public Door(float x, float y) throws SlickException {
 		super(x,y);
-		//set the image source of the wall sub-class
-		setImageSrc("/assets/wall.png");
+		setImageSrc("/assets/door.png");
 		/* Try to create an image object using the image source path and 
 		* catch the error if this is unsuccessful.
 		*/
@@ -26,6 +26,8 @@ public class Wall extends Inpenetrable {
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
+		//Make the door visible
 		setShow(true);
 	}
+	
 }
